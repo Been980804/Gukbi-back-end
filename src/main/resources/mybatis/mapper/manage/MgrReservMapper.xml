@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.manage.dao.MgrMapper">
+  <!-- 예약 테이블 총 개수 -->
+  <select id="getReservCount" parameterType="Map" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      book_reservation as reserv
+    JOIN
+      book on reserv.book_no = book.book_no
+    JOIN
+      member on reserv.mem_no = member.mem_no
+    WHERE
+      reserv.use_flag = 'Y'
+      <if test="search != ''">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')
+      </if>
+  </select>
+
+  <!-- 예약전체목록 데이터 받기 -->
+  <select id="getReservList" parameterType="Map" resultType="Map">
+    SELECT
+      book.book_no, book.book_title, member.mem_no, member.mem_name, reserv.reserv_date, reserv.reserv_state
+    FROM
+      book_reservation as reserv
+    JOIN
+      book on reserv.book_no = book.book_no
+    JOIN
+      member on reserv.mem_no = member.mem_no
+    WHERE
+      reserv.use_flag = 'Y'
+      <if test="search != null">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')  
+      </if>
+    limit #{currentPage}, #{recordPage}
+  </select>
+</mapper>

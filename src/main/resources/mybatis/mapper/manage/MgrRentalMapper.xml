@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.manage.dao.MgrMapper">
+  <!-- 회원 대여/연체정보 테이블 총 개수 -->
+  <select id="getRentCount" parameterType="Map" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      rent
+    JOIN
+      book on rent.book_no = book.book_no
+    JOIN
+      member on rent.mem_no = member.mem_no
+    WHERE
+      rent.use_flag = 'Y'
+      <if test="search != ''">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')
+      </if>
+  </select>
+
+  <!-- 회원 대여/연체정보 데이터 받기 -->
+  <select id="getRentList" parameterType="Map" resultType="Map">
+    SELECT
+      rent.book_no, book.book_title, member.mem_name, rent.mem_no, date_format(rent.rent_date, '%Y.%m.%d') as rent_date, date_format(rent.return_date, '%Y.%m.%d') as return_date, rent.return_state
+    FROM
+      rent
+    JOIN
+      book on rent.book_no = book.book_no
+    JOIN
+      member on rent.mem_no = member.mem_no
+    WHERE
+      rent.use_flag = 'Y'
+      <if test="search != null">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')  
+      </if>
+    limit #{currentPage}, #{recordPage}
+  </select>
+</mapper>

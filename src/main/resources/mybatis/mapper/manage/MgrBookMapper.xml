@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.manage.dao.MgrMapper">
+  <!-- Integer의 경우 null 값에 대한 처리 가능 -->
+  <!-- 도서 테이블 총 개수 -->
+  <select id="getBookCount" parameterType="Map" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      Book
+    WHERE
+      use_flag = 'Y'
+      <if test="search != ''">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')
+      </if>
+  </select>
+
+  <!-- 도서전체목록 데이터 받기 -->
+  <select id="getBookList" parameterType="Map" resultType="Map">
+    SELECT
+      book_no, book_title, book_author, book_publisher, book_isbn, reg_date
+    FROM
+      Book
+    WHERE
+      use_flag = 'Y'
+      <if test="search != null">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')  
+      </if>
+    limit #{currentPage}, #{recordPage}
+  </select>
+
+  <!-- 도서 상세정보 가져오기 -->
+  <select id="getBookInfo" parameterType="String" resultType="Map">
+    SELECT
+      book_no, book_title, book_author, book_publisher, book_category_no, book_category_name, book_pub_year, book_url, book_isbn, date_format(reg_date, '%Y.%m.%d') as reg_date
+    FROM
+      Book
+    WHERE
+      use_flag = 'Y'
+      AND book_isbn = #{isbn}
+  </select>
+
+  <select id="getLargeMenu" parameterType="Integer" resultType="Map">
+    SELECT
+      menu_no, menu_name, menu_link, menu_icon
+    FROM
+      Menu
+    WHERE
+      use_flag = 'Y'
+      AND menu_level = #{level}
+  </select>
+
+  <select id="getSmallMenu" parameterType="String" resultType="Map">
+    SELECT
+      menu_sub_name, menu_link
+    FROM
+      Menu_sub
+    WHERE
+      use_flag = 'Y'
+      AND menu_no = #{menuNo}
+  </select>
+
+  
+  <!-- 추천도서 테이블 총 개수 -->
+  <select id="getSugCount" parameterType="Map" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      Book
+    WHERE
+      use_flag = 'Y'
+      AND book_sug != 'N'
+      <if test="search != ''">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')
+      </if>
+  </select>
+
+  <!-- 추천도서전체목록 데이터 받기 -->
+  <select id="getSugList" parameterType="Map" resultType="Map">
+    SELECT
+      book_no, book_url, book_title, book_author, book_publisher, book_isbn, book_sug, date_format(reg_date, '%Y.%m.%d') as reg_date
+    FROM
+      Book
+    WHERE
+      use_flag = 'Y'
+      AND book_sug != 'N'
+      <if test="search != null">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')  
+      </if>
+    limit #{currentPage}, #{recordPage}
+  </select>
+  
+  <!-- 추천도서 정보 등록 -->
+  <update id="sugRegist" parameterType="String">
+    UPDATE
+      Book
+    SET
+      book_sug = 'I'
+      reg_date = now()
+    WHERE
+      book_isbn = #{isbn}
+  </update>
+
+  <!-- 도서 정보 수정 -->
+  <!-- update문은 resultType 선언 필요 없음 -->
+  <update id="bookModify" parameterType="Map">
+    UPDATE
+      Book
+    SET
+      book_title = #{book_title},
+      book_author = #{book_author},
+      book_publisher = #{book_publisher},
+      book_pub_year = #{book_pub_year},
+      mod_date = now()
+    WHERE
+      book_isbn = #{isbn}
+  </update>
+
+  <!-- 도서 정보 삭제 -->
+  <update id="bookDelete" parameterType="String">
+    UPDATE
+      Book
+    SET
+      use_flag = 'N',
+      mod_date = now()
+    WHERE
+      book_isbn = #{isbn}
+  </update>
+</mapper>

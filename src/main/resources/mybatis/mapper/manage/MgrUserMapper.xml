@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.manage.dao.MgrMapper">
+  <!-- 회원 테이블 총 개수 -->
+  <select id="getUserCount" parameterType="Map" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      Member
+    WHERE
+      use_flag = 'Y'
+      <if test="search != ''">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')
+      </if>
+  </select>
+
+  <!-- 회원전체목록 데이터 받기 -->
+  <select id="getUserList" parameterType="Map" resultType="Map">
+    SELECT
+      mem_no, mem_name, mem_id, mem_phone, mem_birth, reg_date, mem_rent_yn
+    FROM
+      Member
+    WHERE
+      use_flag = 'Y'
+      <if test="search != null">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')  
+      </if>
+    limit #{currentPage}, #{recordPage}
+  </select>
+
+  <!-- 회원 테이블 총 개수 -->
+  <select id="getUserRentCount" parameterType="Map" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      rent
+    JOIN
+      book on rent.book_no = book.book_no
+    WHERE
+      rent.use_flag = 'Y'
+      AND rent.mem_no = #{memNo}
+      <if test="search != ''">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')
+      </if>
+  </select>
+
+  <!-- 회원 대여/연체정보 데이터 받기 -->
+  <select id="getUserInfo" parameterType="Map" resultType="Map">
+    SELECT
+      rent.book_no, book.book_title, rent.mem_no, date_format(rent.rent_date, '%Y.%m.%d') as rent_date, date_format(rent.return_date, '%Y.%m.%d') as return_date, rent.return_state
+    FROM
+      rent
+    JOIN
+      book on rent.book_no = book.book_no
+    WHERE
+      rent.use_flag = 'Y'
+      AND rent.mem_no = #{memNo}
+      <if test="search != null">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')  
+      </if>
+    limit #{currentPage}, #{recordPage}
+  </select>
+
+  <!-- 회원 연체내역 총 개수 -->
+  <select id="getOverdueCount" parameterType="String" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      Rent
+    WHERE
+      use_flag = 'Y'
+      AND mem_no = #{memNo}
+      AND return_state like '%연체%';
+  </select>
+</mapper>

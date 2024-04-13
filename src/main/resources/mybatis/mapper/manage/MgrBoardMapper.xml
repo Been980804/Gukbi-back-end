@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.manage.dao.MgrMapper">
+  <!-- 공지사항 테이블 총 개수 -->
+  <select id="getNotiCount" parameterType="Map" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      notification as noti
+    JOIN
+      member on noti.mem_no = member.mem_no
+    WHERE
+      noti.use_flag = 'Y'
+      <if test="search != ''">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')
+      </if>
+  </select>
+
+  <!-- 공지사항전체목록 데이터 받기 -->
+  <select id="getNotiList" parameterType="Map" resultType="Map">
+    SELECT
+      noti.noti_no, member.mem_name, noti.noti_title, noti.noti_cnt, date_format(noti.reg_date, '%Y.%m.%d') as reg_date
+    FROM
+      notification as noti
+    JOIN
+      member on noti.mem_no = member.mem_no
+    WHERE
+      noti.use_flag = 'Y'
+      <if test="search != null">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')  
+      </if>
+    limit #{currentPage}, #{recordPage}
+  </select>
+
+  <!-- 공지사항 상세정보 가져오기 -->
+  <select id="getNotiInfo" parameterType="String" resultType="Map">
+    SELECT
+      noti_title, noti_subtitle, noti_content, reg_date
+    FROM
+      notification
+    WHERE
+      use_flag = 'Y'
+      AND noti_no = #{notiNo}
+  </select>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+  <!-- 문의사항 테이블 총 개수 -->
+  <select id="getInquiryCount" parameterType="Map" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      qna
+    JOIN
+      member on qna.qes_mem_no = member.mem_no
+    WHERE
+      qna.use_flag = 'Y'
+      <if test="search != ''">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')
+      </if>
+  </select>
+
+  <!-- 문의사항전체목록 데이터 받기 -->
+  <select id="getInquiryList" parameterType="Map" resultType="Map">
+    SELECT
+      qna.qna_no, member.mem_name, qna.qes_title, date_format(qna.qes_reg_date, '%Y.%m.%d') as reg_date, qna.ans_content
+    FROM
+      qna
+    JOIN
+      member on qna.qes_mem_no = member.mem_no
+    WHERE
+      qna.use_flag = 'Y'
+      <if test="search != null">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')  
+      </if>
+    limit #{currentPage}, #{recordPage}
+  </select>
+
+  <!-- 문의사항 상세정보 가져오기 -->
+  <select id="getInquiryInfo" parameterType="String" resultType="Map">
+    SELECT
+      qes_title, qes_content, date_format(qes_reg_date, '%Y.%m.%d') as qes_reg_date, ans_content, date_format(ans_reg_date, '%Y.%m.%d') as ans_reg_date
+    FROM
+      qna
+    WHERE
+      use_flag = 'Y'
+      AND qna_no = #{inquiryNo}
+  </select>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+  <!-- 도서거래 테이블 총 개수 -->
+  <select id="getTradeCount" parameterType="Map" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      book_trade as trade
+    JOIN
+      member on trade.mem_no = member.mem_no
+    WHERE
+      trade.use_flag = 'Y'
+      <if test="search != ''">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')
+      </if>
+  </select>
+
+  <!-- 도서거래전체목록 데이터 받기 -->
+  <select id="getTradeList" parameterType="Map" resultType="Map">
+    SELECT
+      trade.trade_no, trade.mem_no, member.mem_name, trade.trade_title, format(trade.trade_price, 0) as trade_price, trade.reg_date, trade.trade_state
+    FROM
+      book_trade as trade
+    JOIN
+      member on trade.mem_no = member.mem_no
+    WHERE
+      trade.use_flag = 'Y'
+      <if test="search != null">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')  
+      </if>
+    limit #{currentPage}, #{recordPage}
+  </select>
+
+  <!-- 도서거래 상세정보 가져오기 -->
+  <select id="getTradeInfo" parameterType="String" resultType="Map">
+    SELECT
+      trade.trade_title, trade.trade_publisher, trade.trade_price, trade.trade_condition, trade.trade_content, trade.trade_state, trade.reg_date, member.mem_name, member.mem_phone, member.mem_email
+    FROM
+      book_trade as trade
+    JOIN
+      member on trade.mem_no = member.mem_no
+    WHERE
+      trade.use_flag = 'Y'
+      AND trade.trade_no = #{tradeNo}
+  </select>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+  <!-- 희망도서 테이블 총 개수 -->
+  <select id="getApplCount" parameterType="Map" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      book_appl as appl
+    JOIN
+      member on appl.mem_no = member.mem_no
+    WHERE
+      appl.use_flag = 'Y'
+      <if test="search != ''">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')
+      </if>
+  </select>
+
+  <!-- 희망도서전체목록 데이터 받기 -->
+  <select id="getApplList" parameterType="Map" resultType="Map">
+    SELECT
+      member.mem_name, appl.appl_title, appl.appl_author, appl.appl_publisher, appl.reg_date, appl.appl_state
+    FROM
+      book_appl as appl
+    JOIN
+      member on appl.mem_no = member.mem_no
+    WHERE
+      appl.use_flag = 'Y'
+      <if test="search != null">
+        AND ${column} LIKE CONCAT('%', #{search}, '%')  
+      </if>
+    limit #{currentPage}, #{recordPage}
+  </select>
+
+  <!-- 공지사항 정보 삭제 -->
+  <update id="notiDelete" parameterType="String">
+    UPDATE
+      notification
+    SET
+      use_flag = 'N',
+      mod_date = now()
+    WHERE
+      noti_no = #{notiNo}
+  </update>
+</mapper>
