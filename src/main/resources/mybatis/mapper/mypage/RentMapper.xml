@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.mypage.dao.MyPageMapper">
+    <!-- 대여중인 도서 조회 -->
+    <select id="getRentList" parameterType="String" resultType="Map">
+        SELECT
+            book.book_no,
+            book.book_title,
+            member.mem_name,
+            RENT.rent_date,
+            rent.rent_no
+        FROM
+            RENT
+        JOIN
+            BOOK ON RENT.book_no = BOOK.book_no
+        JOIN
+            MEMBER ON RENT.mem_no = MEMBER.mem_no
+        WHERE 
+			1=1
+            and rent.mem_no = #{mem_no}
+            and (rent.return_state = '대여중' or rent.return_state = '연체')
+            and rent.use_flag = 'Y'
+        ORDER BY
+            RENT.RENT_NO DESC
+    </select>
+
+    <!-- 대여한 도서 조회 -->
+    <select id="getRentedList" parameterType="String" resultType="Map">
+        SELECT
+            book.book_no,
+            book.book_title,
+            member.mem_name,
+            rent.rent_date,
+            rent.return_date,
+            rent.rent_no
+        FROM
+            rent
+        JOIN
+            BOOK ON RENT.book_no = BOOK.book_no
+        JOIN
+            MEMBER ON RENT.mem_no = MEMBER.mem_no
+        WHERE   
+            1=1
+            and rent.mem_no = #{mem_no}
+            and (rent.return_state = '정상 반납' or rent.return_state = '연체 후 반납')
+            and rent.use_flag = 'Y'
+        ORDER BY    
+            RENT.rent_no DESC
+    </select>
+
+    <!-- 예약중인 도서 조회 -->
+    <select id="getReserveList" parameterType="String" resultType="Map">
+       SELECT
+            book.book_no,
+            book.book_title,
+            book.book_publisher,
+            member.mem_name,
+            book_reservation.reserv_date,
+            rent.rent_date,
+            book_reservation.reserv_no
+        FROM
+            book_reservation
+        JOIN
+            BOOK ON BOOK_RESERVATION.book_no = BOOK.book_no
+        JOIN
+            MEMBER ON BOOK_RESERVATION.mem_no = MEMBER.mem_no
+        LEFT JOIN
+            RENT ON BOOK_RESERVATION.book_no = RENT.book_no
+        WHERE
+            1=1
+            and book_reservation.mem_no = #{mem_no}
+            and book_reservation.use_flag = 'Y'
+            and rent.use_flag = 'Y'
+        ORDER BY
+            book_reservation.reserv_date DESC
+    </select>
+
+    <!-- 리뷰 작성 -->
+    <insert id="review" parameterType="Map">
+        insert into
+            review
+        values(
+            #{rent_no},
+            #{mem_no},
+            #{book_no},
+            #{rev_scope},
+            #{rev_content},
+            'Y',
+            now(),
+            now()
+        )
+    </insert>
+
+    <!-- 도서 반납 -->
+    <update id="returnBook" parameterType="Map">
+        update
+            rent
+        set
+            return_state =
+                case
+                    when return_state = '대여중' then '정상 반납'
+                    when return_state = '연체' then '연체 후 반납'
+                end,
+            mod_date = now(),
+            return_date = now()
+        WHERE
+            1=1
+            and mem_no = #{mem_no}
+            and rent_no = #{rent_no}
+            and use_flag = 'Y'
+    </update>
+
+    <!-- 대여상태 변경 -->
+    <!-- <update id="changeState" parameterType="Map">
+        update
+            rent
+        set
+            return_state = '연체',
+            mod_date = now()
+        WHERE
+            1=1
+            and rent_no = #{rent_no}
+            and use_flag = 'Y'
+    </update> -->
+
+    <!-- 예약한 도서 취소 -->
+    <update id="cancelReserveBook" parameterType="Map">
+        update
+            book_reservation
+        set
+            use_flag = 'N',
+            mod_date = now()
+        WHERE
+            1=1
+            and mem_no = #{mem_no}
+            and reserv_no = #{reserv_no}
+    </update>
+</mapper>
