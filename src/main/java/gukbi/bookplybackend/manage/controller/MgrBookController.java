@@ -79,14 +79,16 @@ public class MgrBookController { // 도서목록 관련 기능
     return res;
   }
 
-  // 도서 테이블 총 개수
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  // 추천도서 테이블 총 개수
   @GetMapping(value = "/sugCount")
   public ResponseDTO getSugCount(@RequestParam Map<String, String> sqlData) {
     ResponseDTO res = bookService.getSugCount(sqlData);
     return res;
   }
 
-  // 도서전체목록 데이터 받기
+  // 추천도서전체목록 데이터 받기
   @GetMapping(value = "/sugList/{currentPage}")
   public ResponseDTO getSugList(@PathVariable(value = "currentPage") int currentPage, @RequestParam Map<String, String> sqlData) {
     Map<String, Object> pageData = new HashMap<String, Object>();
@@ -99,8 +101,15 @@ public class MgrBookController { // 도서목록 관련 기능
     return res;
   }
 
+  // 추천도서 설정
+  @PutMapping(value = "/sugBook/{isbn}")
+  public ResponseDTO sugBook(@PathVariable(value = "isbn") String isbn) {
+    ResponseDTO res = bookService.sugBook(isbn);
+    return res;
+  }
+
   // 추천도서 정보 등록
-  @PostMapping(value = "/sugRegist/{isbn}")
+  @PutMapping(value = "/sugRegist/{isbn}")
   public ResponseDTO sugRegist(@PathVariable(value = "isbn") String isbn) {
     ResponseDTO res = bookService.sugRegist(isbn);
     return res;

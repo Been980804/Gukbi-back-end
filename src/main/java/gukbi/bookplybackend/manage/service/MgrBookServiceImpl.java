@@ -175,6 +175,8 @@ public class MgrBookServiceImpl implements MgrBookService {
     return res;
   }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   @Override
   @Transactional // 총 추천도서 개수 가져오기
   public ResponseDTO getSugCount(Map<String, String> sqlData) {
@@ -212,6 +214,24 @@ public class MgrBookServiceImpl implements MgrBookService {
   }
 
   @Override
+  @Transactional // 추천도서 설정
+  public ResponseDTO sugBook(String isbn) {
+    ResponseDTO res = new ResponseDTO();
+    int result = manageMapper.sugBook(isbn);
+
+    if(result == 1) {
+      res.setResCode(200);
+      res.setResMsg("도서 정보 수정");
+      res.setData("sugBook", result);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("도서 정보 수정에 실패했습니다.");
+    }
+
+    return res;
+  }
+
+  @Override
   @Transactional // 추천도서 정보 등록
   public ResponseDTO sugRegist(String isbn) {
     ResponseDTO res = new ResponseDTO();
@@ -220,7 +240,7 @@ public class MgrBookServiceImpl implements MgrBookService {
     if(result == 1) {
       res.setResCode(200);
       res.setResMsg("도서 정보 수정");
-      res.setData("regist", result);
+      res.setData("sugRegist", result);
     } else {
       res.setResCode(300);
       res.setResMsg("도서 정보 수정에 실패했습니다.");

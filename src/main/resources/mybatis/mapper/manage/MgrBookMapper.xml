@@ -43,6 +43,32 @@
       AND book_isbn = #{isbn}
   </select>
 
+  <!-- 도서 정보 수정 -->
+  <!-- update문은 resultType 선언 필요 없음 -->
+  <update id="bookModify" parameterType="Map">
+    UPDATE
+      Book
+    SET
+      book_title = #{book_title},
+      book_author = #{book_author},
+      book_publisher = #{book_publisher},
+      book_pub_year = #{book_pub_year},
+      mod_date = now()
+    WHERE
+      book_isbn = #{isbn}
+  </update>
+
+  <!-- 도서 정보 삭제 -->
+  <update id="bookDelete" parameterType="String">
+    UPDATE
+      Book
+    SET
+      use_flag = 'N',
+      mod_date = now()
+    WHERE
+      book_isbn = #{isbn}
+  </update>
+
   <select id="getLargeMenu" parameterType="Integer" resultType="Map">
     SELECT
       menu_no, menu_name, menu_link, menu_icon
@@ -93,38 +119,23 @@
     limit #{currentPage}, #{recordPage}
   </select>
   
-  <!-- 추천도서 정보 등록 -->
-  <update id="sugRegist" parameterType="String">
+  <!-- 추천도서 설정 -->
+  <update id="sugBook" parameterType="String">
     UPDATE
       Book
     SET
-      book_sug = 'I'
-      reg_date = now()
-    WHERE
-      book_isbn = #{isbn}
-  </update>
-
-  <!-- 도서 정보 수정 -->
-  <!-- update문은 resultType 선언 필요 없음 -->
-  <update id="bookModify" parameterType="Map">
-    UPDATE
-      Book
-    SET
-      book_title = #{book_title},
-      book_author = #{book_author},
-      book_publisher = #{book_publisher},
-      book_pub_year = #{book_pub_year},
+      book_sug = 'Y',
       mod_date = now()
     WHERE
       book_isbn = #{isbn}
   </update>
 
-  <!-- 도서 정보 삭제 -->
-  <update id="bookDelete" parameterType="String">
+  <!-- 추천도서 정보 등록 -->
+  <update id="sugRegist" parameterType="String">
     UPDATE
       Book
     SET
-      use_flag = 'N',
+      book_sug = 'I',
       mod_date = now()
     WHERE
       book_isbn = #{isbn}
