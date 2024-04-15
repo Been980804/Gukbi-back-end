@@ -24,9 +24,9 @@ public class MgrSidebarController {
   }
 
   // 소메뉴 가져오기
-  @GetMapping("/smallMenu/{menuNo}")
-  public ResponseDTO getSmallMenu(@PathVariable(value = "menuNo") String menuNo) {
-    ResponseDTO res = sidebarService.getSmallMenu(menuNo);
+  @GetMapping("/smallMenu")
+  public ResponseDTO getSmallMenu() {
+    ResponseDTO res = sidebarService.getSmallMenu();
     return res;
   }
 }

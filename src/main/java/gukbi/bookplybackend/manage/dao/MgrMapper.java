@@ -45,7 +45,7 @@ public interface MgrMapper {
   List<Map<String, Object>> getLargeMenu(int level);
 
   // 소메뉴 가져오기
-  List<Map<String, Object>> getSmallMenu(String menuNo);
+  List<Map<String, Object>> getSmallMenu();
 
 
   // 총 회원 개수 가져오기

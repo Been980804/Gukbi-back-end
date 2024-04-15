@@ -79,14 +79,13 @@
       AND menu_level = #{level}
   </select>
 
-  <select id="getSmallMenu" parameterType="String" resultType="Map">
+  <select id="getSmallMenu" resultType="Map">
     SELECT
-      menu_sub_name, menu_link
+      menu_sub_name, menu_no, menu_link
     FROM
       Menu_sub
     WHERE
       use_flag = 'Y'
-      AND menu_no = #{menuNo}
   </select>
 
   
