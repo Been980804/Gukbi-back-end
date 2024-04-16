@@ -54,4 +54,8 @@ public interface MyPageMapper {
     // 문의내역
     List<Map<String, String>> getMyInquiry(String mem_no); // 문의내역 조회
     int deleteInquiry(Map<String, String> reqBody); // 문의내역 삭제
+
+    // 도서거래
+    List<Map<String, String>> getTradeList(String mem_no); // 거래내역 조회
+    int deleteTrade(Map<String, Object> reqBody); // 거래내역 삭제
 }

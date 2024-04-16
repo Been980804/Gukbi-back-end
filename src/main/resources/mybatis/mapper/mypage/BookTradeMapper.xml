@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.mypage.dao.MyPageMapper">
+    <!-- 거래내역 조회 -->
+     <select id="getTradeList" parameterType="String" resultType="Map">
+        select
+            book_trade.trade_no,
+            member.mem_name,
+            book_trade.trade_title,
+            book_trade.trade_book_title,
+            book_trade.trade_publisher,
+            book_trade.trade_price,
+            book_trade.trade_condition,
+            book_trade.trade_content,
+            book_trade.trade_state
+        FROM
+            book_trade
+        join
+            member on book_trade.mem_no = member.mem_no
+        WHERE
+            1=1
+            and book_trade.mem_no = #{mem_no}
+            and book_trade.use_flag = 'Y'        
+    </select>
+    <!-- 거래내역 삭제 -->
+    <update id="deleteTrade" parameterType="Map">
+        update
+            book_trade
+        set
+            use_flag = 'N',
+            mod_date = now()
+        WHERE
+            1=1
+            and mem_no = #{mem_no}
+            and trade_no = #{trade_no}
+    </update>
+</mapper>
