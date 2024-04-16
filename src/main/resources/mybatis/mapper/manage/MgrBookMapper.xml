@@ -69,25 +69,6 @@
       book_isbn = #{isbn}
   </update>
 
-  <select id="getLargeMenu" parameterType="Integer" resultType="Map">
-    SELECT
-      menu_no, menu_name, menu_link, menu_icon
-    FROM
-      Menu
-    WHERE
-      use_flag = 'Y'
-      AND menu_level = #{level}
-  </select>
-
-  <select id="getSmallMenu" resultType="Map">
-    SELECT
-      menu_sub_name, menu_no, menu_link
-    FROM
-      Menu_sub
-    WHERE
-      use_flag = 'Y'
-  </select>
-
   
   <!-- 추천도서 테이블 총 개수 -->
   <select id="getSugCount" parameterType="Map" resultType="Integer">

@@ -41,13 +41,6 @@ public interface MgrMapper {
   Integer sugRegist(String isbn);
 
 
-  // 대메뉴 가져오기
-  List<Map<String, Object>> getLargeMenu(int level);
-
-  // 소메뉴 가져오기
-  List<Map<String, Object>> getSmallMenu();
-
-
   // 총 회원 개수 가져오기
   Integer getUserCount(Map<String, String> sqlData);
 
