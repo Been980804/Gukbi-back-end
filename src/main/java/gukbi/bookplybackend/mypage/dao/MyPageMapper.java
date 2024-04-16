@@ -50,4 +50,8 @@ public interface MyPageMapper {
     int addBpl(Map<String,String> reqBody); // 북플리상세보기 도서 추가
     Map<String, String> getBookExist(Map<String,String> reqBody); // 상세북플리 테이블에 유무 체크
     int addBpl_update(Map<String,String> reqBody); // 테이블있을시 use_flag 수정
+
+    // 문의내역
+    List<Map<String, String>> getMyInquiry(String mem_no); // 문의내역 조회
+    int deleteInquiry(Map<String, String> reqBody); // 문의내역 삭제
 }

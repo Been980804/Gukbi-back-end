@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.mypage.dao.MyPageMapper">
+    <!-- 문의내역 조회 -->
+  <select id="getMyInquiry" parameterType="String" resultType="Map">
+        select
+            qna_no,
+            qes_mem_no,
+            qes_title,
+            qes_content,
+            ans_mem_no,
+            ans_content
+        FROM
+            qna
+        WHERE
+            1=1
+            and qes_mem_no = #{mem_no}
+            and use_flag = 'Y'
+    </select>
+    <!-- 문의내역 삭제 -->
+    <update id="deleteInquiry" parameterType="Map">
+        update
+            qna
+        set
+            use_flag = 'N',
+            qes_mod_date = now()
+        WHERE
+            1=1
+            and qes_mem_no = #{mem_no}
+            and qna_no = #{qna_no}
+    </update>    
+</mapper>
