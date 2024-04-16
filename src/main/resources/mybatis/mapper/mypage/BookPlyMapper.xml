@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.mypage.dao.MyPageMapper">
+       <select id="getBookPlyList" parameterType="String" resultType="Map">
+        SELECT
+            BOOK_PLAYLIST.bpl_no,
+            BOOK_PLAYLIST.bpl_name,
+            MEMBER.mem_name,
+            DATE_FORMAT(BOOK_PLAYLIST.mod_date, '%Y .%m .%d.') as mod_date,
+            COALESCE(BOOK_PLAYLIST.like_cnt,0) as like_cnt,
+            BOOK_PLAYLIST.bpl_yn,
+            BOOK_PLAYLIST.bpl_intro,
+            BOOK_PLAYLIST.bpl_category,
+            COALESCE(BOOK_PLAYLIST.book_cnt,0) as book_cnt,
+            (
+                select
+                    book.book_url
+                FROM
+                    bpl_detail
+                JOIN
+                    book on bpl_detail.book_no = book.book_no
+                WHERE
+                    book_playlist.bpl_no = bpl_detail.bpl_no
+                    and bpl_detail.use_flag = 'Y'
+                order by
+                    book_playlist.reg_date limit 1
+            ) as book_url
+        FROM
+            BOOK_PLAYLIST
+        JOIN
+            MEMBER ON BOOK_PLAYLIST.mem_no = MEMBER.mem_no
+        WHERE 
+            1=1
+            and BOOK_PLAYLIST.mem_no = #{mem_no}
+            and BOOK_PLAYLIST.use_flag = 'Y'
+    </select>
+  
+    <update id="updateVisibility" parameterType="Map">
+        update
+            book_playlist
+        set
+            bpl_yn = 
+                CASE 
+                    WHEN bpl_yn = 'Y' THEN 'N'
+                    ELSE 'Y'
+                END,
+            mod_date = now()
+        WHERE
+            1=1
+            and bpl_no = #{bpl_no}
+            and use_flag = 'Y'
+    </update>
+
+    <select id="detailList" parameterType="String" resultType="Map">
+        select
+            book.book_url,
+            book.book_title,
+            book.book_author,
+            book.book_publisher,
+            book.book_no
+        FROM
+            bpl_detail
+        JOIN
+            book on bpl_detail.book_no = book.book_no
+        WHERE
+            1=1
+            and bpl_detail.bpl_no = #{bpl_no}
+            and bpl_detail.use_flag = 'Y'
+    </select>
+
+    <select id="getLikeInfo" parameterType="Map" resultType="Map">
+        select
+            case when count(*) > 0 then 'true' else 'false' end as isLiked
+        FROM
+            like_bookply
+        WHERE
+            1=1
+            and bpl_no = #{bpl_no}
+            and mem_no = #{mem_no}
+            and use_flag = 'Y'
+    </select>
+
+    <select id="checkLike" parameterType="Map" resultType="Map">
+        select
+            *
+        FROM
+            like_bookply
+        WHERE
+            1=1
+            and bpl_no = #{bpl_no}
+            and mem_no = #{mem_no}
+    </select>
+
+    <update id="updateLikeTable" parameterType="Map">
+        update
+            like_bookply
+        set
+            use_flag = case 
+                        when use_flag = 'Y' then 'N' else 'Y' END,
+            mod_date = now()
+        WHERE
+            1=1
+            and mem_no = #{mem_no}
+            and bpl_no = #{bpl_no}
+    </update>
+
+    <insert id="insertLike" parameterType="Map">
+        insert into
+            like_bookply
+        values(
+            #{mem_no},
+            #{bpl_no},
+            'Y',
+            now(),
+            now()
+        )
+    </insert>
+
+    <update id="updateLikeCnt" parameterType="Map">
+        update
+            book_playlist
+        set
+            like_cnt = 
+                (select 
+                    count(*)
+                FROM
+                    like_bookply
+                WHERE
+                    bpl_no = #{bpl_no}
+                    and use_flag = 'Y'
+                ),
+            mod_date = now()
+        WHERE
+            1=1
+            and bpl_no = #{bpl_no}
+            and use_flag = 'Y'
+    </update>
+
+    <select id="likeCount" parameterType="Map" resultType="Map">
+        select
+            like_cnt
+        FROM    
+            book_playlist
+        WHERE
+            1=1
+            and bpl_no = #{bpl_no}
+            and use_flag = 'Y'
+    </select>
+
+    <insert id="createBpl" parameterType="Map">
+        insert into
+            book_playlist(
+                bpl_name,
+                mem_no,
+                bpl_intro,
+                bpl_category,
+                bpl_yn,
+                use_flag,
+                reg_date,
+                mod_date
+            ) values(
+                #{bpl_name},
+                #{mem_no},
+                #{bpl_intro},
+                #{bpl_category},
+                'Y',
+                'Y',
+                now(),
+                now()
+            )
+    </insert>
+
+    <update id="deleteBpl" parameterType="Map">
+        update
+            book_playlist
+        set
+            use_flag = 'N',
+            bpl_yn = 'N',
+            mod_date = now()
+        WHERE
+            1=1
+            and bpl_no in
+                <foreach collection = "bpl_no" item="bpl_no" open="(" separator="," close=")">
+                    #{bpl_no}
+                </foreach>
+            and mem_no = #{mem_no}
+    </update>
+
+    <update id="deleteBook" parameterType="Map">
+        update
+            bpl_detail
+        set
+            use_flag = 'N',
+            mod_date = now()
+        WHERE
+            1=1
+            and book_no in
+                <foreach collection = "book_no" item="book_no" open="(" separator="," close=")">
+                    #{book_no}
+                </foreach>
+            and bpl_no = #{bpl_no}
+    </update>
+
+    <update id="updateBookCnt" parameterType="Map">
+        update
+            book_playlist
+        set
+            mod_date = now(),
+            book_cnt = (select count(*) from bpl_detail where bpl_no = #{bpl_no} and use_flag = 'Y')
+        where
+            1=1
+            and bpl_no = #{bpl_no}
+    </update>
+
+     <update id="updateBookCnt2" parameterType="String">
+        update
+            book_playlist
+        set
+            mod_date = now(),
+            book_cnt = (select count(*) from bpl_detail where bpl_no = #{bpl_no} and use_flag = 'Y')
+        where
+            1=1
+            and bpl_no = #{bpl_no}
+    </update>
+
+    <update id="updateBpl" parameterType="Map">
+        update
+            book_playlist
+        set
+            mod_date = now(),
+            bpl_name = #{bpl_name},
+            bpl_intro = #{bpl_intro},
+            bpl_category = #{bpl_category}
+        where
+            1=1
+            and bpl_no = #{bpl_no}
+            and mem_no = #{mem_no}
+            and use_flag = 'Y'
+    </update>
+
+    <insert id="addBpl" parameterType="Map">
+        insert into
+            bpl_detail
+        values(
+            #{bpl_no},
+            #{book_no},
+            'Y',
+            now(),
+            now()
+        )
+    </insert>
+
+    <select id="getBookExist" parameterType="Map" resultType="Map">
+        select
+            *
+        from
+            bpl_detail
+        where
+            bpl_no = #{bpl_no}
+            and book_no = #{book_no}
+    </select>
+
+    <update id="addBpl_update" parameterType="Map">
+        update
+            bpl_detail
+        set
+            use_flag = 'Y',
+            mod_date = now()
+        where
+            bpl_no = #{bpl_no}
+            and book_no = #{book_no}
+    </update>
+</mapper>
