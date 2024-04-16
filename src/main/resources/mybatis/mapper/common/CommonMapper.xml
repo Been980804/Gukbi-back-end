@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.common.dao.CommonMapper">
+  <!-- 대메뉴 가져오기 -->
+  <select id="getLargeMenu" parameterType="Integer" resultType="Map">
+    SELECT
+      menu_no, menu_name, menu_link, menu_icon
+    FROM
+      Menu
+    WHERE
+      use_flag = 'Y'
+      AND menu_level = #{level}
+  </select>
+
+  <!-- 소메뉴 가져오기 -->
+  <select id="getSmallMenu" resultType="Map">
+    SELECT
+      menu_sub_name, menu_no, menu_link
+    FROM
+      Menu_sub
+    WHERE
+      use_flag = 'Y'
+  </select>
+</mapper>
