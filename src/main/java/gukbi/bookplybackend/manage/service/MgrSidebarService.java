@@ -11,5 +11,5 @@ public interface MgrSidebarService {
   ResponseDTO getLargeMenu(int level);
 
   // 소메뉴 가져오기
-  ResponseDTO getSmallMenu(String menuNo);
+  ResponseDTO getSmallMenu();
 }

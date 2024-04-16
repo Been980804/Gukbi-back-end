@@ -41,9 +41,9 @@ public class MgrSidebarServiceImpl implements MgrSidebarService {
 
   @Override
   @Transactional // 소메뉴 가져오기
-  public ResponseDTO getSmallMenu(String menuNo) {
+  public ResponseDTO getSmallMenu() {
     ResponseDTO res = new ResponseDTO();
-    List<Map<String, Object>> menuList = manageMapper.getSmallMenu(menuNo);
+    List<Map<String, Object>> menuList = manageMapper.getSmallMenu();
 
     if(!menuList.isEmpty()) {
       res.setResCode(200);

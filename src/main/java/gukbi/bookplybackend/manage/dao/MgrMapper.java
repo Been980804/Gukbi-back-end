@@ -34,6 +34,9 @@ public interface MgrMapper {
   // 현재 페이지 추천도서목록 가져오기
   List<Map<String, Object>> getSugList(Map<String, Object> pageData);
 
+  // 추천도서 설정
+  Integer sugBook(String isbn);
+
   // 추천도서 정보 등록
   Integer sugRegist(String isbn);
 
@@ -42,7 +45,7 @@ public interface MgrMapper {
   List<Map<String, Object>> getLargeMenu(int level);
 
   // 소메뉴 가져오기
-  List<Map<String, Object>> getSmallMenu(String menuNo);
+  List<Map<String, Object>> getSmallMenu();
 
 
   // 총 회원 개수 가져오기
