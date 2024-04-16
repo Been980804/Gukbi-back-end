@@ -12,7 +12,9 @@
       Menu
     WHERE
       use_flag = 'Y'
-      AND menu_level = #{level}
+      <if test="level != 10">
+        AND menu_level = #{level}
+      </if>
   </select>
 
   <!-- 소메뉴 가져오기 -->
