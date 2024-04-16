@@ -4,6 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="gukbi.bookplybackend.mypage.dao.MyPageMapper">
+        <!-- 북플리 목록 조회 -->
        <select id="getBookPlyList" parameterType="String" resultType="Map">
         SELECT
             BOOK_PLAYLIST.bpl_no,
@@ -38,6 +39,7 @@
             and BOOK_PLAYLIST.use_flag = 'Y'
     </select>
   
+    <!-- 공개여부 수정 -->
     <update id="updateVisibility" parameterType="Map">
         update
             book_playlist
@@ -53,7 +55,7 @@
             and bpl_no = #{bpl_no}
             and use_flag = 'Y'
     </update>
-
+    <!-- 북플리 상세보기 조회 -->
     <select id="detailList" parameterType="String" resultType="Map">
         select
             book.book_url,
@@ -70,7 +72,7 @@
             and bpl_detail.bpl_no = #{bpl_no}
             and bpl_detail.use_flag = 'Y'
     </select>
-
+    <!-- 좋아요수 조회 -->
     <select id="getLikeInfo" parameterType="Map" resultType="Map">
         select
             case when count(*) > 0 then 'true' else 'false' end as isLiked
@@ -82,7 +84,7 @@
             and mem_no = #{mem_no}
             and use_flag = 'Y'
     </select>
-
+    <!-- 선호북플리 테이블 유무 조회 -->
     <select id="checkLike" parameterType="Map" resultType="Map">
         select
             *
@@ -93,7 +95,7 @@
             and bpl_no = #{bpl_no}
             and mem_no = #{mem_no}
     </select>
-
+    <!-- 선호북플리 테이블 수정 -->
     <update id="updateLikeTable" parameterType="Map">
         update
             like_bookply
@@ -106,7 +108,7 @@
             and mem_no = #{mem_no}
             and bpl_no = #{bpl_no}
     </update>
-
+    <!-- 선호북플리 테이블 추가 -->
     <insert id="insertLike" parameterType="Map">
         insert into
             like_bookply
@@ -118,7 +120,7 @@
             now()
         )
     </insert>
-
+    <!-- 좋아요수 수정 -->
     <update id="updateLikeCnt" parameterType="Map">
         update
             book_playlist
@@ -138,7 +140,7 @@
             and bpl_no = #{bpl_no}
             and use_flag = 'Y'
     </update>
-
+    <!-- 좋아요수 조회 -->
     <select id="likeCount" parameterType="Map" resultType="Map">
         select
             like_cnt
@@ -149,7 +151,7 @@
             and bpl_no = #{bpl_no}
             and use_flag = 'Y'
     </select>
-
+    <!-- 북플리 생성 -->
     <insert id="createBpl" parameterType="Map">
         insert into
             book_playlist(
@@ -172,7 +174,7 @@
                 now()
             )
     </insert>
-
+    <!-- 북플리 삭제 -->
     <update id="deleteBpl" parameterType="Map">
         update
             book_playlist
@@ -188,7 +190,7 @@
                 </foreach>
             and mem_no = #{mem_no}
     </update>
-
+    <!-- 북플리 상세보기 도서 삭제 -->
     <update id="deleteBook" parameterType="Map">
         update
             bpl_detail
@@ -203,7 +205,7 @@
                 </foreach>
             and bpl_no = #{bpl_no}
     </update>
-
+    <!-- 북플리 도서수 수정(삭제시) -->
     <update id="updateBookCnt" parameterType="Map">
         update
             book_playlist
@@ -214,7 +216,7 @@
             1=1
             and bpl_no = #{bpl_no}
     </update>
-
+    <!-- 북플리 도서수 수정(생성시) -->
      <update id="updateBookCnt2" parameterType="String">
         update
             book_playlist
@@ -225,7 +227,7 @@
             1=1
             and bpl_no = #{bpl_no}
     </update>
-
+    <!-- 북플리 수정 -->
     <update id="updateBpl" parameterType="Map">
         update
             book_playlist
@@ -240,7 +242,7 @@
             and mem_no = #{mem_no}
             and use_flag = 'Y'
     </update>
-
+    <!-- 북플리 상세보기 도서 추가 -->
     <insert id="addBpl" parameterType="Map">
         insert into
             bpl_detail
@@ -252,7 +254,7 @@
             now()
         )
     </insert>
-
+    <!-- 상세북플리 테이블 도서 유무 조회 -->
     <select id="getBookExist" parameterType="Map" resultType="Map">
         select
             *
@@ -262,7 +264,7 @@
             bpl_no = #{bpl_no}
             and book_no = #{book_no}
     </select>
-
+    <!-- 상세북플리 도서 수정(있을경우) -->
     <update id="addBpl_update" parameterType="Map">
         update
             bpl_detail

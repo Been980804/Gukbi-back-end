@@ -4,6 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="gukbi.bookplybackend.mypage.dao.MyPageMapper">
+    <!-- 희망도서 조회 -->
    <select id="getHopeBookList" parameterType="String" resultType="Map">
     SELECT
         appl_title,
@@ -19,7 +20,7 @@
         AND mem_no = #{mem_no}
         AND use_flag = 'Y'
   </select>
-  
+  <!-- 희망도서 삭제 -->
   <update id="cancelHopeBook" parameterType="Map">
     update
       BOOK_APPL
