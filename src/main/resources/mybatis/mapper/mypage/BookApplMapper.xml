@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.mypage.dao.MyPageMapper">
+   <select id="getHopeBookList" parameterType="String" resultType="Map">
+    SELECT
+        appl_title,
+        appl_author,
+        appl_publisher,
+        Date_format(reg_date, '%Y .%m .%d.') as reg_date,
+        appl_state,
+        appl_no
+    FROM
+        BOOK_APPL
+    WHERE
+        1=1
+        AND mem_no = #{mem_no}
+        AND use_flag = 'Y'
+  </select>
+  
+  <update id="cancelHopeBook" parameterType="Map">
+    update
+      BOOK_APPL
+    set
+      use_flag = 'N',
+      mod_date = now()
+    WHERE
+      1=1
+      and mem_no = #{mem_no}
+      and appl_no = #{appl_no}
+      and appl_state != '입고완료' 
+      and appl_state != '입고중'
+  </update>
+</mapper>
