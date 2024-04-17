@@ -69,6 +69,7 @@
       book_isbn = #{isbn}
   </update>
 
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->
   
   <!-- 추천도서 테이블 총 개수 -->
   <select id="getSugCount" parameterType="Map" resultType="Integer">
@@ -120,4 +121,14 @@
     WHERE
       book_isbn = #{isbn}
   </update>
+
+  <select id="sugBookInfo" resultType="Map">
+    SELECT
+      book_no, book_url, book_title, book_author, book_publisher, book_isbn, book_sug, date_format(reg_date, '%Y.%m.%d') as reg_date
+    FROM
+      Book
+    WHERE
+      use_flag = 'Y'
+      AND book_sug = 'Y'
+  </select>
 </mapper>

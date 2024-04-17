@@ -114,4 +114,11 @@ public class MgrBookController { // 도서목록 관련 기능
     ResponseDTO res = bookService.sugRegist(isbn);
     return res;
   }
+
+  // 추천도서 정보 가져오기
+  @GetMapping(value = "/sugBookInfo")
+  public ResponseDTO sugBookInfo() {
+    ResponseDTO res = bookService.sugBookInfo();
+    return res;
+  }
 }

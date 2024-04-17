@@ -40,6 +40,9 @@ public interface MgrMapper {
   // 추천도서 정보 등록
   Integer sugRegist(String isbn);
 
+  // 추천도서 정보 가져오기
+  Map<String, Object> sugBookInfo();
+
 
   // 총 회원 개수 가져오기
   Integer getUserCount(Map<String, String> sqlData);

@@ -248,4 +248,22 @@ public class MgrBookServiceImpl implements MgrBookService {
 
     return res;
   }
+
+  @Override
+  @Transactional // 추천도서 정보 가져오기
+  public ResponseDTO sugBookInfo() {
+    ResponseDTO res = new ResponseDTO();
+    Map<String, Object> bookInfo = manageMapper.sugBookInfo();
+
+    if(bookInfo != null) {
+      res.setResCode(200);
+      res.setResMsg("추천도서 정보 조회");
+      res.setData("sugBookInfo", bookInfo);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("추천도서 정보 조회에 실패했습니다.");
+    }
+
+    return res;
+  }
 }
