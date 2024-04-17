@@ -7,7 +7,7 @@
   <!-- 대메뉴 가져오기 -->
   <select id="getLargeMenu" parameterType="Integer" resultType="Map">
     SELECT
-      menu_no, menu_name, menu_link, menu_icon
+      menu_no, menu_name, menu_link, menu_icon, menu_level
     FROM
       Menu
     WHERE
