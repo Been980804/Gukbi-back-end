@@ -114,6 +114,7 @@ public class MgrBookServiceImpl implements MgrBookService {
       res.setResMsg("도서 책소개 정보 조회");
       res.setData("descript", result);
     } catch (Exception e) {
+      System.out.println("getDescript error: " + e.getMessage());
       res.setResCode(400);
       res.setResMsg("도서 상세정보 조회에 실패했습니다.");
     }
