@@ -61,8 +61,8 @@ public class MgrBookController { // 도서목록 관련 기능
 
   // 도서 정보 등록
   @PostMapping(value = "/books")
-  public ResponseDTO createBook(@RequestParam Map<String, Object> book) {
-    ResponseDTO res = new ResponseDTO();
+  public ResponseDTO createBook(@RequestBody Map<String, Object> book) {
+    ResponseDTO res = bookService.createBook(book);
     return res;
   }
 

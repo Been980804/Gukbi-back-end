@@ -43,6 +43,14 @@
       AND book_isbn = #{isbn}
   </select>
 
+  <!-- 도서 정보 등록 -->
+  <insert id="createBook" parameterType="Map">
+    INSERT INTO
+      book(book_title, book_author, book_publisher, book_category_no, book_category_name, book_pub_year, book_url, book_isbn, reg_date)
+    VALUES
+      (#{book_title}, #{book_author}, #{book_publisher}, #{book_category_no}, #{book_category_name}, #{book_pub_year}, #{book_url}, #{book_isbn}, now())
+  </insert>
+
   <!-- 도서 정보 수정 -->
   <!-- update문은 resultType 선언 필요 없음 -->
   <update id="bookModify" parameterType="Map">
