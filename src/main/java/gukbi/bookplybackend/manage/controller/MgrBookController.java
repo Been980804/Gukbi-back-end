@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,7 +68,7 @@ public class MgrBookController { // 도서목록 관련 기능
 
   // 도서 정보 수정
   @PutMapping(value = "/bookModify")
-  public ResponseDTO bookModify(@RequestParam Map<String, Object> book) {
+  public ResponseDTO bookModify(@RequestBody Map<String, Object> book) {
     ResponseDTO res = bookService.bookModify(book);
     return res;
   }
