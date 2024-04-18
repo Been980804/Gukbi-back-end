@@ -97,7 +97,7 @@ public interface MgrMapper {
   Map<String, Object> getInquiryInfo(String inquiryNo);
 
   // 문의사항 답장 등록
-  Integer registAnswer(Map<String, String> sqlData);
+  Integer registAnswer(Map<String, Object> sqlData);
 
   // 총 도서거래 개수 가져오기
   Integer getTradeCount(Map<String, String> sqlData);

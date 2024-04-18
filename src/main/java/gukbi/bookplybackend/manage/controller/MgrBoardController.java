@@ -6,11 +6,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.manage.service.MgrBoardService;
@@ -23,6 +25,9 @@ public class MgrBoardController {
 
   @Autowired
   MgrBoardService boardService;
+
+  @Autowired
+  ObjectMapper objectMapper;
 
   // 공지사항 테이블 총 개수
   @GetMapping(value = "/notice/notiCount")
@@ -86,9 +91,11 @@ public class MgrBoardController {
   }
 
   // 문의사항 답장 등록
-  @PostMapping(value = "/inquiry/answer")
-  public ResponseDTO registAnswer(@RequestParam Map<String, String> sqlData) {
-    ResponseDTO res = boardService.registAnswer(sqlData);
+  @PutMapping(value = "/inquiry/answer")
+  public ResponseDTO registAnswer(@RequestBody Map<String, Object> sqlData) {
+    Map<String, Object> a = objectMapper.convertValue(sqlData.get("params"), Map.class);
+ 
+    ResponseDTO res = boardService.registAnswer(a);
     return res;
   }
 
