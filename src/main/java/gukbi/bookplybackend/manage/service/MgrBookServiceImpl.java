@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -114,6 +115,7 @@ public class MgrBookServiceImpl implements MgrBookService {
       res.setResMsg("도서 책소개 정보 조회");
       res.setData("descript", result);
     } catch (Exception e) {
+      System.out.println("getDescript error: " + e.getMessage());
       res.setResCode(400);
       res.setResMsg("도서 상세정보 조회에 실패했습니다.");
     }
@@ -124,19 +126,26 @@ public class MgrBookServiceImpl implements MgrBookService {
   @Override
   @Transactional // 도서 정보 등록
   public ResponseDTO createBook(Map<String, Object> book) {
-    ResponseDTO res = new ResponseDTO();
-    int result = manageMapper.createBook(book);
+    try {
+      ResponseDTO res = new ResponseDTO();
+      int result = manageMapper.createBook(book);
 
-    if(result == 1) {
-      res.setResCode(200);
-      res.setResMsg("도서 정보 등록");
-      res.setData("book", result);
-    } else {
-      res.setResCode(300);
-      res.setResMsg("도서 정보 등록에 실패했습니다.");
+      if(result == 1) {
+        res.setResCode(200);
+        res.setResMsg("도서 정보 등록");
+        res.setData("book", result);
+      } else {
+        res.setResCode(300);
+        res.setResMsg("도서 정보 등록에 실패했습니다.");
+      }
+
+      return res;
+    } catch (DataIntegrityViolationException e) {
+      ResponseDTO res = new ResponseDTO();
+      res.setResCode(500);
+      res.setResMsg("이미 등록되어 있는 도서 정보 입니다.");
+      return res;
     }
-
-    return res;
   }
 
   @Override
@@ -244,6 +253,24 @@ public class MgrBookServiceImpl implements MgrBookService {
     } else {
       res.setResCode(300);
       res.setResMsg("도서 정보 수정에 실패했습니다.");
+    }
+
+    return res;
+  }
+
+  @Override
+  @Transactional // 추천도서 정보 가져오기
+  public ResponseDTO sugBookInfo() {
+    ResponseDTO res = new ResponseDTO();
+    Map<String, Object> bookInfo = manageMapper.sugBookInfo();
+
+    if(bookInfo != null) {
+      res.setResCode(200);
+      res.setResMsg("추천도서 정보 조회");
+      res.setData("sugBookInfo", bookInfo);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("추천도서 정보 조회에 실패했습니다.");
     }
 
     return res;

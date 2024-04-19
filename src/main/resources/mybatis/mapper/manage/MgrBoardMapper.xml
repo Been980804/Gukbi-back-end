@@ -46,6 +46,17 @@
       AND noti_no = #{notiNo}
   </select>
 
+  <!-- 공지사항 정보 삭제 -->
+  <update id="notiDelete" parameterType="String">
+    UPDATE
+      notification
+    SET
+      use_flag = 'N',
+      mod_date = now()
+    WHERE
+      noti_no = #{notiNo}
+  </update>
+
 <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
   <!-- 문의사항 테이블 총 개수 -->
@@ -90,6 +101,18 @@
       AND qna_no = #{inquiryNo}
   </select>
 
+  <!-- 문의사항 답변등록 -->
+  <update id="registAnswer" parameterType="Map">
+    UPDATE
+      qna
+    SET
+      ans_content = #{answer},
+      ans_reg_date = now()
+    WHERE
+      use_flag = 'Y'
+      AND qna_no = #{inquiryNo}
+  </update>
+  
 <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
   <!-- 도서거래 테이블 총 개수 -->
@@ -168,15 +191,4 @@
       </if>
     limit #{currentPage}, #{recordPage}
   </select>
-
-  <!-- 공지사항 정보 삭제 -->
-  <update id="notiDelete" parameterType="String">
-    UPDATE
-      notification
-    SET
-      use_flag = 'N',
-      mod_date = now()
-    WHERE
-      noti_no = #{notiNo}
-  </update>
 </mapper>

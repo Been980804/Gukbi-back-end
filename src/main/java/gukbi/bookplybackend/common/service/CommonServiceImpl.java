@@ -1,4 +1,4 @@
-package gukbi.bookplybackend.manage.service;
+package gukbi.bookplybackend.common.service;
 
 import java.util.List;
 import java.util.Map;
@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import gukbi.bookplybackend.common.dao.CommonMapper;
 import gukbi.bookplybackend.common.dto.ResponseDTO;
-import gukbi.bookplybackend.manage.dao.MgrMapper;
 
 @Service
-public class MgrSidebarServiceImpl implements MgrSidebarService {
+public class CommonServiceImpl implements CommonService {
 
   @Autowired
-  MgrMapper manageMapper;
+  CommonMapper commonMapper;
 
   @Autowired
   ObjectMapper objectMapper;
@@ -25,7 +25,7 @@ public class MgrSidebarServiceImpl implements MgrSidebarService {
   @Transactional // 대메뉴 가져오기
   public ResponseDTO getLargeMenu(int level) {
     ResponseDTO res = new ResponseDTO();
-    List<Map<String, Object>> menuList = manageMapper.getLargeMenu(level);
+    List<Map<String, Object>> menuList = commonMapper.getLargeMenu(level);
 
     if(!menuList.isEmpty()) {
       res.setResCode(200);
@@ -43,7 +43,7 @@ public class MgrSidebarServiceImpl implements MgrSidebarService {
   @Transactional // 소메뉴 가져오기
   public ResponseDTO getSmallMenu() {
     ResponseDTO res = new ResponseDTO();
-    List<Map<String, Object>> menuList = manageMapper.getSmallMenu();
+    List<Map<String, Object>> menuList = commonMapper.getSmallMenu();
 
     if(!menuList.isEmpty()) {
       res.setResCode(200);
@@ -56,4 +56,5 @@ public class MgrSidebarServiceImpl implements MgrSidebarService {
 
     return res;
   }
+  
 }

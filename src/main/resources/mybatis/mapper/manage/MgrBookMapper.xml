@@ -43,6 +43,14 @@
       AND book_isbn = #{isbn}
   </select>
 
+  <!-- 도서 정보 등록 -->
+  <insert id="createBook" parameterType="Map">
+    INSERT INTO
+      book(book_title, book_author, book_publisher, book_category_no, book_category_name, book_pub_year, book_url, book_isbn, reg_date)
+    VALUES
+      (#{book_title}, #{book_author}, #{book_publisher}, #{book_category_no}, #{book_category_name}, #{book_pub_year}, #{book_url}, #{book_isbn}, now())
+  </insert>
+
   <!-- 도서 정보 수정 -->
   <!-- update문은 resultType 선언 필요 없음 -->
   <update id="bookModify" parameterType="Map">
@@ -69,25 +77,7 @@
       book_isbn = #{isbn}
   </update>
 
-  <select id="getLargeMenu" parameterType="Integer" resultType="Map">
-    SELECT
-      menu_no, menu_name, menu_link, menu_icon
-    FROM
-      Menu
-    WHERE
-      use_flag = 'Y'
-      AND menu_level = #{level}
-  </select>
-
-  <select id="getSmallMenu" resultType="Map">
-    SELECT
-      menu_sub_name, menu_no, menu_link
-    FROM
-      Menu_sub
-    WHERE
-      use_flag = 'Y'
-  </select>
-
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->
   
   <!-- 추천도서 테이블 총 개수 -->
   <select id="getSugCount" parameterType="Map" resultType="Integer">
@@ -139,4 +129,14 @@
     WHERE
       book_isbn = #{isbn}
   </update>
+
+  <select id="sugBookInfo" resultType="Map">
+    SELECT
+      book_no, book_url, book_title, book_author, book_publisher, book_isbn, book_sug, date_format(reg_date, '%Y.%m.%d') as reg_date
+    FROM
+      Book
+    WHERE
+      use_flag = 'Y'
+      AND book_sug = 'Y'
+  </select>
 </mapper>

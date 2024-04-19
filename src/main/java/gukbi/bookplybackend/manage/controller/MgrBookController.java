@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,14 +61,14 @@ public class MgrBookController { // 도서목록 관련 기능
 
   // 도서 정보 등록
   @PostMapping(value = "/books")
-  public ResponseDTO createBook(@RequestParam Map<String, Object> book) {
-    ResponseDTO res = new ResponseDTO();
+  public ResponseDTO createBook(@RequestBody Map<String, Object> book) {
+    ResponseDTO res = bookService.createBook(book);
     return res;
   }
 
   // 도서 정보 수정
   @PutMapping(value = "/bookModify")
-  public ResponseDTO bookModify(@RequestParam Map<String, Object> book) {
+  public ResponseDTO bookModify(@RequestBody Map<String, Object> book) {
     ResponseDTO res = bookService.bookModify(book);
     return res;
   }
@@ -112,6 +113,13 @@ public class MgrBookController { // 도서목록 관련 기능
   @PutMapping(value = "/sugRegist/{isbn}")
   public ResponseDTO sugRegist(@PathVariable(value = "isbn") String isbn) {
     ResponseDTO res = bookService.sugRegist(isbn);
+    return res;
+  }
+
+  // 추천도서 정보 가져오기
+  @GetMapping(value = "/sugBookInfo")
+  public ResponseDTO sugBookInfo() {
+    ResponseDTO res = bookService.sugBookInfo();
     return res;
   }
 }

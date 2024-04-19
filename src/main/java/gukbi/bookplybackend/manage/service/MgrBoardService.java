@@ -32,7 +32,7 @@ public interface MgrBoardService {
   ResponseDTO getInquiryInfo(String inquiryNo);
 
   // 문의사항 답장 등록
-  ResponseDTO registAnswer(Map<String, String> sqlData);
+  ResponseDTO registAnswer(Map<String, Object> sqlData);
 
 
   // 총 도서거래 개수 가져오기

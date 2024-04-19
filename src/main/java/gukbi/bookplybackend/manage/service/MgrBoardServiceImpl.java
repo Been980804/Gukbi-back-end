@@ -149,14 +149,14 @@ public class MgrBoardServiceImpl implements MgrBoardService {
 
   @Override
   @Transactional // 문의사항 답장 등록
-  public ResponseDTO registAnswer(Map<String, String> sqlData) {
+  public ResponseDTO registAnswer(Map<String, Object> sqlData) {
     ResponseDTO res = new ResponseDTO();
     int result = manageMapper.registAnswer(sqlData);
 
     if(result == 1) {
       res.setResCode(200);
       res.setResMsg("문의사항 답장 등록");
-      res.setData("book", result);
+      res.setData("answer", result);
     } else {
       res.setResCode(300);
       res.setResMsg("문의사항 답장 등록에 실패했습니다.");

@@ -40,12 +40,8 @@ public interface MgrMapper {
   // 추천도서 정보 등록
   Integer sugRegist(String isbn);
 
-
-  // 대메뉴 가져오기
-  List<Map<String, Object>> getLargeMenu(int level);
-
-  // 소메뉴 가져오기
-  List<Map<String, Object>> getSmallMenu();
+  // 추천도서 정보 가져오기
+  Map<String, Object> sugBookInfo();
 
 
   // 총 회원 개수 가져오기
@@ -101,7 +97,7 @@ public interface MgrMapper {
   Map<String, Object> getInquiryInfo(String inquiryNo);
 
   // 문의사항 답장 등록
-  Integer registAnswer(Map<String, String> sqlData);
+  Integer registAnswer(Map<String, Object> sqlData);
 
   // 총 도서거래 개수 가져오기
   Integer getTradeCount(Map<String, String> sqlData);

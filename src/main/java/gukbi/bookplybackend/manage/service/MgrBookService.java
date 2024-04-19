@@ -41,4 +41,7 @@ public interface MgrBookService {
 
   // 추천도서 정보 등록
   ResponseDTO sugRegist(String isbn);
+
+  // 추천도서 정보 가져오기
+  ResponseDTO sugBookInfo();
 }
