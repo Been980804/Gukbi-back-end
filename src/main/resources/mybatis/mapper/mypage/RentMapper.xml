@@ -59,7 +59,7 @@
             book.book_publisher,
             member.mem_name,
             book_reservation.reserv_date,
-            rent.rent_date,
+            rent.rent_date, <!-- 대여 예정일을 위한 날짜 -->
             book_reservation.reserv_no
         FROM
             book_reservation
@@ -73,7 +73,7 @@
             1=1
             and book_reservation.mem_no = #{mem_no}
             and book_reservation.use_flag = 'Y'
-            and rent.use_flag = 'Y'
+            and book_reservation.reserv_state = '예약완료'
         ORDER BY
             book_reservation.reserv_date DESC
     </select>
@@ -131,6 +131,7 @@
         update
             book_reservation
         set
+            reserv_state = '예약취소',
             use_flag = 'N',
             mod_date = now()
         WHERE

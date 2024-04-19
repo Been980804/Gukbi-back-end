@@ -10,11 +10,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface MyPageMapper {
-    
-    // 사이드바
-    List<Map<String,Object>> getLargeMenu(int level);
-    List<Map<String,Object>> getSmallMenu();
-
+  
     // 회원    
     int getIdDuplicate(String mem_id); // 아이디 중복체크    
     String getCurrentPwd(String mem_no); // 현재비밀번호 조회    
