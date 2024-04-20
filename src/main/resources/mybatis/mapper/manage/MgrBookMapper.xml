@@ -101,7 +101,7 @@
       Book
     WHERE
       use_flag = 'Y'
-      AND book_sug != 'N'
+      AND book_sug = 'I'
       <if test="search != null">
         AND ${column} LIKE CONCAT('%', #{search}, '%')  
       </if>
