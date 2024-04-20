@@ -259,6 +259,24 @@ public class MgrBookServiceImpl implements MgrBookService {
   }
 
   @Override
+  @Transactional // 추천도서 정보 삭제
+  public ResponseDTO sugDelete(String isbn) {
+    ResponseDTO res = new ResponseDTO();
+    int result = manageMapper.sugDelete(isbn);
+
+    if(result == 1) {
+      res.setResCode(200);
+      res.setResMsg("도서 정보 삭제");
+      res.setData("sugDelete", result);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("도서 정보 삭제에 실패했습니다.");
+    }
+
+    return res;
+  }
+
+  @Override
   @Transactional // 추천도서 정보 가져오기
   public ResponseDTO sugBookInfo() {
     ResponseDTO res = new ResponseDTO();
