@@ -45,6 +45,14 @@ public class MgrUserServiceImpl implements MgrUserService{
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> userList = manageMapper.getUserList(pageData);
 
+    for(Map<String, Object> user: userList) {
+      if(user.get("mem_rent_yn").equals("Y")) {
+        user.replace("mem_rent_yn", true);
+      } else {
+        user.replace("mem_rent_yn", false);
+      }
+    }
+
     if(!userList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("회원 리스트 조회");
