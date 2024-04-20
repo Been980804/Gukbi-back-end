@@ -53,6 +53,8 @@ public interface MgrMapper {
   // 현재 페이지 회원목록 가져오기
   List<Map<String, Object>> getUserList(Map<String, Object> pageData);
 
+  // 회원 대여가능여부 변경
+  Integer setRent(Map<String, String> sqlData);
 
   // 총 회원 대여/연체정보 개수 가져오기
   Integer getUserRentCount(Map<String, String> sqlData);

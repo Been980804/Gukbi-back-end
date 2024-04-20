@@ -118,4 +118,22 @@ public class MgrUserServiceImpl implements MgrUserService{
 
     return res;
   }
+
+  @Override
+  @Transactional // 회원 대여가능여부 변경
+  public ResponseDTO setRent(Map<String, String> sqlData) {
+    ResponseDTO res = new ResponseDTO();
+    int result = manageMapper.setRent(sqlData);
+
+    if(result == 1) {
+      res.setResCode(200);
+      res.setResMsg("회원 대여가능여부 변경");
+      res.setData("rent", result);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("회원 대여가능여부 변경에 실패했습니다.");
+    }
+
+    return res;
+  }
 }
