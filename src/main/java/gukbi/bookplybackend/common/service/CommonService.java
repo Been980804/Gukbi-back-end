@@ -12,4 +12,7 @@ public interface CommonService {
 
   // 소메뉴 가져오기
   ResponseDTO getSmallMenu();
+
+  // 추천도서 정보 가져오기
+  ResponseDTO sugBookInfo();
 }

@@ -26,4 +26,15 @@
     WHERE
       use_flag = 'Y'
   </select>
+
+  <!-- 추천도서 정보 가져오기 -->
+  <select id="sugBookInfo" resultType="Map">
+    SELECT
+      book_no, book_url, book_title, book_author, book_publisher, book_isbn, book_sug
+    FROM
+      Book
+    WHERE
+      use_flag = 'Y'
+      AND book_sug = 'Y'
+  </select>
 </mapper>

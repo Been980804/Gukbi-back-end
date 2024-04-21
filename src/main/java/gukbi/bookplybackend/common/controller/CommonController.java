@@ -29,4 +29,11 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     ResponseDTO res = commonService.getSmallMenu();
     return res;
   }
+
+  // 추천도서 등록정보 가져오기
+  @GetMapping(value = "/sugBookInfo")
+  public ResponseDTO sugBookInfo() {
+    ResponseDTO res = commonService.sugBookInfo();
+    return res;
+  }
 }
