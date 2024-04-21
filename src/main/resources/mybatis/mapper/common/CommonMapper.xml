@@ -37,4 +37,17 @@
       use_flag = 'Y'
       AND book_sug = 'Y'
   </select>
+
+  <!-- 도서 테이블 총 개수 -->
+  <select id="getBookCount" parameterType="Map" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      Book
+    WHERE
+      use_flag = 'Y'
+      <if test="search != ''">
+        AND book_title LIKE CONCAT('%', #{search}, '%')
+      </if>
+  </select>
 </mapper>

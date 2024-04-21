@@ -18,4 +18,7 @@ public interface CommonMapper {
 
   // 추천도서 정보 가져오기
   Map<String, Object> sugBookInfo();
+
+  // 총 도서 개수 가져오기
+  Integer getBookCount(Map<String, String> sqlData);
 }
