@@ -50,4 +50,18 @@
         AND book_title LIKE CONCAT('%', #{search}, '%')
       </if>
   </select>
+
+  <!-- 도서전체목록 데이터 받기 -->
+  <select id="getBookList" parameterType="Map" resultType="Map">
+    SELECT
+      book_no, book_title, book_author, book_publisher, book_isbn, reg_date
+    FROM
+      Book
+    WHERE
+      use_flag = 'Y'
+      <if test="search != null">
+        AND book_title LIKE CONCAT('%', #{search}, '%')  
+      </if>
+    limit #{currentPage}, #{recordPage}
+  </select>
 </mapper>

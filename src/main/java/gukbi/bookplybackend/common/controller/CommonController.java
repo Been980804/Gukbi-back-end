@@ -10,9 +10,12 @@ import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.common.service.CommonService;
 
 import java.util.Map;
+import java.util.HashMap;
 
 @RestController
 public class CommonController { // 공통으로 처리가 필요한 기능들 추가
+
+  private static final int recordPage = 10;
 
   @Autowired
   CommonService commonService;
@@ -42,6 +45,18 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
   @GetMapping(value = "/main/bookCount")
   public ResponseDTO getBookCount(@RequestParam Map<String, String> sqlData) {
     ResponseDTO res = commonService.getBookCount(sqlData);
+    return res;
+  }
+
+  // 도서전체목록 데이터 받기
+  @GetMapping(value = "/main/bookList/{currentPage}")
+  public ResponseDTO getBookList(@PathVariable(value = "currentPage") int currentPage, @RequestParam Map<String, String> sqlData) {
+    Map<String, Object> pageData = new HashMap<String, Object>();
+    pageData.put("recordPage", recordPage);
+    pageData.put("currentPage", (currentPage - 1) * 10);
+    pageData.put("search", sqlData.get("search"));
+    
+    ResponseDTO res = commonService.getBookList(pageData);
     return res;
   }
 }

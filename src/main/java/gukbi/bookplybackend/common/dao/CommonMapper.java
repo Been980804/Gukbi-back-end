@@ -21,4 +21,7 @@ public interface CommonMapper {
 
   // 총 도서 개수 가져오기
   Integer getBookCount(Map<String, String> sqlData);
+
+  // 현재 페이지 도서목록 가져오기
+  List<Map<String, Object>> getBookList(Map<String, Object> pageData);
 }
