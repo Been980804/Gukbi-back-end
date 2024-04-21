@@ -54,7 +54,7 @@
   <!-- 도서전체목록 데이터 받기 -->
   <select id="getBookList" parameterType="Map" resultType="Map">
     SELECT
-      book_no, book_title, book_author, book_publisher, book_isbn, reg_date
+      book_no, book_title, book_author, book_publisher, book_category_no, book_category_name, book_pub_year, book_isbn, book_url
     FROM
       Book
     WHERE
