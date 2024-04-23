@@ -174,4 +174,22 @@ public class CommonServiceImpl implements CommonService {
 
     return res;
   }
+
+  @Override
+  @Transactional // 총 카테고리 도서 개수 가져오기
+  public ResponseDTO getCatCount(Map<String, String> sqlData) {
+    ResponseDTO res = new ResponseDTO();
+    int bookCount = commonMapper.getCatCount(sqlData);
+
+    if(bookCount >= 0) {
+      res.setResCode(200);
+      res.setResMsg("총 도서 개수 조회");
+      res.setData("bookCount", bookCount);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("도서 개수 조회에 실패했습니다.");
+    }
+
+    return res;
+  }
 }

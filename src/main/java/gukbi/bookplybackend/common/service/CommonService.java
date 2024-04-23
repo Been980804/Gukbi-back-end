@@ -27,4 +27,7 @@ public interface CommonService {
 
   // 도서 책소개 정보 가져오기
   ResponseDTO getDescript(String isbn);
+
+  // 총 카테고리 도서 개수 가져오기
+  ResponseDTO getCatCount(Map<String, String> sqlData);
 }

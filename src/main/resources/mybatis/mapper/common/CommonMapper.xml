@@ -75,4 +75,15 @@
       use_flag = 'Y'
       AND book_isbn = #{isbn}
   </select>
+
+  <!-- 카테고리 도서 테이블 총 개수 -->
+  <select id="getCatCount" parameterType="Map" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      Book
+    WHERE
+      use_flag = 'Y'
+      AND book_category_name = #{menuName}
+  </select>
 </mapper>

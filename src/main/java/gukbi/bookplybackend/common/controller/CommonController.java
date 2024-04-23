@@ -73,4 +73,11 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     ResponseDTO res = commonService.getDescript(isbn);
     return res;
   }
+
+  // 카테고리 도서 테이블 총 개수
+  @GetMapping(value = "/main/catCount")
+  public ResponseDTO getCatCount(@RequestParam Map<String, String> sqlData) {
+    ResponseDTO res = commonService.getCatCount(sqlData);
+    return res;
+  }
 }

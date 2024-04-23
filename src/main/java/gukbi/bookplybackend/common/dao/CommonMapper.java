@@ -27,4 +27,7 @@ public interface CommonMapper {
 
   // 도서 상세정보 가져오기
   Map<String, Object> getBookInfo(String isbn);
+
+  // 총 카테고리 도서 개수 가져오기
+  Integer getCatCount(Map<String, String> sqlData);
 }
