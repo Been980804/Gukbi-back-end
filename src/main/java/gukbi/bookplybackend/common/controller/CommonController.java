@@ -66,4 +66,11 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     ResponseDTO res = commonService.getBookInfo(isbn);
     return res;
   }
+
+  // 도서 책소개 정보 가져오기
+  @GetMapping(value = "/main/descript/{isbn}")
+  public ResponseDTO getDescript(@PathVariable(value = "isbn") String isbn) {
+    ResponseDTO res = commonService.getDescript(isbn);
+    return res;
+  }
 }

@@ -24,4 +24,7 @@ public interface CommonService {
 
   // 도서 상세정보 가져오기
   ResponseDTO getBookInfo(String isbn);
+
+  // 도서 책소개 정보 가져오기
+  ResponseDTO getDescript(String isbn);
 }
