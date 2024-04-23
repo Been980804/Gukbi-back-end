@@ -30,4 +30,7 @@ public interface CommonService {
 
   // 총 카테고리 도서 개수 가져오기
   ResponseDTO getCatCount(Map<String, String> sqlData);
+
+  // 카테고리 현재 페이지 도서목록 가져오기
+  ResponseDTO getCatList(Map<String, Object> pageData);
 }

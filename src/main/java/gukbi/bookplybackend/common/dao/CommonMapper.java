@@ -30,4 +30,7 @@ public interface CommonMapper {
 
   // 총 카테고리 도서 개수 가져오기
   Integer getCatCount(Map<String, String> sqlData);
+
+  // 현재 페이지 도서목록 가져오기
+  List<Map<String, Object>> getCatList(Map<String, Object> pageData);
 }
