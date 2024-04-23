@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
@@ -45,15 +46,14 @@ public class RentController {
     
 
     // 대여했던 도서 리스트 조회
-    @GetMapping(value = "/rentedList")
-    public ResponseDTO rentedList(@RequestBody Map<String, Object> reqBody) {
+    @GetMapping(value = "/rentedList/{nowPage}")
+    public ResponseDTO rentedList(@PathVariable("nowPage") int nowPage , @RequestParam Map<String,String> reqBody) {
         Map<String, Object> pageMap = new HashMap<>();
         pageMap.put("showCnt", showCnt);
-        pageMap.put("nowPage", ((int)reqBody.get("nowPage") - 1) * 10);
+        pageMap.put("nowPage", (nowPage - 1) * 10);
         pageMap.put("mem_no", reqBody.get("mem_no"));
-
+       
         ResponseDTO res = rentService.getRentedList(pageMap);
-
         return res;
     }
 

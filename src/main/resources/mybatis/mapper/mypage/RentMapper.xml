@@ -61,7 +61,7 @@
             and rent.use_flag = 'Y'
         ORDER BY    
             RENT.rent_no DESC
-        limit #{nowPage}, #{showCnt}
+        Limit #{nowPage}, #{showCnt}
     </select>
 
     <!-- 예약중인 도서 조회 -->
