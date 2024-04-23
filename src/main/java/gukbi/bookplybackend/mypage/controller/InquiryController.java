@@ -1,5 +1,6 @@
 package gukbi.bookplybackend.mypage.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
@@ -20,13 +22,29 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/mypage/inquiry")
 public class InquiryController {
     
+    private static final int showCnt = 10;
+
     @Autowired
     private final InquiryService inquiryService;
 
+     // 개별문의 총 게시글 개수 조회
+     @GetMapping(value="/getMyInquiryCnt/{mem_no}")
+     public ResponseDTO getMyInquiryCnt(@PathVariable("mem_no") String mem_no) {
+         ResponseDTO res = inquiryService.getMyInquiryCnt(mem_no);
+ 
+         return res;
+     }
+ 
     // 개별문의내역 리스트 조회
-    @GetMapping(value="/getMyInquiry/{mem_no}")
-    public ResponseDTO getMyInquiry(@PathVariable("mem_no") String mem_no){
-        ResponseDTO res = inquiryService.getMyInquiry(mem_no);
+    @GetMapping(value="/getMyInquiry/{nowPage}")
+    public ResponseDTO getMyInquiry(@PathVariable("nowPage") int nowPage, @RequestParam Map<String, String> reqBody){
+        Map<String, Object> pageMap = new HashMap<>();
+        pageMap.put("showCnt", showCnt);
+        pageMap.put("nowPage", (nowPage - 1) * 10);
+        pageMap.put("search", reqBody.get("search"));
+        pageMap.put("mem_no", reqBody.get("mem_no"));
+
+        ResponseDTO res = inquiryService.getMyInquiry(pageMap);
 
         return res;
     }

@@ -4,8 +4,18 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="gukbi.bookplybackend.mypage.dao.MyPageMapper">
+    <!-- 문의내역 총 게시글 수 조회 -->
+    <select id="getMyInquiryCnt" parameterType="String" resultType="Integer">
+        select
+            count(*)
+        FROM
+            qna
+        WHERE
+            use_flag='Y'
+            and qes_mem_no = #{mem_no}
+    </select>
     <!-- 문의내역 조회 -->
-  <select id="getMyInquiry" parameterType="String" resultType="Map">
+  <select id="getMyInquiry" parameterType="Map" resultType="Map">
         select
             qna_no,
             qes_mem_no,
@@ -19,6 +29,10 @@
             1=1
             and qes_mem_no = #{mem_no}
             and use_flag = 'Y'
+            <if test="search != null">
+                and qes_title like concat('%', #{search}, '%')
+            </if>
+        LIMIT #{nowPage}, #{showCnt}
     </select>
     <!-- 문의내역 삭제 -->
     <update id="deleteInquiry" parameterType="Map">

@@ -30,7 +30,7 @@ public class BookPlyController {
 
     // 북플리 총 개수 조회
     @GetMapping(value="/bookPlyCnt/{mem_no}")
-    public ResponseDTO getMethodName(@PathVariable("mem_no") String mem_no) {
+    public ResponseDTO getBookPlyCnt(@PathVariable("mem_no") String mem_no) {
         ResponseDTO res = bookPlyService.getBookPlyCnt(mem_no);
 
         return res;

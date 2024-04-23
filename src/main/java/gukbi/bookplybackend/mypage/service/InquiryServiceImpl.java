@@ -18,10 +18,27 @@ public class InquiryServiceImpl implements InquiryService{
 
     @Override
     @Transactional
-    public ResponseDTO getMyInquiry(String mem_no) { // 문의내역 조회
+    public ResponseDTO getMyInquiryCnt(String mem_no) {
+        ResponseDTO res = new ResponseDTO();
+
+        int totalCnt = myPageMapper.getMyInquiryCnt(mem_no);
+
+        if(totalCnt >= 0){
+            res.setResCode(200);
+            res.setResMsg("개별문의 게시글 수 조회");
+            res.setData("totalCnt", totalCnt);
+          }else{
+            res.setResCode(300);
+            res.setResMsg("개별문의 게시글 수 조회 실패");
+          }
+          return res;
+    }
+    @Override
+    @Transactional
+    public ResponseDTO getMyInquiry(Map<String, Object> pageMap) { // 문의내역 조회
         ResponseDTO res = new ResponseDTO();
         
-        List<Map<String, String>> inquiryList = myPageMapper.getMyInquiry(mem_no);
+        List<Map<String, String>> inquiryList = myPageMapper.getMyInquiry(pageMap);
 
         if(null != inquiryList){
             res.setResCode(200);

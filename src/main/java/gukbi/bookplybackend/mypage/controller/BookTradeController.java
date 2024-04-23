@@ -1,5 +1,6 @@
 package gukbi.bookplybackend.mypage.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.mypage.service.BookTradeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -22,13 +25,28 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/mypage/trade")
 public class BookTradeController {
     
+    private static final int showCnt = 10;
+
     @Autowired
     private final BookTradeService bookTradeService;
     
+    // 거래내역 총 게시글 개수 조회
+    @GetMapping(value="/bookTradeCnt/{mem_no}")
+    public ResponseDTO getTradeCnt(@PathVariable("mem_no") String mem_no) {
+        ResponseDTO res = bookTradeService.getTradeCnt(mem_no);
+
+        return res;
+    }
+
     // 거래내역 조회
-    @GetMapping(value="/getTradeList/{mem_no}")
-    public ResponseDTO getTradeList(@PathVariable("mem_no") String mem_no) {
-        ResponseDTO res = bookTradeService.getTradeList(mem_no);
+    @GetMapping(value="/getTradeList/{nowPage}")
+    public ResponseDTO getTradeList(@PathVariable("nowPage") int nowPage, @RequestParam Map<String,String> reqBody) {
+        Map<String, Object> pageMap = new HashMap<>();
+        pageMap.put("showCnt", showCnt);
+        pageMap.put("nowPage", (nowPage - 1) * 10);
+        pageMap.put("mem_no", reqBody.get("mem_no"));
+
+        ResponseDTO res = bookTradeService.getTradeList(pageMap);
 
         return res;
     }

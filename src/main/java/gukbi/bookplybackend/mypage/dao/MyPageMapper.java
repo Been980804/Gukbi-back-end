@@ -54,10 +54,12 @@ public interface MyPageMapper {
     int addBpl_update(Map<String,String> reqBody); // 테이블있을시 use_flag 수정
 
     // 문의내역
-    List<Map<String, String>> getMyInquiry(String mem_no); // 문의내역 조회
+    int getMyInquiryCnt(String mem_no); // 문의내역 게시글 수 조회
+    List<Map<String, String>> getMyInquiry(Map<String, Object> pageMap); // 문의내역 조회
     int deleteInquiry(Map<String, String> reqBody); // 문의내역 삭제
 
     // 도서거래
-    List<Map<String, String>> getTradeList(String mem_no); // 거래내역 조회
+    int getTradeCnt(String mem_no); // 거래내역 총 게시글 수 조회
+    List<Map<String, String>> getTradeList(Map<String, Object> pageMap); // 거래내역 조회
     int deleteTrade(Map<String, Object> reqBody); // 거래내역 삭제
 }

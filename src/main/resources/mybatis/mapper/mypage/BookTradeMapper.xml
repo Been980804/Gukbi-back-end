@@ -4,8 +4,18 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="gukbi.bookplybackend.mypage.dao.MyPageMapper">
+    <!-- 거래내역 총 게시글 수 조회 -->
+    <select id="getTradeCnt" parameterType="String" resultType="Integer">
+        select
+            count(*)
+        FROM
+            book_trade
+        WHERE
+            use_flag='Y'
+            and mem_no = #{mem_no}
+    </select>
     <!-- 거래내역 조회 -->
-     <select id="getTradeList" parameterType="String" resultType="Map">
+     <select id="getTradeList" parameterType="Map" resultType="Map">
         select
             book_trade.trade_no,
             member.mem_name,
@@ -24,6 +34,7 @@
             1=1
             and book_trade.mem_no = #{mem_no}
             and book_trade.use_flag = 'Y'        
+        LIMIT #{nowPage}, #{showCnt}
     </select>
     <!-- 거래내역 삭제 -->
     <update id="deleteTrade" parameterType="Map">

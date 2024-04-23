@@ -17,11 +17,28 @@ public class BookTradeServiceImpl implements BookTradeService{
     private final MyPageMapper myPageMapper;
 
     @Override
+    public ResponseDTO getTradeCnt(String mem_no) {
+        ResponseDTO res = new ResponseDTO();
+
+        int totalCnt = myPageMapper.getTradeCnt(mem_no);
+
+        if(totalCnt >= 0){
+            res.setResCode(200);
+            res.setResMsg("도서거래 게시글 수 조회");
+            res.setData("totalCnt", totalCnt);
+          }else{
+            res.setResCode(300);
+            res.setResMsg("도서거래 게시글 수 조회 실패");
+          }
+          return res;
+    }    
+
+    @Override
     @Transactional
-    public ResponseDTO getTradeList(String mem_no) {
+    public ResponseDTO getTradeList(Map<String, Object> pageMap){
         ResponseDTO res = new ResponseDTO();
         
-        List<Map<String,String>> tradeList = myPageMapper.getTradeList(mem_no);
+        List<Map<String,String>> tradeList = myPageMapper.getTradeList(pageMap);
 
         if(null != tradeList){
             res.setResCode(200);
