@@ -4,8 +4,19 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="gukbi.bookplybackend.mypage.dao.MyPageMapper">
+        <!-- 북플리 개수 조회 -->
+        <select id="getBookPlyCnt" parameterType="String" resultType="Integer">
+            select
+                count(*)
+            from
+                book_playlist
+            where
+                use_flag='Y'
+                and mem_no = #{mem_no}
+        </select>
+
         <!-- 북플리 목록 조회 -->
-       <select id="getBookPlyList" parameterType="String" resultType="Map">
+       <select id="getBookPlyList" parameterType="Map" resultType="Map">
         SELECT
             BOOK_PLAYLIST.bpl_no,
             BOOK_PLAYLIST.bpl_name,
@@ -37,6 +48,7 @@
             1=1
             and BOOK_PLAYLIST.mem_no = #{mem_no}
             and BOOK_PLAYLIST.use_flag = 'Y'
+        LIMIT #{nowPage}, #{showCnt}
     </select>
   
     <!-- 공개여부 수정 -->

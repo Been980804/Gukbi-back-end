@@ -1,5 +1,6 @@
 package gukbi.bookplybackend.mypage.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,29 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/mypage/bookPly")
 public class BookPlyController {
     
+    private static final int showCnt = 3;
+
     @Autowired
     private final BookPlyService bookPlyService;
 
-    // 북플리 목록 조회
-    @GetMapping(value="/bookPlyList/{mem_no}")
-    public ResponseDTO getBookPlyList(@PathVariable("mem_no") String mem_no){
-        ResponseDTO res = bookPlyService.getBookPlyList(mem_no);
+    // 북플리 총 개수 조회
+    @GetMapping(value="/bookPlyCnt/{mem_no}")
+    public ResponseDTO getMethodName(@PathVariable("mem_no") String mem_no) {
+        ResponseDTO res = bookPlyService.getBookPlyCnt(mem_no);
 
+        return res;
+    }
+    
+
+    // 북플리 목록 조회
+    @GetMapping(value="/bookPlyList/{nowPage}")
+    public ResponseDTO getBookPlyList(@PathVariable("nowPage") int nowPage, @RequestParam Map<String,String> reqBody){
+        Map<String, Object> pageMap = new HashMap<>();
+        pageMap.put("showCnt", showCnt);
+        pageMap.put("nowPage", (nowPage - 1) * 3);
+        pageMap.put("mem_no", reqBody.get("mem_no"));
+
+        ResponseDTO res = bookPlyService.getBookPlyList(pageMap);
         return res;
     }
 

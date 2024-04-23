@@ -27,7 +27,6 @@ public class BookApplServiceImpl implements BookApplService{
             res.setResCode(200);
             res.setResMsg("희망 도서 수 조회");
             res.setData("totalCnt", totalCnt);
-            System.out.println(totalCnt);
           }else{
             res.setResCode(300);
             res.setResMsg("희망 도서 수 조회 실패");

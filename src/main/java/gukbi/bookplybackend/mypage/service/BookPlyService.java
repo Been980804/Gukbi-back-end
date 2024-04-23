@@ -8,8 +8,10 @@ import gukbi.bookplybackend.common.dto.ResponseDTO;
 
 @Service
 public interface BookPlyService {
+    // 북플리 개수 조회
+    ResponseDTO getBookPlyCnt(String mem_no);
     // 북플리 목록 조회
-    ResponseDTO getBookPlyList(String mem_no);
+    ResponseDTO getBookPlyList(Map<String, Object> pageMap);
     // 공개여부 수정
     ResponseDTO updateVisibility(Map<String,String> bpl_no);
     // 북플리 상세보기 조회

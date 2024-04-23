@@ -19,10 +19,29 @@ public class BookPlyServiceImpl implements BookPlyService {
 
     @Override
     @Transactional
-    public ResponseDTO getBookPlyList(String mem_no) { // 북플리 목록 조회
+    public ResponseDTO getBookPlyCnt(String mem_no) { // 북플리 개수 조회
         ResponseDTO res = new ResponseDTO();
 
-        List<Map<String, String>> bookPlyList = myPageMapper.getBookPlyList(mem_no);
+        int totalCnt = myPageMapper.getBookPlyCnt(mem_no);
+
+        if (totalCnt >= 0) {
+            res.setResCode(200);
+            res.setResMsg("북플리 수 조회");
+            res.setData("totalCnt", totalCnt);
+        } else {
+            res.setResCode(300);
+            res.setResMsg("북플리 수 조회 실패");
+        }
+        return res;
+
+    }
+
+    @Override
+    @Transactional
+    public ResponseDTO getBookPlyList(Map<String, Object> pageMap) { // 북플리 목록 조회
+        ResponseDTO res = new ResponseDTO();
+
+        List<Map<String, String>> bookPlyList = myPageMapper.getBookPlyList(pageMap);
 
         res.setResCode(200);
         res.setResMsg("북플리 목록 조회");
@@ -138,7 +157,7 @@ public class BookPlyServiceImpl implements BookPlyService {
     @Override
     @Transactional
     public ResponseDTO deleteBpl(Map<String, Object> reqBody) { // 북플리 삭제
-        ResponseDTO res = new ResponseDTO(); 
+        ResponseDTO res = new ResponseDTO();
 
         int updateRow = myPageMapper.deleteBpl(reqBody);
 
@@ -211,7 +230,7 @@ public class BookPlyServiceImpl implements BookPlyService {
             parameter.put("bpl_no", bpl_no);
             parameter.put("book_no", book_no);
 
-            Map<String, String> bookExist = myPageMapper.getBookExist(parameter);  // bpl_detail에 있는지 확인
+            Map<String, String> bookExist = myPageMapper.getBookExist(parameter); // bpl_detail에 있는지 확인
 
             // 있음
             if (bookExist != null) {
@@ -228,8 +247,8 @@ public class BookPlyServiceImpl implements BookPlyService {
                         res.setResMsg("북플리 책 담기 실패");
                     }
                 }
-            // 없음
-            } else { 
+                // 없음
+            } else {
                 int insertRow = myPageMapper.addBpl(parameter);
 
                 if (insertRow <= 0) {
