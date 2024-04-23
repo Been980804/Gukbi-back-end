@@ -28,7 +28,8 @@ public interface MyPageMapper {
     int cancelReserveBook(Map<String,String> reqBody); // 예약한 도서 취소
 
     // 희망도서
-    List<Map<String, String>> getHopeBookList(String mem_no); // 희망도서 조회
+    int getHopeBookCnt(String mem_no);
+    List<Map<String, String>> getHopeBookList(Map<String, Object> pageMap); // 희망도서 조회
     int cancelHopeBook(Map<String, String> reqBody); // 희망도서 취소
 
     // 북플리

@@ -18,10 +18,29 @@ public class BookApplServiceImpl implements BookApplService{
 
     @Override
     @Transactional
-    public ResponseDTO getHopeBookList(String mem_no) { // 희망도서 조회
+    public ResponseDTO getHopeBookCnt(String mem_no) {
+        ResponseDTO res = new ResponseDTO();
+
+        int totalCnt = myPageMapper.getHopeBookCnt(mem_no);
+
+        if(totalCnt >= 0){
+            res.setResCode(200);
+            res.setResMsg("희망 도서 수 조회");
+            res.setData("totalCnt", totalCnt);
+            System.out.println(totalCnt);
+          }else{
+            res.setResCode(300);
+            res.setResMsg("희망 도서 수 조회 실패");
+          }
+          return res;
+    }
+
+    @Override
+    @Transactional
+    public ResponseDTO getHopeBookList(Map<String, Object> pageMap) { // 희망도서 조회
        ResponseDTO res = new ResponseDTO();
 
-       List<Map<String, String>> hopeBookList = myPageMapper.getHopeBookList(mem_no);
+       List<Map<String, String>> hopeBookList = myPageMapper.getHopeBookList(pageMap);
 
        res.setResCode(200);
        res.setResMsg("희망 도서 리스트 조회");
