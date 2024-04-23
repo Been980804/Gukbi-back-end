@@ -10,9 +10,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommonMapper {
   
-    // 대메뉴 가져오기
-    List<Map<String, Object>> getLargeMenu(int level);
+  // 대메뉴 가져오기
+  List<Map<String, Object>> getLargeMenu(int level);
 
-    // 소메뉴 가져오기
-    List<Map<String, Object>> getSmallMenu();
+  // 소메뉴 가져오기
+  List<Map<String, Object>> getSmallMenu();
+
+  // 추천도서 정보 가져오기
+  Map<String, Object> sugBookInfo();
+
+  // 총 도서 개수 가져오기
+  Integer getBookCount(Map<String, String> sqlData);
+
+  // 현재 페이지 도서목록 가져오기
+  List<Map<String, Object>> getBookList(Map<String, Object> pageData);
 }

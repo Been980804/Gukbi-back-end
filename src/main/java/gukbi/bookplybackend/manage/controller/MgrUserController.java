@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.manage.service.MgrUserService;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/manage/user") // 메뉴 depth에 따라서 설정
@@ -67,6 +70,21 @@ public class MgrUserController {
   @GetMapping(value = "/userInfo/overdueCount/{memNo}")
   public ResponseDTO getOverdueCount(@PathVariable(value = "memNo") String memNo) {
     ResponseDTO res = userService.getOverdueCount(memNo);
+    return res;
+  }
+
+  // 회원 대여가능여부 변경
+  @PutMapping(value = "/userInfo/rent/{memNo}")
+  public ResponseDTO setRent(@PathVariable(value = "memNo") String memNo, @RequestBody Boolean rentYn) {
+    Map<String, String> sqlData = new HashMap<String, String>();
+    sqlData.put("memNo", memNo);
+    if(rentYn == true) {
+      sqlData.put("rentYn", "Y");
+    } else {
+      sqlData.put("rentYn", "N");
+    }
+    
+    ResponseDTO res = userService.setRent(sqlData);
     return res;
   }
 }

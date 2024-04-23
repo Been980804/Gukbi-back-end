@@ -116,6 +116,13 @@ public class MgrBookController { // 도서목록 관련 기능
     return res;
   }
 
+  // 추천도서 정보 삭제
+  @PutMapping(value = "/sugDelete/{isbn}")
+  public ResponseDTO sugDelete(@PathVariable(value = "isbn") String isbn) {
+    ResponseDTO res = bookService.sugDelete(isbn);
+    return res;
+  }
+
   // 추천도서 정보 가져오기
   @GetMapping(value = "/sugBookInfo")
   public ResponseDTO sugBookInfo() {

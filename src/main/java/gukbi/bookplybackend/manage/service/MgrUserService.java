@@ -23,4 +23,7 @@ public interface MgrUserService {
 
   // 회원 연체정보 개수 가져오기
   ResponseDTO getOverdueCount(String memNo);
+
+  // 회원 대여가능여부 변경
+  ResponseDTO setRent(Map<String, String> sqlData);
 }

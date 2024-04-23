@@ -75,4 +75,16 @@
       AND mem_no = #{memNo}
       AND return_state like '%연체%';
   </select>
+
+  <!-- 회원 대여가능여부 변경 -->
+  <update id="setRent" parameterType="String">
+    UPDATE
+      member
+    SET
+      mem_rent_yn = #{rentYn},
+      mod_date = now()
+    WHERE
+      use_flag = 'Y'
+      AND mem_no = #{memNo}
+  </update>
 </mapper>

@@ -45,6 +45,14 @@ public class MgrUserServiceImpl implements MgrUserService{
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> userList = manageMapper.getUserList(pageData);
 
+    for(Map<String, Object> user: userList) {
+      if(user.get("mem_rent_yn").equals("Y")) {
+        user.replace("mem_rent_yn", true);
+      } else {
+        user.replace("mem_rent_yn", false);
+      }
+    }
+
     if(!userList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("회원 리스트 조회");
@@ -106,6 +114,24 @@ public class MgrUserServiceImpl implements MgrUserService{
     } else {
       res.setResCode(300);
       res.setResMsg("회원 연체정보 개수 조회에 실패했습니다.");
+    }
+
+    return res;
+  }
+
+  @Override
+  @Transactional // 회원 대여가능여부 변경
+  public ResponseDTO setRent(Map<String, String> sqlData) {
+    ResponseDTO res = new ResponseDTO();
+    int result = manageMapper.setRent(sqlData);
+
+    if(result == 1) {
+      res.setResCode(200);
+      res.setResMsg("회원 대여가능여부 변경");
+      res.setData("rent", result);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("회원 대여가능여부 변경에 실패했습니다.");
     }
 
     return res;
