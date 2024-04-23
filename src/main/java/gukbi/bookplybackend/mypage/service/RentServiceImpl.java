@@ -37,11 +37,29 @@ public class RentServiceImpl implements RentService {
 
   @Override
   @Transactional
-  public ResponseDTO getRentedList(String mem_no) { // 대여한 도서 조회
+  public ResponseDTO getRentedCnt(String mem_no) { // 대여한 총 도서 수 조회
     ResponseDTO res = new ResponseDTO();
 
-    List<Map<String, String>> rentedList = myPageMapper.getRentedList(mem_no);
+    int totalCnt = myPageMapper.getRentedCnt(mem_no);
 
+    if(totalCnt >= 0){
+      res.setResCode(200);
+      res.setResMsg("대여한 도서 수 조회");
+      res.setData("totalCnt", totalCnt);
+    }else{
+      res.setResCode(300);
+      res.setResMsg("대여한 도서 수 조회 실패");
+    }
+    return res;
+  }
+
+  @Override
+  @Transactional
+  public ResponseDTO getRentedList(Map<String,Object> pageMap) { // 대여한 도서 조회
+    ResponseDTO res = new ResponseDTO();
+
+    List<Map<String, String>> rentedList = myPageMapper.getRentedList(pageMap);
+    
     res.setResCode(200);
     res.setResMsg("대여한 리스트 조회");
     res.setData("rentedList", rentedList);

@@ -1,5 +1,6 @@
 package gukbi.bookplybackend.mypage.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,13 @@ import gukbi.bookplybackend.mypage.service.RentService;
 import lombok.RequiredArgsConstructor;
 
 
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mypage/rent")
 public class RentController {
+
+    private static final int showCnt = 10;
 
     @Autowired
     private final RentService rentService;
@@ -31,10 +35,24 @@ public class RentController {
         return res;
     }
 
+    // 대여했던 총 도서 수
+    @GetMapping(value="/rentedCnt/{mem_no}")
+    public ResponseDTO getRentedCnt(@PathVariable("mem_no") String mem_no) {
+        ResponseDTO res = rentService.getRentedCnt(mem_no);
+
+        return res;
+    }
+    
+
     // 대여했던 도서 리스트 조회
-    @GetMapping(value = "/rentedList/{mem_no}")
-    public ResponseDTO rentedList(@PathVariable("mem_no") String mem_no) {
-        ResponseDTO res = rentService.getRentedList(mem_no);
+    @GetMapping(value = "/rentedList")
+    public ResponseDTO rentedList(@RequestBody Map<String, Object> reqBody) {
+        Map<String, Object> pageMap = new HashMap<>();
+        pageMap.put("showCnt", showCnt);
+        pageMap.put("nowPage", ((int)reqBody.get("nowPage") - 1) * 10);
+        pageMap.put("mem_no", reqBody.get("mem_no"));
+
+        ResponseDTO res = rentService.getRentedList(pageMap);
 
         return res;
     }

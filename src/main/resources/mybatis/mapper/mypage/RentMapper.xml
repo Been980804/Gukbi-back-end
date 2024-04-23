@@ -27,8 +27,20 @@
             RENT.RENT_NO DESC
     </select>
 
+    <!-- 대여한 총 도서 수 조회 -->
+    <select id="getRentedCnt" parameterType="String" resultType="Integer">
+        select
+            count(*)
+        FROM
+            rent
+        WHERE
+            use_flag = 'Y'
+            and mem_no = #{mem_no}
+            and (return_state = '정상 반납' or return_state = '연체 후 반납')
+    </select>
+
     <!-- 대여한 도서 조회 -->
-    <select id="getRentedList" parameterType="String" resultType="Map">
+    <select id="getRentedList" parameterType="Map" resultType="Map">
         SELECT
             book.book_no,
             book.book_title,
@@ -42,13 +54,14 @@
             BOOK ON RENT.book_no = BOOK.book_no
         JOIN
             MEMBER ON RENT.mem_no = MEMBER.mem_no
-        WHERE   
+        WHERE
             1=1
             and rent.mem_no = #{mem_no}
             and (rent.return_state = '정상 반납' or rent.return_state = '연체 후 반납')
             and rent.use_flag = 'Y'
         ORDER BY    
             RENT.rent_no DESC
+        limit #{nowPage}, #{showCnt}
     </select>
 
     <!-- 예약중인 도서 조회 -->
@@ -131,7 +144,7 @@
         update
             book_reservation
         set
-            reserv_state = '예약취소',
+            reserv_state = '예약취소'
             use_flag = 'N',
             mod_date = now()
         WHERE

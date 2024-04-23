@@ -11,8 +11,10 @@ public interface RentService {
     
     // 대여중인 도서 조회
     ResponseDTO getRentList(String mem_no);
+    // 대여한 총 도서 수 조회
+    ResponseDTO getRentedCnt(String mem_no);
     // 대여한 도서 조회
-    ResponseDTO getRentedList(String mem_no);
+    ResponseDTO getRentedList(Map<String,Object> pageMap);
     // 예약중인 도서 조회
     ResponseDTO getReserveList(String mem_no);
     // 리뷰 작성
