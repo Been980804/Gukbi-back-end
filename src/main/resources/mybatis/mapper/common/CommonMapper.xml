@@ -64,4 +64,15 @@
       </if>
     limit #{currentPage}, #{recordPage}
   </select>
+
+  <!-- 도서 상세정보 가져오기 -->
+  <select id="getBookInfo" parameterType="String" resultType="Map">
+    SELECT
+      book_no, book_title, book_author, book_publisher, book_category_no, book_category_name, book_pub_year, book_url, book_isbn, date_format(reg_date, '%Y.%m.%d') as reg_date
+    FROM
+      Book
+    WHERE
+      use_flag = 'Y'
+      AND book_isbn = #{isbn}
+  </select>
 </mapper>

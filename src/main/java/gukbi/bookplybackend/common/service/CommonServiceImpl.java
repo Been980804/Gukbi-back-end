@@ -111,4 +111,21 @@ public class CommonServiceImpl implements CommonService {
     return res;
   }
   
+  @Override
+  @Transactional // 도서 상세정보 가져오기
+  public ResponseDTO getBookInfo(String isbn) {
+    ResponseDTO res = new ResponseDTO();
+    Map<String, Object> bookInfo = commonMapper.getBookInfo(isbn);
+
+    if(bookInfo != null) {
+      res.setResCode(200);
+      res.setResMsg("도서 상세정보 조회");
+      res.setData("bookInfo", bookInfo);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("도서 상세정보 조회에 실패했습니다.");
+    }
+    
+    return res;
+  }
 }

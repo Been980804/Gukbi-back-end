@@ -21,4 +21,7 @@ public interface CommonService {
 
   // 현재 페이지 도서목록 가져오기
   ResponseDTO getBookList(Map<String, Object> pageData);
+
+  // 도서 상세정보 가져오기
+  ResponseDTO getBookInfo(String isbn);
 }
