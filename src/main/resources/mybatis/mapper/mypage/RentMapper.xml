@@ -126,19 +126,16 @@
             and use_flag = 'Y'
     </update>
 
-    <!-- 대여상태 변경 -->
-    <!-- <update id="changeState" parameterType="Map">
+    <!-- 대여 상태 변경 -->
+    <update id="changeRentState" parameterType="String">
         update
             rent
         set
-            return_state = '연체',
-            mod_date = now()
+            return_state = '연체'
         WHERE
-            1=1
+            use_flag ='Y'
             and rent_no = #{rent_no}
-            and use_flag = 'Y'
-    </update> -->
-
+    </update>
     <!-- 예약한 도서 취소 -->
     <update id="cancelReserveBook" parameterType="Map">
         update

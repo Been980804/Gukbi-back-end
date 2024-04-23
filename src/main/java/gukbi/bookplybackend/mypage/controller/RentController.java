@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -80,13 +81,14 @@ public class RentController {
 
         return res;
     }
-    // 대여 상태 변경
-    // @PutMapping("/changeState")
-    // public ResponseDTO changeState(@RequestBody Map<String,String> reqBody) {
-    //     ResponseDTO res = rentService.changeState(reqBody);
 
-    //     return res;
-    // }
+    // 대여 상태 변경
+    @PutMapping("/changeRentState/{rent_no}")
+    public ResponseDTO changeRentState(@PathVariable("rent_no") String rent_no) {
+        ResponseDTO res = rentService.changeRentState(rent_no);
+
+        return res;
+    }
 
     // 도서 예약 취소
     @PostMapping(value="/cancelReserveBook")

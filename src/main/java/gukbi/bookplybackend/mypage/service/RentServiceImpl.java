@@ -115,22 +115,22 @@ public class RentServiceImpl implements RentService {
     return res;
   }
 
-  // @Override
-  // @Transactional
-  // public ResponseDTO changeState(Map<String,String> reqBody) { // 대여상태 변경
-  // ResponseDTO res = new ResponseDTO();
+  @Override
+  @Transactional
+  public ResponseDTO changeRentState(String rent_no) { // 대여상태 변경
+  ResponseDTO res = new ResponseDTO();
 
-  // int updateRow = myPageMapper.changeState(reqBody);
+  int updateRow = myPageMapper.changeRentState(rent_no);
 
-  // if (updateRow > 0) {
-  // res.setResCode(200);
-  // res.setResMsg("대여상태 수정 성공");
-  // } else {
-  // res.setResCode(300);
-  // res.setResMsg("대여상태 수정 실패");
-  // }
-  // return res;
-  // }
+  if (updateRow > 0) {
+  res.setResCode(200);
+  res.setResMsg("대여상태 수정 성공");
+  } else {
+  res.setResCode(300);
+  res.setResMsg("대여상태 수정 실패");
+  }
+  return res;
+  }
 
   @Override
   @Transactional

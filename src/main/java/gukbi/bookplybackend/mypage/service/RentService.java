@@ -22,7 +22,7 @@ public interface RentService {
     // 도서 반납
     ResponseDTO returnBook(Map<String,String> reqBody);
     // 대여상태 변경
-    // ResponseDTO changeState(Map<String,String> reqBody);
+    ResponseDTO changeRentState(String rent_no);
     // 예약도서 취소
     ResponseDTO cancelReserveBook(Map<String,String> reqBody);
 }

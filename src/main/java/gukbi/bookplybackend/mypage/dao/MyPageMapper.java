@@ -24,7 +24,7 @@ public interface MyPageMapper {
     List<Map<String, String>> getReserveList(String mem_no); // 예약중인 도서 조회
     int review(Map<String,Object> reqBody); // 리뷰 작성
     int returnBook(Map<String,String> reqBody); // 도서 반납
-    // int changeState(Map<String,String> reqBody); // 대여상태 변경 
+    int changeRentState(String rent_no);
     int cancelReserveBook(Map<String,String> reqBody); // 예약한 도서 취소
 
     // 희망도서
