@@ -26,7 +26,7 @@ public class BookTradeListController {
     @Autowired
     BookTradeListService bookTradeService;
 
-    // 거래도서 총 게시글 개수 조회
+    // 도서거래ㄴㄴ 총 게시글 개수 조회
     @GetMapping(value="/bookTradeCnt")
     public ResponseDTO getBookTradeCnt(@RequestParam Map<String,Object> reqBody) {             
         ResponseDTO res = bookTradeService.getBookTradeCnt(reqBody);
@@ -34,7 +34,7 @@ public class BookTradeListController {
         return res;
     }
 
-    // 거래도서 게시글 조회
+    // 도서거래 게시글 조회
     @GetMapping(value="/bookTradeList/{nowPage}")
     public ResponseDTO getBookTradeList(@PathVariable("nowPage") int nowPage, @RequestParam Map<String,Object> reqBody) {
         Map<String, Object> pageMap = new HashMap<>();
@@ -48,5 +48,12 @@ public class BookTradeListController {
         return res;
     }
     
+    // 도서거래 상세정보 조회
+    @GetMapping(value="/tradeDetail/{tradeNo}")
+    public ResponseDTO getTradeDetail(@PathVariable("tradeNo") String tradeNo) {
+        ResponseDTO res = bookTradeService.getTradeDetail(tradeNo);
+        
+        return res;
+    }
     
 }

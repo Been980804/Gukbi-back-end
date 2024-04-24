@@ -38,4 +38,26 @@
         limit #{nowPage}, #{showCnt}
     </select>
 
+    <select id="getTradeDetail" parameterType="String" resultType="Map">
+        select
+            book_trade.mem_no,
+            member.mem_name,
+            book_trade.trade_title,
+            book_trade.trade_book_title,
+            book_trade.trade_publisher,
+            book_trade.trade_price,
+            book_trade.trade_condition,
+            book_trade.trade_content,
+            book_trade.trade_state,
+            member.mem_phone,
+            member.mem_email,
+            book_trade.reg_date
+        from
+            book_trade
+        join
+            member on book_trade.mem_no = member.mem_no
+        where
+            book_trade.use_flag = 'Y'
+            and book_trade.trade_no = #{tradeNo}
+    </select>
 </mapper>

@@ -43,11 +43,31 @@ public class BookTradeListServiceImpl implements BookTradeListService{
 
         if(tradeList != null){
             res.setResCode(200);
-            res.setResMsg("거래도서 게시글 조회 성공");
+            res.setResMsg("도서거래 게시글 조회 성공");
             res.setData("tradeList", tradeList);
         } else{
             res.setResCode(300);
-            res.setResMsg("거래도서 게시글 조회 실패");
+            res.setResMsg("도서거래 게시글 조회 실패");
+        }
+        
+        return res;
+    }
+
+    @Override
+    @Transactional
+    public ResponseDTO getTradeDetail(String tradeNo) {
+        ResponseDTO res = new ResponseDTO();
+
+        Map<String, Object> tradeInfo = madangMapper.getTradeDetail(tradeNo);
+
+        if(tradeInfo != null){
+            res.setResCode(200);
+            res.setResMsg("도서거래 상세정보 조회 성공");
+            res.setData("tradeInfo", tradeInfo);
+            System.out.println(tradeInfo);
+        } else{
+            res.setResCode(300);
+            res.setResMsg("도서거래 상세정보 조회 실패");
         }
         
         return res;
