@@ -24,4 +24,13 @@ public interface CommonMapper {
 
   // 현재 페이지 도서목록 가져오기
   List<Map<String, Object>> getBookList(Map<String, Object> pageData);
+
+  // 도서 상세정보 가져오기
+  Map<String, Object> getBookInfo(String isbn);
+
+  // 총 카테고리 도서 개수 가져오기
+  Integer getCatCount(Map<String, String> sqlData);
+
+  // 현재 페이지 도서목록 가져오기
+  List<Map<String, Object>> getCatList(Map<String, Object> pageData);
 }
