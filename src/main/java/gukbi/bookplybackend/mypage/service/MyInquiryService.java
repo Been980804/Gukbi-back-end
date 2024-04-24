@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 
 @Service
-public interface InquiryService {
+public interface MyInquiryService {
     // 문의내역 게시글 수 조회
     ResponseDTO getMyInquiryCnt(String mem_no);
     // 문의내역 조회

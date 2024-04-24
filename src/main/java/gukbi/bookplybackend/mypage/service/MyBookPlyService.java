@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 
 @Service
-public interface BookPlyService {
+public interface MyBookPlyService {
     // 북플리 개수 조회
     ResponseDTO getBookPlyCnt(String mem_no);
     // 북플리 목록 조회
@@ -28,4 +28,6 @@ public interface BookPlyService {
     ResponseDTO updateBpl(Map<String, String> reqBody);
     // 북플리에 도서 추가
     ResponseDTO addBpl(Map<String, Object> reqBody);
+    // 북플리에 책 추가시 내 북플리목록 조회
+    ResponseDTO getMyBookPlyList(String mem_no);
 }

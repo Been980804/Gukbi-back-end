@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class BookApplServiceImpl implements BookApplService{
+public class MyBookApplServiceImpl implements MyBookApplService{
     
     private final MyPageMapper myPageMapper;
 

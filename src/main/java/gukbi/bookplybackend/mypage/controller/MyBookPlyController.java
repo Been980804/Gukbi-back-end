@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
-import gukbi.bookplybackend.mypage.service.BookPlyService;
+import gukbi.bookplybackend.mypage.service.MyBookPlyService;
 import lombok.RequiredArgsConstructor;
 
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mypage/bookPly")
-public class BookPlyController {
+public class MyBookPlyController {
     
     private static final int showCnt = 3;
 
     @Autowired
-    private final BookPlyService bookPlyService;
+    private final MyBookPlyService bookPlyService;
 
     // 북플리 총 개수 조회
     @GetMapping(value="/bookPlyCnt/{mem_no}")
@@ -111,6 +111,13 @@ public class BookPlyController {
     public ResponseDTO addBpl(@RequestBody Map<String,Object> reqBody) {
         ResponseDTO res = bookPlyService.addBpl(reqBody);
         
+        return res;
+    }
+    
+    @GetMapping(value="MyBookPlyList/{mem_no}")
+    public ResponseDTO getMyBookPlyList(@PathVariable("mem_no") String mem_no) {
+        ResponseDTO res = bookPlyService.getMyBookPlyList(mem_no);
+
         return res;
     }
     

@@ -13,19 +13,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
-import gukbi.bookplybackend.mypage.service.InquiryService;
+import gukbi.bookplybackend.mypage.service.MyInquiryService;
 import lombok.RequiredArgsConstructor;
 
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mypage/inquiry")
-public class InquiryController {
+public class MyInquiryController {
     
     private static final int showCnt = 10;
 
     @Autowired
-    private final InquiryService inquiryService;
+    private final MyInquiryService inquiryService;
 
      // 개별문의 총 게시글 개수 조회
      @GetMapping(value="/getMyInquiryCnt/{mem_no}")

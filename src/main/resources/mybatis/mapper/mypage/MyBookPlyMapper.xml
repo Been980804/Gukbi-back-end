@@ -287,4 +287,32 @@
             bpl_no = #{bpl_no}
             and book_no = #{book_no}
     </update>
+
+    <select id="getMyBookPlyList" parameterType="String" resultType="Map">
+        select
+            book_playlist.bpl_no,
+            book_playlist.bpl_name,
+            member.mem_name,
+            DATE_FORMAT(BOOK_PLAYLIST.mod_date, '%Y .%m .%d.') as mod_date,
+             (
+                select
+                    book.book_url
+                FROM
+                    bpl_detail
+                JOIN
+                    book on bpl_detail.book_no = book.book_no
+                WHERE
+                    book_playlist.bpl_no = bpl_detail.bpl_no
+                    and bpl_detail.use_flag = 'Y'
+                order by
+                    book_playlist.reg_date limit 1
+            ) as book_url
+        from
+            book_playlist
+        JOIN
+            member on book_playlist.mem_no = member.mem_no
+        where
+            book_playlist.use_flag = 'Y'
+            and book_playlist.mem_no = #{mem_no}
+    </select>
 </mapper>

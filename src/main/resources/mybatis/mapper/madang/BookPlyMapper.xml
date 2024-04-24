@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.madang.dao.MadangMapper">
+    <select id="getBookPlyListCnt" parameterType="Map" resultType="Integer">
+        select
+            count(*)
+        FROM
+            book_playlist
+        LEFT JOIN
+            member on book_playlist.mem_no = member.mem_no
+        WHERE
+            book_playlist.use_flag='Y'
+            and bpl_yn = 'Y'
+            <if test="search != null">
+                and ${column} like concat('%', #{search}, '%')
+            </if>
+    </select>  
+
+    <select id="getBookPlyList" parameterType="Map" resultType="Map">
+        select
+            book_playlist.bpl_no,
+            book_playlist.bpl_name,
+            member.mem_name, 
+            COALESCE(BOOK_PLAYLIST.like_cnt,0) as like_cnt,
+            COALESCE(BOOK_PLAYLIST.book_cnt,0) as book_cnt,
+            BOOK_PLAYLIST.bpl_intro,
+            DATE_FORMAT(BOOK_PLAYLIST.mod_date, '%Y .%m .%d.') as mod_date,
+            (
+                select
+                    book.book_url
+                from
+                    bpl_detail
+                JOIN
+                    book on bpl_detail.book_no = book.book_no
+                where
+                    book_playlist.bpl_no = bpl_detail.bpl_no
+                    and bpl_detail.use_flag = 'Y'
+                order by
+                    book_playlist.reg_date limit 1
+            ) as book_url
+        from
+            book_playlist
+        JOIN
+            member on book_playlist.mem_no = member.mem_no
+        where
+            book_playlist.use_flag = 'Y'
+            and book_playlist.bpl_yn = 'Y'
+            <if test="search != null">
+                and ${column} like concat('%', #{search}, '%')
+            </if>
+        limit #{nowPage}, #{showCnt}
+    </select>
+
+</mapper>

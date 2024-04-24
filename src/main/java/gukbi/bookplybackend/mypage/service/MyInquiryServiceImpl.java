@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class InquiryServiceImpl implements InquiryService{
+public class MyInquiryServiceImpl implements MyInquiryService{
     
     private final MyPageMapper myPageMapper;
 

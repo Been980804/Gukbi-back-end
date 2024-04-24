@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class BookPlyServiceImpl implements BookPlyService {
+public class MyBookPlyServiceImpl implements MyBookPlyService {
 
     private final MyPageMapper myPageMapper;
 
@@ -268,6 +268,25 @@ public class BookPlyServiceImpl implements BookPlyService {
         }
         res.setResCode(200);
         res.setResMsg("북플리 책 담기 실패");
+        return res;
+    }
+
+    @Override
+    @Transactional
+    public ResponseDTO getMyBookPlyList(String mem_no) {
+        ResponseDTO res = new ResponseDTO();
+
+        List<Map<String, Object>> bookPlyList = myPageMapper.getMyBookPlyList(mem_no);
+
+        if(bookPlyList != null){
+            res.setResCode(200);
+            res.setResMsg("내 북플리 목록 조회 성공");
+            res.setData("bookPlyList", bookPlyList);
+        } else{
+            res.setResCode(300);
+            res.setResMsg("내 북플리 목록 조회 실패");
+        }
+
         return res;
     }
 }
