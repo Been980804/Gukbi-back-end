@@ -210,4 +210,22 @@ public class CommonServiceImpl implements CommonService {
 
     return res;
   }
+
+  @Override
+  @Transactional // 최신 공지사항 목록 가져오기
+  public ResponseDTO getNotiList() {
+    ResponseDTO res = new ResponseDTO();
+    List<Map<String, Object>> notiList = commonMapper.getNotiList();
+
+    if(!notiList.isEmpty()) {
+      res.setResCode(200);
+      res.setResMsg("공지사항 리스트 조회");
+      res.setData("notiList", notiList);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("공지사항 리스트 조회에 실패했습니다.");
+    }
+
+    return res;
+  }
 }

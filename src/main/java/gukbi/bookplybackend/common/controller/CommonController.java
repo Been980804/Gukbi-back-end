@@ -92,4 +92,11 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     ResponseDTO res = commonService.getCatList(pageData);
     return res;
   }
+
+  // 최신 공지사항 목록 가져오기
+  @GetMapping(value = "/main/notiList")
+  public ResponseDTO getNotiList() {
+    ResponseDTO res = commonService.getNotiList();
+    return res;
+  }
 }

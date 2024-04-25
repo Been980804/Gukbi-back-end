@@ -98,4 +98,17 @@
       AND book_category_name = #{menuName}
     limit #{currentPage}, #{recordPage}
   </select>
+
+  <!-- 최신 공지사항 목록 가져오기 -->
+  <select id="getNotiList" parameterType="Map" resultType="Map">
+    SELECT
+      noti_no, noti_title
+    FROM
+      notification
+    JOIN
+      member on noti.mem_no = member.mem_no
+    WHERE
+      use_flag = 'Y'
+    ORDER BY reg_date DESC limit 5
+  </select>
 </mapper>
