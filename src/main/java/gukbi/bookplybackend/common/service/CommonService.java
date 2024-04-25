@@ -33,4 +33,7 @@ public interface CommonService {
 
   // 카테고리 현재 페이지 도서목록 가져오기
   ResponseDTO getCatList(Map<String, Object> pageData);
+
+  // 최신 공지사항 목록 가져오기
+  ResponseDTO getNotiList();
 }

@@ -33,4 +33,7 @@ public interface CommonMapper {
 
   // 현재 페이지 도서목록 가져오기
   List<Map<String, Object>> getCatList(Map<String, Object> pageData);
+
+  // 최신 공지사항 목록 가져오기
+  List<Map<String, Object>> getNotiList();
 }
