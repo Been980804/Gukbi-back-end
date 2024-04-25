@@ -102,11 +102,9 @@
   <!-- 최신 공지사항 목록 가져오기 -->
   <select id="getNotiList" parameterType="Map" resultType="Map">
     SELECT
-      noti_no, noti_title
+      noti_no, noti_title, date_format(mod_date, '%Y-%m-%d') as mod_date
     FROM
       notification
-    JOIN
-      member on noti.mem_no = member.mem_no
     WHERE
       use_flag = 'Y'
     ORDER BY reg_date DESC limit 5
