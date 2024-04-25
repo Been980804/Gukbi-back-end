@@ -20,6 +20,7 @@
         SELECT
             BOOK_PLAYLIST.bpl_no,
             BOOK_PLAYLIST.bpl_name,
+            member.mem_no,
             MEMBER.mem_name,
             DATE_FORMAT(BOOK_PLAYLIST.mod_date, '%Y .%m .%d.') as mod_date,
             COALESCE(BOOK_PLAYLIST.like_cnt,0) as like_cnt,
