@@ -15,4 +15,6 @@ public interface BookTradeListService {
     ResponseDTO getBookTradeList(Map<String, Object> pageMap);
     // 도서거래 상세보기
     ResponseDTO getTradeDetail(String tradeNo);
+    // 도서거래 수정
+    ResponseDTO tradeModi(Map<String,Object> reqBody);
 }

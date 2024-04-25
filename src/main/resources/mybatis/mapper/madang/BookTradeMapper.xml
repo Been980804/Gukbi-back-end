@@ -40,6 +40,7 @@
 
     <select id="getTradeDetail" parameterType="String" resultType="Map">
         select
+            book_trade.trade_no,
             book_trade.mem_no,
             member.mem_name,
             book_trade.trade_title,
@@ -60,4 +61,21 @@
             book_trade.use_flag = 'Y'
             and book_trade.trade_no = #{tradeNo}
     </select>
+
+    <!-- 도서거래 수정 -->
+    <update id="tradeModi" parameterType="Map">
+        update
+            book_trade
+        set
+            trade_title = #{trade_title},
+            trade_book_title = #{trade_book_title},
+            trade_publisher = #{trade_publisher},
+            trade_price = #{trade_price},
+            trade_condition = #{trade_condition},
+            trade_content = #{trade_content},
+            trade_state = #{trade_state},
+            mod_date = now()
+        where
+            trade_no = #{trade_no}
+    </update>
 </mapper>

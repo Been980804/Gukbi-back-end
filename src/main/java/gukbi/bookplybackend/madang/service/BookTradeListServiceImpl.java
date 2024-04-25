@@ -11,23 +11,23 @@ import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.madang.dao.MadangMapper;
 
 @Service
-public class BookTradeListServiceImpl implements BookTradeListService{
-    
+public class BookTradeListServiceImpl implements BookTradeListService {
+
     @Autowired
     MadangMapper madangMapper;
 
     @Override
     @Transactional
-    public ResponseDTO getBookTradeCnt(Map<String, Object> reqBody) {
+    public ResponseDTO getBookTradeCnt(Map<String, Object> reqBody) { // 도서거래 게시물 수 조회
         ResponseDTO res = new ResponseDTO();
 
         int totalCnt = madangMapper.getBookTradeCnt(reqBody);
-        
-        if(totalCnt > 0){
+
+        if (totalCnt > 0) {
             res.setResCode(200);
             res.setResMsg("거래도서 게시글 개수 조회 성공");
             res.setData("totalCnt", totalCnt);
-        } else{
+        } else {
             res.setResCode(300);
             res.setResMsg("거래도서 게시글 개수 조회 실패");
         }
@@ -36,40 +36,57 @@ public class BookTradeListServiceImpl implements BookTradeListService{
 
     @Override
     @Transactional
-    public ResponseDTO getBookTradeList(Map<String, Object> pageMap) {
+    public ResponseDTO getBookTradeList(Map<String, Object> pageMap) { // 도서거래 게시물 조회
         ResponseDTO res = new ResponseDTO();
 
-        List<Map<String,Object>> tradeList = madangMapper.getBookTradeList(pageMap);
+        List<Map<String, Object>> tradeList = madangMapper.getBookTradeList(pageMap);
 
-        if(tradeList != null){
+        if (tradeList != null) {
             res.setResCode(200);
             res.setResMsg("도서거래 게시글 조회 성공");
             res.setData("tradeList", tradeList);
-        } else{
+        } else {
             res.setResCode(300);
             res.setResMsg("도서거래 게시글 조회 실패");
         }
-        
+
         return res;
     }
 
     @Override
     @Transactional
-    public ResponseDTO getTradeDetail(String tradeNo) {
+    public ResponseDTO getTradeDetail(String tradeNo) { // 도서거래 상세보기
         ResponseDTO res = new ResponseDTO();
 
         Map<String, Object> tradeInfo = madangMapper.getTradeDetail(tradeNo);
 
-        if(tradeInfo != null){
+        if (tradeInfo != null) {
             res.setResCode(200);
             res.setResMsg("도서거래 상세정보 조회 성공");
             res.setData("tradeInfo", tradeInfo);
-            System.out.println(tradeInfo);
-        } else{
+        } else {
             res.setResCode(300);
             res.setResMsg("도서거래 상세정보 조회 실패");
         }
-        
+
+        return res;
+    }
+
+    @Override
+    @Transactional
+    public ResponseDTO tradeModi(Map<String, Object> reqBody) {
+        ResponseDTO res = new ResponseDTO();
+
+        int updateRow = madangMapper.tradeModi(reqBody);
+
+        if(updateRow > 0){
+            res.setResCode(200);
+            res.setResMsg("도서거래 수정 성공");
+        } else{
+            res.setResCode(300);
+            res.setResMsg("도서거래 수정 실패");
+        }
+
         return res;
     }
 }
