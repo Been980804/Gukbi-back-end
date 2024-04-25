@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.madang.service.BookTradeListService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+
 
 
 
@@ -66,4 +68,13 @@ public class BookTradeListController {
       
         return res;
     }
+
+    // 도서거래 등록
+    @PostMapping(value="/tradeReg")
+    public ResponseDTO tradeReg(@RequestBody Map<String, Object> reqBody) {
+        ResponseDTO res = bookTradeService.tradeReg(reqBody);
+        
+        return res;
+    }
+    
 }

@@ -4,7 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="gukbi.bookplybackend.madang.dao.MadangMapper">
-
+    <!-- 도서거래 게시물 수 조회 -->
     <select id="getBookTradeCnt" parameterType="Map" resultType="Integer">
         select 
             count(*)
@@ -16,7 +16,7 @@
                 and ${column} like concat('%', #{search}, '%')
             </if>
     </select>
-
+    <!-- 도서거래 게시물 조회 -->
     <select id="getBookTradeList" parameterType="Map" resultType="Map">
         select
             book_trade.trade_no,
@@ -37,7 +37,7 @@
             </if>
         limit #{nowPage}, #{showCnt}
     </select>
-
+    <!-- 도서거래 상세보기 -->
     <select id="getTradeDetail" parameterType="String" resultType="Map">
         select
             book_trade.trade_no,
@@ -78,4 +78,31 @@
         where
             trade_no = #{trade_no}
     </update>
+    <!-- trade_no 최대값 -->
+    <select id="getMaxTradeNo" resultType="Integer">
+        select
+            max(trade_no)
+        from
+            book_trade
+    </select>
+
+    <!-- 도서거래 등록 -->
+    <insert id="tradeReg" parameterType="Map">
+        insert into
+            book_trade
+        values(
+            (#{trade_no} + 1),
+            #{mem_no},
+            #{trade_title},
+            #{trade_book_title},
+            #{trade_publisher},
+            #{trade_price},
+            #{trade_condition},
+            #{trade_content},
+            #{trade_state},
+            'Y',
+            now(),
+            now()
+        )
+    </insert>
 </mapper>

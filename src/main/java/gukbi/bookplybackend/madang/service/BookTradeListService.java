@@ -17,4 +17,6 @@ public interface BookTradeListService {
     ResponseDTO getTradeDetail(String tradeNo);
     // 도서거래 수정
     ResponseDTO tradeModi(Map<String,Object> reqBody);
+    // 도서거래 등록
+    ResponseDTO tradeReg(Map<String,Object> reqBody);
 }

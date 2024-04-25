@@ -89,4 +89,25 @@ public class BookTradeListServiceImpl implements BookTradeListService {
 
         return res;
     }
+
+    @Override
+    @Transactional
+    public ResponseDTO tradeReg(Map<String, Object> reqBody) {
+        ResponseDTO res = new ResponseDTO();
+
+        int getMaxTradeNo = madangMapper.getMaxTradeNo();
+
+        reqBody.put("trade_no", getMaxTradeNo);
+        
+        int insertRow = madangMapper.tradeReg(reqBody);
+
+        if(insertRow > 0){
+            res.setResCode(200);
+            res.setResMsg("도서거래 등록 성공");
+        } else{
+            res.setResCode(300);
+            res.setResMsg("도서거래 등록 실패");
+        }
+        return res;
+    }
 }
