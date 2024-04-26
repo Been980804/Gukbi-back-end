@@ -18,7 +18,7 @@ public class InquiryListServiceImpl implements InquiryListService{
 
     @Override
     @Transactional
-    public ResponseDTO getFaq() {
+    public ResponseDTO getFaq() { // 자주하는 질문 조회
         ResponseDTO res = new ResponseDTO();
 
         List<Map<String, Object>> faqList = madangMapper.getFaq();
@@ -36,7 +36,7 @@ public class InquiryListServiceImpl implements InquiryListService{
 
     @Override
     @Transactional
-    public ResponseDTO getQnaCnt(Map<String, Object> reqBody) {
+    public ResponseDTO getQnaCnt(Map<String, Object> reqBody) { // 문의사항 개수 조회
         ResponseDTO res = new ResponseDTO();
 
         int totalCnt = madangMapper.getQnaCnt(reqBody);
@@ -54,7 +54,7 @@ public class InquiryListServiceImpl implements InquiryListService{
 
     @Override
     @Transactional
-    public ResponseDTO getQna(Map<String, Object> pageMap) {
+    public ResponseDTO getQna(Map<String, Object> pageMap) { // 문의사항 조회
         ResponseDTO res = new ResponseDTO();
 
         List<Map<String, Object>> qnaList = madangMapper.getQna(pageMap);
@@ -67,6 +67,28 @@ public class InquiryListServiceImpl implements InquiryListService{
             res.setResCode(300);
             res.setResMsg("문의내역 조회 실패");
         }
+        return res;
+    }
+
+    @Override
+    @Transactional
+    public ResponseDTO inquiryReg(Map<String, Object> reqBody) { // 문의사항 등록
+        ResponseDTO res = new ResponseDTO();
+
+        int getMaxInquiryNo = madangMapper.getMaxInquiryNo();
+
+        reqBody.put("qna_no", getMaxInquiryNo);
+
+        int insertRow = madangMapper.inquiryReg(reqBody);
+
+        if(insertRow > 0){
+            res.setResCode(200);
+            res.setResMsg("문의사항 등록 성공");
+        } else{
+            res.setResCode(300);
+            res.setResMsg("문의사항 등록 실패");
+        }
+
         return res;
     }
 }

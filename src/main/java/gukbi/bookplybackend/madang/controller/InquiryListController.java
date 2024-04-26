@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.madang.service.InquiryListService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -50,6 +53,13 @@ public class InquiryListController {
         pageMap.put("search", reqBody.get("search"));
 
         ResponseDTO res = inquiryService.getQna(pageMap);
+        
+        return res;
+    }
+    
+    @PostMapping(value="/inquiryReg")
+    public ResponseDTO inquiryReg(@RequestBody Map<String, Object> reqBody) {
+        ResponseDTO res = inquiryService.inquiryReg(reqBody);
         
         return res;
     }
