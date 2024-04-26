@@ -35,7 +35,7 @@ public interface MyPageMapper {
     // 북플리
     int getBookPlyCnt(String mem_no); // 북플리 개수 조회
     List<Map<String, String>> getBookPlyList(Map<String, Object> pageMap); // 북플리 목록 조회
-    int updateVisibility(Map<String, String> reqBody); // 공개여부 수정
+    int updateVisibilityBpl(Map<String, String> reqBody); // 공개여부 수정
     List<Map<String, String>> detailList(String bpl_no); // 북플리 상세보기 조회
     Map<String, String> getLikeInfo(@Param("bpl_no") String bpl_no,@Param("mem_no") String mem_no); // 상세보기 페이지에 좋아요수 조회
     Map<String, String> checkLike(Map<String, String> reqBody); // 좋아요테이블에 유무 체크
@@ -58,6 +58,7 @@ public interface MyPageMapper {
     int getMyInquiryCnt(String mem_no); // 문의내역 게시글 수 조회
     List<Map<String, String>> getMyInquiry(Map<String, Object> pageMap); // 문의내역 조회
     int deleteInquiry(Map<String, String> reqBody); // 문의내역 삭제
+    int updateVisibilityQna(Map<String, Integer> reqBody); // 공개여부 수정
 
     // 도서거래
     int getTradeCnt(String mem_no); // 거래내역 총 게시글 수 조회

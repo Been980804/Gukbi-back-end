@@ -22,7 +22,8 @@
             qes_title,
             qes_content,
             ans_mem_no,
-            ans_content
+            ans_content,
+            qna_yn
         FROM
             qna
         WHERE
@@ -45,5 +46,20 @@
             1=1
             and qes_mem_no = #{mem_no}
             and qna_no = #{qna_no}
-    </update>    
+    </update>       
+    <!-- 공개여부 수정 -->
+    <update id="updateVisibilityQna" parameterType="Map">
+        update
+            qna
+        set
+            qna_yn = 
+                case
+                    when qna_yn = 'Y' then 'N'
+                    else 'Y'
+                end,
+            qes_mod_date = now()
+        where
+            qna_no = #{qna_no}
+            and use_flag = 'Y'
+    </update> 
 </mapper>

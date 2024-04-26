@@ -57,4 +57,12 @@ public class MyInquiryController {
         return res;
     }
     
+    // 개별문의내역 등록
+    @PostMapping(value="/inquiryReg")
+    public ResponseDTO inquiryReg(@RequestBody Map<String, Object> reqBody) {
+        ResponseDTO res = inquiryService.inquiryReg(reqBody);
+        
+        return res;
+    }
+    
 }
