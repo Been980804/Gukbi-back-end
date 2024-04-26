@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/madang/notiList")
+@RequestMapping("/madang/noti")
 public class NotificationListController {
     
     public static final int showCnt = 10;
