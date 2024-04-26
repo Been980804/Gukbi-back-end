@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.mypage.service.MyInquiryService;
 import lombok.RequiredArgsConstructor;
+
 
 
 @RestController
@@ -57,4 +59,12 @@ public class MyInquiryController {
         return res;
     }
     
+    // 공개여부 설정
+    @PutMapping(value="/updateVisibility")
+    public ResponseDTO updateVisibility(@RequestBody Map<String, Integer> reqBody) {
+        ResponseDTO res = inquiryService.updateVisibility(reqBody);
+        System.out.println(reqBody.get("qna_no"));
+
+        return res;
+    }
 }

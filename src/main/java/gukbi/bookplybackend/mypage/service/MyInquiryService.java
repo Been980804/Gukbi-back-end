@@ -14,4 +14,6 @@ public interface MyInquiryService {
     ResponseDTO getMyInquiry(Map<String, Object> pageMap);
     // 문의내역 삭제
     ResponseDTO deleteInquiry(Map<String, String> reqBody);
+    // 공개여부 수정
+    ResponseDTO updateVisibility(Map<String, Integer> reqBody);
 }
