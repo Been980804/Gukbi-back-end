@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,5 +49,19 @@ public class NotificationListController {
         return res;
     }
     
-    
+       // 공지사항 조회수 증가
+       @PutMapping(value="/updateNotiViews/{noti_no}")
+       public ResponseDTO updateNotiViews(@PathVariable("noti_no") String noti_no) {
+           ResponseDTO res = notiService.updateNotiViews(noti_no);
+           
+           return res;
+       }
+   
+       // 공지사항 상세보기
+       @GetMapping(value="/notiDetail/{notiNo}")
+       public ResponseDTO notiDetail(@PathVariable("notiNo") String notiNo) {
+           ResponseDTO res = notiService.notiDetail(notiNo);
+   
+           return res;
+       }
 }

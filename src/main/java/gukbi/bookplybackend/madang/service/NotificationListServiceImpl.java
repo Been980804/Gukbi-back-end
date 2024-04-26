@@ -18,7 +18,7 @@ public class NotificationListServiceImpl implements NotificationListService {
 
     @Override
     @Transactional
-    public ResponseDTO notiListCnt(Map<String, Object> reqBody) {
+    public ResponseDTO notiListCnt(Map<String, Object> reqBody) { // 공지사항 게시글 수 조회
         ResponseDTO res = new ResponseDTO();
 
         int totalCnt = madangMapper.notiListCnt(reqBody);
@@ -37,7 +37,7 @@ public class NotificationListServiceImpl implements NotificationListService {
 
     @Override
     @Transactional
-    public ResponseDTO notiList(Map<String, Object> pageMap) {
+    public ResponseDTO notiList(Map<String, Object> pageMap) { // 공지사항 조회
         ResponseDTO res = new ResponseDTO();
 
         List<Map<String, Object>> notiList = madangMapper.notiList(pageMap);
@@ -49,6 +49,42 @@ public class NotificationListServiceImpl implements NotificationListService {
         } else{
             res.setResCode(300);
             res.setResMsg("공지사항 조회 실패");
+        }
+        return res;
+    }
+
+    @Override
+    @Transactional
+    public ResponseDTO updateNotiViews(String noti_no) { // 공지사항 조회수 증가
+        ResponseDTO res = new ResponseDTO();
+
+        int updateRow = madangMapper.updateNotiViews(noti_no);
+
+        if(updateRow > 0){
+            res.setResCode(200);
+            res.setResMsg("조회수 증가 성공");
+        } else{            
+            res.setResCode(300);
+            res.setResMsg("조회수 증가 실패");
+        }
+
+        return res;
+    }
+
+    @Override
+    @Transactional
+    public ResponseDTO notiDetail(String notiNo) { // 공지사항 상세보기
+        ResponseDTO res = new ResponseDTO();
+
+        Map<String, Object> notiInfo = madangMapper.notiDetail(notiNo);
+
+        if (notiInfo != null) {
+            res.setResCode(200);
+            res.setResMsg("공지사항 상세정보 조회 성공");
+            res.setData("notiInfo", notiInfo);
+        } else {
+            res.setResCode(300);
+            res.setResMsg("공지사항 상세정보 조회 실패");
         }
         return res;
     }

@@ -32,4 +32,7 @@ public interface MadangMapper {
     // 공지사항
     int notiListCnt(Map<String, Object> reqBody); // 공지사항 게시글 수 조회
     List<Map<String, Object>> notiList(Map<String, Object> pageMap); // 공지사항 조회
+    int updateNotiViews(String noti_no); // 공지사항 조회수 증가
+    Map<String, Object> notiDetail(String notiNo); // 공지사항 상세보기
+
 }

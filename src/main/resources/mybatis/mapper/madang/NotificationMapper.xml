@@ -35,4 +35,30 @@
                 and ${column} like concat('%', #{search}, '%')
             </if>
     </select>
+    <!-- 공지사항 조회수 증가 -->
+    <update id="updateNotiViews" parameterType="String">
+        update
+            notification
+        set
+            noti_cnt = noti_cnt + 1
+        where 
+            noti_no = #{noti_no}
+    </update>
+    <!-- 공지사항 상세보기 -->
+    <select id="notiDetail" parameterType="String" resultType="Map">
+        select
+            n.noti_title,
+            m.mem_name,
+            n.noti_subtitle,
+            n.noti_content,
+            n.reg_date
+        from
+            notification n
+        join
+            member m on n.mem_no = m.mem_no
+        where
+            n.use_flag = 'Y'
+            and n.noti_no = #{notiNo}
+    </select>
+
 </mapper>
