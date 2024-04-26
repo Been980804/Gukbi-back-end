@@ -28,4 +28,8 @@ public interface MadangMapper {
     List<Map<String,Object>> getQna(Map<String,Object> pageMap); // 문의내역 게시글 조회
     int getMaxInquiryNo(); // qna_no 마지막 번호 가져오기
     int inquiryReg(Map<String, Object> reqBody); // 문의사항 등록
+
+    // 공지사항
+    int notiListCnt(Map<String, Object> reqBody); // 공지사항 게시글 수 조회
+    List<Map<String, Object>> notiList(Map<String, Object> pageMap); // 공지사항 조회
 }
