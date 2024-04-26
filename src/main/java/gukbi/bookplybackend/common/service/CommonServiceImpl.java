@@ -228,4 +228,22 @@ public class CommonServiceImpl implements CommonService {
 
     return res;
   }
+
+  @Override
+  @Transactional // 북플리 추천 목록 가져오기
+  public ResponseDTO getBookPly() {
+    ResponseDTO res = new ResponseDTO();
+    List<Map<String, Object>> bookPlyList = commonMapper.getBookPly();
+
+    if(!bookPlyList.isEmpty()) {
+      res.setResCode(200);
+      res.setResMsg("북플리 리스트 조회");
+      res.setData("bookPlyList", bookPlyList);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("북플리 리스트 조회에 실패했습니다.");
+    }
+
+    return res;
+  }
 }

@@ -36,4 +36,7 @@ public interface CommonMapper {
 
   // 최신 공지사항 목록 가져오기
   List<Map<String, Object>> getNotiList();
+
+  // 북플리 추천 목록 가져오기
+  List<Map<String, Object>> getBookPly();
 }

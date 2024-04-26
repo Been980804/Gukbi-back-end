@@ -99,4 +99,11 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     ResponseDTO res = commonService.getNotiList();
     return res;
   }
+
+  // 북플리 추천 목록 가져오기
+  @GetMapping(value = "/main/bookPly")
+  public ResponseDTO getBookPly() {
+    ResponseDTO res = commonService.getBookPly();
+    return res;
+  }
 }
