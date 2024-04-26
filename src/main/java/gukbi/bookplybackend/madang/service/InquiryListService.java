@@ -15,4 +15,6 @@ public interface InquiryListService {
     ResponseDTO getQnaCnt(Map<String, Object> reqBody);
     // 문의내역 조회
     ResponseDTO getQna(Map<String, Object> pageMap);
+    // 문의사항 등록
+    ResponseDTO inquiryReg(Map<String, Object> reqBody);
 }

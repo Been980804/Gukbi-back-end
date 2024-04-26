@@ -4,7 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="gukbi.bookplybackend.madang.dao.MadangMapper">
-
+    <!-- 자주하는 질문 조회 -->
     <select id="getFaq" resultType="Map">
         select
             faq_no,faq_title,faq_content
@@ -13,7 +13,7 @@
         where
             use_flag = 'Y'
     </select>
-
+    <!-- 문의사항 개수 조회 -->
     <select id="getQnaCnt" parameterType="Map" resultType="Integer">
         select
             count(*)
@@ -26,7 +26,7 @@
                 and ${column} like concat('%', #{search}, '%')
             </if>
     </select>
-
+    <!-- 문의사항 조회 -->
     <select id="getQna" parameterType="Map" resultType="Map">
         select
             qna.qna_no,
@@ -47,4 +47,33 @@
         limit
             #{nowPage}, #{showCnt}
     </select>
+    <!-- qna_no 마지막 번호 조회 -->
+    <select id="getMaxInquiryNo" resultType="Integer">
+        select
+            max(qna_no)
+        from
+            qna
+    </select>
+    <!-- 문의사항 등록 -->
+    <insert id="inquiryReg" parameterType="Map">
+        insert into qna(
+            qna_no,
+            qes_mem_no,
+            qes_title,
+            qes_content,
+            qna_yn,
+            use_flag,
+            qes_reg_date,
+            qes_mod_date
+        ) values(
+            (#{qna_no} + 1),
+            #{qes_mem_no},
+            #{qes_title},
+            #{qes_content},
+            #{qna_yn},
+            'Y',
+            now(),
+            now()
+        )
+    </insert>
 </mapper>
