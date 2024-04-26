@@ -53,7 +53,7 @@
     </select>
   
     <!-- 공개여부 수정 -->
-    <update id="updateVisibilityBpl" parameterType="Map">
+    <update id="updateVisibility" parameterType="Map">
         update
             book_playlist
         set

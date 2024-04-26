@@ -55,7 +55,7 @@ public class MyBookPlyServiceImpl implements MyBookPlyService {
     public ResponseDTO updateVisibility(Map<String, String> reqBody) { // 공개여부 수정
         ResponseDTO res = new ResponseDTO();
 
-        int updateRow = myPageMapper.updateVisibilityBpl(reqBody);
+        int updateRow = myPageMapper.updateVisibility(reqBody);
 
         if (updateRow > 0) {
             res.setResCode(200);

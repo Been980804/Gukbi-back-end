@@ -68,21 +68,4 @@ public class MyInquiryServiceImpl implements MyInquiryService{
 
         return res;
     }
-
-    @Override
-    @Transactional
-    public ResponseDTO updateVisibility(Map<String, Integer> reqBody) { // 공개여부 수정
-        ResponseDTO res = new ResponseDTO(); 
-        int updateRow = myPageMapper.updateVisibilityQna(reqBody);
-
-        if(updateRow > 0){
-            res.setResCode(200);
-            res.setResMsg("공개여부 수정 성공");
-        } else{            
-            res.setResCode(300);
-            res.setResMsg("공개여부 수정 실패");
-        }
-
-        return res;
-    }
 }
