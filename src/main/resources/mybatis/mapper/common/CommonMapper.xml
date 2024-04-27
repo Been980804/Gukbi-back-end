@@ -129,4 +129,16 @@
     VALUES
       (#{memNo}, #{bookNo}, now(), now())
   </insert>
+
+  <!-- 책바구니에 빼기 -->
+  <update id="basketDelete" parameterType="Map">
+    UPDATE
+      book_basket
+    SET
+      use_flag = 'N',
+      mod_date = now()
+    WHERE
+      mem_no = #{memNo}
+      AND book_no = #{bookNo}
+  </update>
 </mapper>

@@ -42,4 +42,7 @@ public interface CommonService {
 
   // 책바구니에 담기
   ResponseDTO basket(Map<String, Object> sqlData);
+
+  // 책바구니에 빼기
+  ResponseDTO basketDelete(Map<String, Object> sqlData);
 }

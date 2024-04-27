@@ -42,4 +42,7 @@ public interface CommonMapper {
 
   // 책바구니에 담기
   Integer basket(Map<String, Object> sqlData);
+
+  // 책바구니에 빼기
+  Integer basketDelete(Map<String, Object> sqlData);
 }

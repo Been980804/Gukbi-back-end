@@ -272,4 +272,22 @@ public class CommonServiceImpl implements CommonService {
       return res;
     }
   }
+
+  @Override
+  @Transactional // 책바구니에 빼기
+  public ResponseDTO basketDelete(Map<String, Object> sqlData) {
+    ResponseDTO res = new ResponseDTO();
+    int result = commonMapper.basketDelete(sqlData);
+
+    if(result == 1) {
+      res.setResCode(200);
+      res.setResMsg("책바구니 정보 삭제");
+      res.setData("basket", result);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("책바구니 정보 삭제에 실패했습니다.");
+    }
+
+    return res;
+  }
 }
