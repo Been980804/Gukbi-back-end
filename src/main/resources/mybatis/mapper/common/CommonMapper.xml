@@ -121,4 +121,12 @@
     FROM book_playlist AS ply
     WHERE ply.use_flag = 'Y';
   </select>
+
+  <!-- 책바구니에 담기 -->
+  <insert id="basket" parameterType="Map">
+    INSERT INTO
+      book_basket(mem_no, book_no, reg_date, mod_date)
+    VALUES
+      (#{memNo}, #{bookNo}, now(), now())
+  </insert>
 </mapper>

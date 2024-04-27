@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -245,5 +246,30 @@ public class CommonServiceImpl implements CommonService {
     }
 
     return res;
+  }
+
+  @Override
+  @Transactional // 책바구니에 담기
+  public ResponseDTO basket(Map<String, Object> sqlData) {
+    try {
+      ResponseDTO res = new ResponseDTO();
+      int result = commonMapper.basket(sqlData);
+
+      if(result == 1) {
+        res.setResCode(200);
+        res.setResMsg("책바구니 정보 등록");
+        res.setData("basket", result);
+      } else {
+        res.setResCode(300);
+        res.setResMsg("책바구니 정보 등록에 실패했습니다.");
+      }
+
+      return res;
+    } catch (DataIntegrityViolationException e) {
+      ResponseDTO res = new ResponseDTO();
+      res.setResCode(500);
+      res.setResMsg("이미 등록되어 있는 정보 입니다.");
+      return res;
+    }
   }
 }

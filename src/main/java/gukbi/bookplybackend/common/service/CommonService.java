@@ -39,4 +39,7 @@ public interface CommonService {
 
   // 북플리 추천 목록 가져오기
   ResponseDTO getBookPly();
+
+  // 책바구니에 담기
+  ResponseDTO basket(Map<String, Object> sqlData);
 }
