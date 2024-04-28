@@ -141,4 +141,16 @@
       mem_no = #{memNo}
       AND book_no = #{bookNo}
   </update>
+
+  <!-- 책바구니 목록 가져오기 -->
+  <select id="basketList" parameterType="String" resultType="Map">
+    SELECT
+      book_no
+    FROM
+      book_basket as basket
+    JOIN
+      book ON book.book_no = basket.book_no
+    WHERE
+      use_flag = 'Y'
+  </select>
 </mapper>

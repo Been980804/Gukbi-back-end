@@ -290,4 +290,22 @@ public class CommonServiceImpl implements CommonService {
 
     return res;
   }
+
+  @Override
+  @Transactional // 책바구니 목록 가져오기
+  public ResponseDTO basketList(String memNo) {
+    ResponseDTO res = new ResponseDTO();
+    List<Map<String, Object>> basketList = commonMapper.basketList(memNo);
+
+    if(!basketList.isEmpty()) {
+      res.setResCode(200);
+      res.setResMsg("책바구니 리스트 조회");
+      res.setData("basketList", basketList);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("책바구니 리스트 조회에 실패했습니다.");
+    }
+
+    return res;
+  }
 }

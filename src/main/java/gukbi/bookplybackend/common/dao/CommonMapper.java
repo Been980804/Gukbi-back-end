@@ -45,4 +45,7 @@ public interface CommonMapper {
 
   // 책바구니에 빼기
   Integer basketDelete(Map<String, Object> sqlData);
+
+  // 책바구니 목록 가져오기
+  List<Map<String, Object>> basketList(String memNo);
 }
