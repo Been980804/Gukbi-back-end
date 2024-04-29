@@ -9,6 +9,5 @@ import gukbi.bookplybackend.common.dto.ResponseDTO;
 @Service
 public interface UserService {
   
-  ResponseDTO getUserList(String number);
   ResponseDTO login(Map<String, String> reqBody);
 }

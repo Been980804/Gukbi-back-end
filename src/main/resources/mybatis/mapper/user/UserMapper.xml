@@ -5,17 +5,6 @@
 
 <mapper namespace="gukbi.bookplybackend.user.dao.UserMapper">
 
-  <select id="getUserList" parameterType="String" resultType="Map">
-    SELECT 
-        mem_no,
-        mem_name,
-        mem_id
-    FROM
-        member
-    WHERE   
-        1=1
-  </select>
-
   <select id="selectUserInfo" parameterType="Map" resultType="Map">
   SELECT 
       mem_no, mem_name, mem_id, mem_pwd,

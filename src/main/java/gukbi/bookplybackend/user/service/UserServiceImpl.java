@@ -19,20 +19,6 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional
-  public ResponseDTO getUserList(String number) {
-    ResponseDTO res = new ResponseDTO();
-
-    List<Map<String, String>> userList = userMapper.getUserList(number);
-
-    res.setResCode(200);
-    res.setResMsg("유저 리스트 조회");
-    res.setData("userList", userList);
-
-    return res;
-  }
-
-  @Override
-  @Transactional
   public ResponseDTO login(Map<String, String> reqBody) {
     ResponseDTO res = new ResponseDTO();
 

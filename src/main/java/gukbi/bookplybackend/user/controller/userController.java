@@ -20,7 +20,6 @@ public class userController {
   @Autowired
   private final UserService userService;
 
-  // login test
   @PostMapping(value="/login")
   public ResponseDTO login(@RequestBody Map<String, String> reqBody) {
     ResponseDTO res = userService.login(reqBody);
