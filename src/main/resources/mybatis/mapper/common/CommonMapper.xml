@@ -145,7 +145,7 @@
   <!-- 책바구니 목록 가져오기 -->
   <select id="basketList" parameterType="String" resultType="Map">
     SELECT
-      basket.book_no
+      basket.book_no, book.book_title, book.book_author, book.book_publisher, book.book_category_no, book.book_category_name, book.book_url
     FROM
       book_basket as basket
     JOIN
