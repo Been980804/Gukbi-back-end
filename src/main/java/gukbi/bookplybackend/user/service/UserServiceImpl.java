@@ -1,8 +1,8 @@
 package gukbi.bookplybackend.user.service;
 
-import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,10 +12,10 @@ import gukbi.bookplybackend.user.dao.UserMapper;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-  private final UserMapper userMapper;
+  @Autowired
+  UserMapper userMapper;
 
   @Override
   @Transactional
@@ -39,6 +39,24 @@ public class UserServiceImpl implements UserService {
     } else {            
       res.setResCode(300);
       res.setResMsg("ID 또는 PW가 일치하지 않습니다.");
+    }
+
+    return res;
+  }
+
+  @Override
+  @Transactional // 아이디 중복 체크
+  public ResponseDTO duplicate(String memId) {
+    ResponseDTO res = new ResponseDTO();
+    Map<String, Object> userInfo = userMapper.duplicate(memId);
+
+    if(userInfo != null) {
+      res.setResCode(200);
+      res.setResMsg("아이디 중복체크 조회");
+      res.setData("userInfo", userInfo);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("아이디 중복체크 조회에 실패했습니다.");
     }
 
     return res;

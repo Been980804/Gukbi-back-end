@@ -6,16 +6,24 @@
 <mapper namespace="gukbi.bookplybackend.user.dao.UserMapper">
 
   <select id="selectUserInfo" parameterType="Map" resultType="Map">
-  SELECT 
+    SELECT 
       mem_no, mem_name, mem_id, mem_pwd,
       mem_phone, mem_birth, mem_email, mem_gender,
       mem_rent_yn, mem_favorite, mem_class, reg_date, mod_date
-  FROM
+    FROM
       member
-  WHERE   
+    WHERE   
       1=1
       AND mem_id = #{id}
       AND use_flag = 'Y'
-</select>
+  </select>
   
+  <select id="duplicate" parameterType="String" resultType="Map">
+    SELECT
+      count(*) as count
+    FROM
+      member
+    WHERE
+      mem_id = #{memId}
+  </select>
 </mapper>
