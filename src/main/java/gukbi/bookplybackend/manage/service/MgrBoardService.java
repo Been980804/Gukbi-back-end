@@ -50,4 +50,7 @@ public interface MgrBoardService {
 
   // 현재 페이지 희망도서목록 가져오기
   ResponseDTO getApplList(Map<String, Object> pageData);
+
+  // 희망도서 신청상태 변경
+  ResponseDTO setStatus(Map<String, Object> sqlData);
 }

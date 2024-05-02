@@ -255,11 +255,21 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     return res;
   }
 
+  @Override
+  @Transactional // 희망도서 신청상태 변경
+  public ResponseDTO setStatus(Map<String, Object> sqlData) {
+    ResponseDTO res = new ResponseDTO();
+    int result = manageMapper.setStatus(sqlData);
 
+    if(result == 1) {
+      res.setResCode(200);
+      res.setResMsg("희망도서 신청상태 변경");
+      res.setData("status", result);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("희망도서 신청상태 변경에 실패했습니다.");
+    }
 
-
-
-
-
-  
+    return res;
+  }
 }

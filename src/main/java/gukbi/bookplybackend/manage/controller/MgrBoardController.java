@@ -145,4 +145,11 @@ public class MgrBoardController {
     ResponseDTO res = boardService.getApplList(pageData);
     return res;
   }
+
+  // 희망도서 신청상태 변경
+  @PutMapping(value = "/appl/status")
+  public ResponseDTO setStatus(@RequestParam Map<String, Object> sqlData) {
+    ResponseDTO res = boardService.setStatus(sqlData);
+    return res;
+  }
 }

@@ -118,4 +118,7 @@ public interface MgrMapper {
 
   // 현재 페이지 희망도서목록 가져오기
   List<Map<String, Object>> getApplList(Map<String, Object> pageData);
+
+  // 희망도서 신청상태 변경
+  Integer setStatus(Map<String, Object> sqlData);
 }

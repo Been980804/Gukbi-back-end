@@ -179,7 +179,7 @@
   <!-- 희망도서전체목록 데이터 받기 -->
   <select id="getApplList" parameterType="Map" resultType="Map">
     SELECT
-      appl.appl_no, member.mem_name, appl.appl_title, appl.appl_author, appl.appl_publisher, appl.reg_date, appl.appl_state
+      appl.appl_no, appl.mem_no, member.mem_name, appl.appl_title, appl.appl_author, appl.appl_publisher, appl.reg_date, appl.appl_state
     FROM
       book_appl as appl
     JOIN
@@ -193,5 +193,14 @@
   </select>
 
   <!-- 희망도서 신청상태 변경 -->
-
+  <update id="setStatus" parameterType="Map">
+    UPDATE
+      book_appl
+    SET
+      appl_state = #{status},
+      mod_date = now()
+    WHERE
+      use_flag = 'Y'
+      AND mem_no = #{memNo}
+  </update>
 </mapper>
