@@ -201,6 +201,7 @@
       mod_date = now()
     WHERE
       use_flag = 'Y'
+      AND appl_no = #{applNo}
       AND mem_no = #{memNo}
   </update>
 </mapper>
