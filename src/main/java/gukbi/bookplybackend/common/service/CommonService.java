@@ -48,4 +48,7 @@ public interface CommonService {
 
   // 책바구니 목록 가져오기
   ResponseDTO basketList(String memNo);
+
+  // 도서대여내역 조회
+  ResponseDTO getBookStatus(String bookNo);
 }

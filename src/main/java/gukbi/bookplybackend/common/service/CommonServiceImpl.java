@@ -308,4 +308,22 @@ public class CommonServiceImpl implements CommonService {
 
     return res;
   }
+
+  @Override
+  @Transactional // 도서대여내역 조회
+  public ResponseDTO getBookStatus(String bookNo) {
+    ResponseDTO res = new ResponseDTO();
+    int result = commonMapper.getBookStatus(bookNo);
+
+    if(result == 1) {
+      res.setResCode(200);
+      res.setResMsg("도서대여내역 조회");
+      res.setData("status", result);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("도서대여내역 조회에 실패했습니다.");
+    }
+
+    return res;
+  }
 }

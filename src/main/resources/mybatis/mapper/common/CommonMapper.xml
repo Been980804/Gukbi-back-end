@@ -153,4 +153,15 @@
     WHERE
       basket.use_flag = 'Y'
   </select>
+
+  <!-- 도서대여내역 조회 -->
+  <select id="getBookStatus" parameterType="String" resultType="Integer">
+    SELECT
+      count(*)
+    FROM
+      rent
+    WHERE
+      use_flag = 'Y'
+      AND book_no = #{bookNo}
+  </select>
 </mapper>

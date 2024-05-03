@@ -130,4 +130,11 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     ResponseDTO res = commonService.basketList(memNo);
     return res;
   }
+
+  // 도서대여내역 조회
+  @GetMapping(value = "/main/bookInfo/status/{bookNo}")
+  public ResponseDTO getBookStatus(@PathVariable(value = "bookNo") String bookNo) {
+    ResponseDTO res = commonService.getBookStatus(bookNo);
+    return res;
+  }
 }

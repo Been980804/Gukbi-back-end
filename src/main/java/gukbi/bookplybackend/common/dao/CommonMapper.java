@@ -48,4 +48,7 @@ public interface CommonMapper {
 
   // 책바구니 목록 가져오기
   List<Map<String, Object>> basketList(String memNo);
+
+  // 도서대여내역 조회
+  Integer getBookStatus(String bookNo);
 }
