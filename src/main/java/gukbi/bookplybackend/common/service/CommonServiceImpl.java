@@ -315,7 +315,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     int result = commonMapper.getBookStatus(bookNo);
 
-    if(result == 1) {
+    if(result == 1 || result == 0) {
       res.setResCode(200);
       res.setResMsg("도서대여내역 조회");
       res.setData("status", result);
