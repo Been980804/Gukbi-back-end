@@ -163,5 +163,15 @@
     WHERE
       use_flag = 'Y'
       AND book_no = #{bookNo}
+  </select> 
+
+  <!-- 카테고리 목록 조회 -->
+  <select id="getCategory" resultType="Map">
+    SELECT
+      pf_no, pf_name
+    FROM
+      prefer
+    WHERE
+      use_flag = 'Y'
   </select>
 </mapper>

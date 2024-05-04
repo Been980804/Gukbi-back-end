@@ -51,4 +51,7 @@ public interface CommonService {
 
   // 도서대여내역 조회
   ResponseDTO getBookStatus(String bookNo);
+
+  // 카테고리 목록 조회
+  ResponseDTO getCategory();
 }

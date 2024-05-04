@@ -137,4 +137,11 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     ResponseDTO res = commonService.getBookStatus(bookNo);
     return res;
   }
+
+  // 카테고리 목록 조회
+  @GetMapping(value = "/main/category")
+  public ResponseDTO getCategory() {
+    ResponseDTO res = commonService.getCategory();
+    return res;
+  }
 }

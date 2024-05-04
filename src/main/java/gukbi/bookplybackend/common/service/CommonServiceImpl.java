@@ -326,4 +326,22 @@ public class CommonServiceImpl implements CommonService {
 
     return res;
   }
+
+  @Override
+  @Transactional // 카테고리 목록 조회
+  public ResponseDTO getCategory() {
+    ResponseDTO res = new ResponseDTO();
+    List<Map<String, Object>> categoryList = commonMapper.getCategory();
+
+    if(!categoryList.isEmpty()) {
+      res.setResCode(200);
+      res.setResMsg("관심분야 카테고리 목록 조회");
+      res.setData("category", categoryList);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("관심분야 카테고리 목록 조회에 실패했습니다.");
+    }
+
+    return res;
+  }
 }
