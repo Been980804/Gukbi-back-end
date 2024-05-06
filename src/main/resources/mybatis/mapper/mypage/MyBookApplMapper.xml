@@ -45,4 +45,27 @@
       and appl_state != '입고완료' 
       and appl_state != '입고중'
   </update>
+  <!-- 도서거래 등록 -->
+  <insert id="bookApplReg" parameterType="Map">
+    insert into
+      book_appl(
+        mem_no,
+        appl_title,
+        appl_author,
+        appl_publisher,
+        appl_state,
+        use_flag,
+        reg_date,
+        mod_date
+      ) values(
+        #{mem_no},
+        #{appl_title},
+        #{appl_author},
+        #{appl_publisher},
+        '신청중',
+        'Y',
+        now(),
+        now()
+      )
+  </insert>
 </mapper>

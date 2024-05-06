@@ -14,4 +14,6 @@ public interface MyBookApplService {
     ResponseDTO getHopeBookList(Map<String, Object> pageMap);
     // 희망도서 취소
     ResponseDTO cancelHopeBook(Map<String, String> reqBody);
+    // 도서거래 등록
+    ResponseDTO bookApplReg(Map<String, Object> reqBody);
 }

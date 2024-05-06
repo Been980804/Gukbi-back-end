@@ -64,4 +64,5 @@ public interface MyPageMapper {
     int getTradeCnt(String mem_no); // 거래내역 총 게시글 수 조회
     List<Map<String, String>> getTradeList(Map<String, Object> pageMap); // 거래내역 조회
     int deleteTrade(Map<String, Object> reqBody); // 거래내역 삭제
+    int bookApplReg(Map<String, Object> reqBody); // 도서거래 등록
 }

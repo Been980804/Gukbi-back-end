@@ -57,4 +57,12 @@ public class MyBookApplController {
         return res;
     }
     
+    // 도서거래 게시글 등록
+    @PostMapping(value="/bookApplReg")
+    public ResponseDTO postMethodName(@RequestBody Map<String, Object> reqBody) {
+        ResponseDTO res = bookApplService.bookApplReg(reqBody);
+        
+        return res;
+    }
+    
 }
