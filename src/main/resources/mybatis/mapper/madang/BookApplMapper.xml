@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gukbi.bookplybackend.madang.dao.MadangMapper">
+    <!-- 도서신청 게시글 수 조회 -->
+    <select id="hopeBookListCnt" parameterType="Map" resultType="Integer">
+        select
+            count(*)
+        from
+            book_appl
+        where
+            use_flag = 'Y'
+            <if test="search != null">
+                and ${column} like concat('%', #{search}, '%')
+            </if>
+    </select>
+
+    <select id="hopeBookList" parameterType="Map" resultType="Map">
+        select
+            book_appl.appl_no,
+            member.mem_name,
+            book_appl.appl_title,
+            book_appl.appl_author,
+            book_appl.appl_publisher,
+            book_appl.appl_state,
+            book_appl.reg_date
+        from
+            book_appl
+        join
+            member on book_appl.mem_no = member.mem_no
+        where
+            book_appl.use_flag = 'Y'
+            <if test="search != null">
+                and ${column} like concat('%', #{search}, '%')
+            </if>
+        limit #{nowPage}, #{showCnt}
+    </select>
+</mapper>

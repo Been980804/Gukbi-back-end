@@ -35,4 +35,8 @@ public interface MadangMapper {
     int updateNotiViews(String noti_no); // 공지사항 조회수 증가
     Map<String, Object> notiDetail(String notiNo); // 공지사항 상세보기
 
+    // 도서신청
+    int hopeBookListCnt(Map<String, Object> reqBody); // 도서신청 게시글 수 조회
+    List<Map<String, Object>> hopeBookList(Map<String, Object> pageMap); // 도서신청 게시글 조회
+
 }
