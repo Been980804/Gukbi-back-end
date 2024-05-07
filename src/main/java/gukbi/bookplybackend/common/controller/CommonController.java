@@ -1,6 +1,7 @@
 package gukbi.bookplybackend.common.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.common.service.CommonService;
 
 import java.util.Map;
+import java.time.LocalDate;
 import java.util.HashMap;
 
 @RestController
@@ -143,5 +145,11 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
   public ResponseDTO getCategory() {
     ResponseDTO res = commonService.getCategory();
     return res;
+  }
+
+  @Scheduled(cron = "0 09 23 * * ?")
+  public void getTime() {
+    LocalDate now = LocalDate.now();
+    System.out.println(now);
   }
 }
