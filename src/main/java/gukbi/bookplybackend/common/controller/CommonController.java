@@ -147,9 +147,8 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     return res;
   }
 
-  @Scheduled(cron = "0 09 23 * * ?")
-  public void getTime() {
-    LocalDate now = LocalDate.now();
-    System.out.println(now);
+  @Scheduled(cron = "0 57 16 * * ?")
+  public void sendMail() {
+    commonService.sendMail();
   }
 }

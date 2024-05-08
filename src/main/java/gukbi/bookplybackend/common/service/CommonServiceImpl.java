@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -17,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import gukbi.bookplybackend.common.dao.CommonMapper;
 import gukbi.bookplybackend.common.dto.ResponseDTO;
+import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class CommonServiceImpl implements CommonService {
@@ -32,6 +35,9 @@ public class CommonServiceImpl implements CommonService {
 
   @Value("${app.data4library.api-key}")
   private String authKey;
+
+  @Autowired
+  JavaMailSender mailSender;
 
   @Override
   @Transactional // 대메뉴 가져오기
@@ -347,7 +353,24 @@ public class CommonServiceImpl implements CommonService {
 
   @Override
   public void sendMail() {
-    List<Map<String, Object>> rentList = commonMapper.getOverdueRent();
-    System.out.println(rentList);
+    // List<Map<String, Object>> rentList = commonMapper.getOverdueRent();
+    // {mem_name=손인호, rent_date=2024-03-02T00:00, mem_email=ihson@korea.com},
+    // {mem_name=이현빈, rent_date=2024-03-02T00:00, mem_email=hblee@korea.com}
+    // System.out.println(rentList);
+
+    MimeMessage mailMessage = mailSender.createMimeMessage();
+
+    String[] mailList = {"dlsghths@gmail.com", "dlsghths79@naver.com"};
+    try {
+      MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, true, "UTF-8");
+      messageHelper.setFrom("dlsghths@gmail.com"); // 보내는 사람
+      messageHelper.setTo(mailList);
+      messageHelper.setSubject("북플리 도서관 도서 연체 관련 안내 메일");
+      messageHelper.setText("북플리 도서관 도서 연체 관련 안내 메일");
+      
+      mailSender.send(mailMessage);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
