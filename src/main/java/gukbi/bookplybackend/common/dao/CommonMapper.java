@@ -54,4 +54,7 @@ public interface CommonMapper {
 
   // 카테고리 목록 조회
   List<Map<String, Object>> getCategory();
+
+  // 연체중인 목록 조회
+  List<Map<String, Object>> getOverdueRent();
 }

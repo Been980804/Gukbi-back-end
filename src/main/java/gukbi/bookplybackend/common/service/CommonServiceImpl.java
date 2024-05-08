@@ -344,4 +344,10 @@ public class CommonServiceImpl implements CommonService {
 
     return res;
   }
+
+  @Override
+  public void sendMail() {
+    List<Map<String, Object>> rentList = commonMapper.getOverdueRent();
+    System.out.println(rentList);
+  }
 }
