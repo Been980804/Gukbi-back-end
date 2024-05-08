@@ -112,12 +112,15 @@
 
   <!-- 북플리 추천 목록 가져오기 -->
   <select id="getBookPly" resultType="Map">
-    SELECT ply.bpl_no, ply.bpl_name, ply.bpl_intro, ply.bpl_category,
+    SELECT ply.bpl_no, ply.bpl_name, ply.bpl_intro, ply.bpl_category, ply.book_cnt,
 	    (SELECT bpl.book_no FROM bpl_detail AS bpl
         WHERE bpl.bpl_no = ply.bpl_no and bpl.use_flag = 'Y' LIMIT 1) AS book_no,
 	    (SELECT book.book_url FROM bpl_detail AS bpl
 	      JOIN book ON bpl.book_no = book.book_no
-	      WHERE bpl.bpl_no = ply.bpl_no AND bpl.use_flag = 'Y' LIMIT 1) AS book_url
+	      WHERE bpl.bpl_no = ply.bpl_no AND bpl.use_flag = 'Y' LIMIT 1) AS book_url,
+      (SELECT prefer.pf_name FROM bpl_detail AS bpl
+        JOIN prefer ON prefer.pf_no = ply.bpl_category
+        WHERE bpl.bpl_no = ply.bpl_no AND bpl.use_flag = 'Y' LIMIT 1) AS pf_name
     FROM book_playlist AS ply
     WHERE ply.use_flag = 'Y';
   </select>
