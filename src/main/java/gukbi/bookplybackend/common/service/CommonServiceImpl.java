@@ -334,6 +334,24 @@ public class CommonServiceImpl implements CommonService {
   }
 
   @Override
+  @Transactional // 최신 대여내역 조회
+  public ResponseDTO getRentalRecent() {
+    ResponseDTO res = new ResponseDTO();
+    List<Map<String, Object>> rentList = commonMapper.getRentalRecent();
+
+    if(!rentList.isEmpty()) {
+      res.setResCode(200);
+      res.setResMsg("최신 대여내역 조회");
+      res.setData("rentList", rentList);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("최신 대여내역 조회에 실패했습니다.");
+    }
+
+    return res;
+  }
+
+  @Override
   @Transactional // 카테고리 목록 조회
   public ResponseDTO getCategory() {
     ResponseDTO res = new ResponseDTO();

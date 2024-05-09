@@ -14,7 +14,6 @@ import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.common.service.CommonService;
 
 import java.util.Map;
-import java.time.LocalDate;
 import java.util.HashMap;
 
 @RestController
@@ -140,6 +139,14 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     return res;
   }
 
+  // 최신 대여내역 조회
+  @GetMapping(value = "/main/rental/recent")
+  public ResponseDTO rentalRecent() {
+    ResponseDTO res = commonService.getRentalRecent();
+    return res;
+  }
+  
+
   // 카테고리 목록 조회
   @GetMapping(value = "/main/category")
   public ResponseDTO getCategory() {
@@ -147,6 +154,7 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     return res;
   }
 
+  // 특정 시간에 연체 내역에 대한 이메일 전송
   @Scheduled(cron = "0 57 16 * * ?")
   public void sendMail() {
     commonService.sendMail();

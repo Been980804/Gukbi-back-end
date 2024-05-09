@@ -52,6 +52,9 @@ public interface CommonMapper {
   // 도서대여내역 조회
   Integer getBookStatus(String bookNo);
 
+  // 최신 대여내역 조회
+  List<Map<String, Object>> getRentalRecent();
+
   // 카테고리 목록 조회
   List<Map<String, Object>> getCategory();
 
