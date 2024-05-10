@@ -1,0 +1,234 @@
+; <-- 테이블 생성 쿼리문 -->
+-- 1. 회원테이블
+CREATE TABLE `bookply`.`member` (
+  `mem_no` VARCHAR(10) NOT NULL COMMENT '회원코드',
+  `mem_name` VARCHAR(20) NOT NULL COMMENT '회원명',
+  `mem_id` VARCHAR(16) NOT NULL COMMENT '아이디\n특수기호 X, 영어랑 숫자포함',
+  `mem_pwd` VARCHAR(18) NOT NULL COMMENT '비밀번호\n8~18자리, 영어,숫자,특수기호 포함',
+  `mem_phone` VARCHAR(13) NULL COMMENT '전화번호',
+  `mem_birth` DATE NULL COMMENT '생년월일',
+  `mem_email` VARCHAR(30) NOT NULL COMMENT '이메일',
+  `mem_gender` VARCHAR(1) NULL COMMENT '성별\nW / M',
+  `mem_rent_yn` VARCHAR(1) NOT NULL DEFAULT 'Y' COMMENT '대여가능여부\nY / N default: Y',
+  `mem_favorite` VARCHAR(2) NOT NULL COMMENT '선호하는 카테고리',
+  `mem_class` INT NOT NULL DEFAULT 1 COMMENT '회원 구분\n0: 관리자/ 1: 유저 default:1',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\nY/ N default: Y',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`mem_no`),
+  UNIQUE INDEX `mem_id_UNIQUE` (`mem_id` ASC) VISIBLE)
+COMMENT = '회원 테이블';
+
+-- 2. 도서테이블
+CREATE TABLE `bookply`.`book` (
+  `book_no` VARCHAR(10) NOT NULL COMMENT '도서코드\nAPI 도서 순번 Value 값 가공',
+  `book_title` VARCHAR(200) NOT NULL COMMENT '도서명',
+  `book_author` VARCHAR(100) NOT NULL COMMENT '저자명',
+  `book_publisher` VARCHAR(30) NOT NULL COMMENT '출판사',
+  `book_category_no` VARCHAR(1) NULL COMMENT '카테고리 번호',
+  `book_category_name` VARCHAR(8) NULL COMMENT '카테고리명',
+  `book_pub_year` VARCHAR(4) NOT NULL COMMENT '출판년도',
+  `book_url` VARCHAR(1000) NOT NULL COMMENT '책표지 URL\n이미지 없을 때 엑박사진 대신 보여주기',
+  `book_isbn` VARCHAR(13) NOT NULL COMMENT 'isbn 13',
+  `book_sug` VARCHAR(1) NULL DEFAULT 'N' COMMENT '추천도서\nY: 들어갔던 도서, I: 현재 들어간 도서',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`book_no`),
+  UNIQUE INDEX `book_isbn_UNIQUE` (`book_isbn` ASC) VISIBLE)
+COMMENT = '도서 테이블';
+
+-- 3. 대여내역
+CREATE TABLE `bookply`.`rent` (
+  `rent_no` VARCHAR(10) NOT NULL COMMENT '대여코드',
+  `mem_no` VARCHAR(10) NOT NULL COMMENT '회원코드-FK\n회원 (회원코드)',
+  `book_no` VARCHAR(10) NOT NULL COMMENT '도서코드-FK\n도서 (도서코드)',
+  `rent_date` DATETIME NOT NULL COMMENT '대여일자',
+  `return_date` DATETIME NULL COMMENT '반납일자',
+  `return_state` VARCHAR(12) NOT NULL COMMENT '반납상태\n대여중, 정상반납, 연체, 연체 후 반납',
+  `use_flag` VARCHAR(45) NULL DEFAULT 'Y' COMMENT '사용여부\nY/N default: Y',
+  `reg_date` VARCHAR(45) NULL COMMENT '등록일시',
+  `mod_date` VARCHAR(45) NULL COMMENT '수정일시',
+  PRIMARY KEY (`rent_no`, `mem_no`, `book_no`))
+COMMENT = '대여내역 테이블';
+
+-- 4. 리뷰
+CREATE TABLE `bookply`.`review` (
+  `rent_no` VARCHAR(10) NOT NULL COMMENT '대여코드-FK\n대여 (대여코드)',
+  `mem_no` VARCHAR(10) NOT NULL COMMENT '회원코드-FK\n회원 (회원코드)',
+  `book_no` VARCHAR(10) NOT NULL COMMENT '도서코드-FK\n도서 (도서코드)',
+  `rev_scope` INT NOT NULL COMMENT '별점\n1, 2, 3, 4, 5',
+  `rev_content` VARCHAR(300) NULL COMMENT '리뷰내용',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\nY/N default: Y',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`rent_no`, `mem_no`, `book_no`))
+COMMENT = '리뷰 테이블';
+
+-- 5. 책바구니
+CREATE TABLE `bookply`.`book_basket` (
+  `mem_no` VARCHAR(10) NOT NULL COMMENT '회원코드-FK\n회원(회원코드)',
+  `book_no` VARCHAR(10) NOT NULL COMMENT '도서코드-FK\n도서(도서코드)',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\nY/N default: Y',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`mem_no`, `book_no`))
+COMMENT = '책바구니';
+
+-- 6. 문의내역
+CREATE TABLE `bookply`.`qna` (
+  `qna_no` INT auto_increment NOT NULL COMMENT '번호',
+  `qes_mem_no` VARCHAR(10) NOT NULL COMMENT '작성자\n회원코드-FK\n회원(회원코드)',
+  `qes_title` VARCHAR(100) NOT NULL COMMENT '제목',
+  `qes_content` VARCHAR(1000) NOT NULL COMMENT '문의내용',
+  `ans_mem_no` VARCHAR(10) NULL COMMENT '답변자\n회원코드-FK\n회원(회원코드)',
+  `ans_content` VARCHAR(1000) NULL COMMENT '답변 내용',
+  `qna_yn` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '공개여부\nY/N default: Y',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\nY/N default: Y',
+  `qes_reg_date` DATETIME NOT NULL COMMENT '문의 등록일시',
+  `qes_mod_date` DATETIME NULL COMMENT '문의 수정일시',
+  `ans_reg_date` DATETIME NULL COMMENT '답변 등록일시',
+  `ans_mod_date` DATETIME NULL COMMENT '답변 수정일시',
+  PRIMARY KEY (`qna_no`, `qes_mem_no`))
+COMMENT = '문의내역';
+
+-- 7. 자주하는 질문
+CREATE TABLE `bookply`.`faq` (
+  `faq_no` INT NOT NULL COMMENT '번호',
+  `faq_title` VARCHAR(100) NOT NULL COMMENT '제목',
+  `faq_content` VARCHAR(1000) NOT NULL COMMENT '내용',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\nY/N default: Y',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`faq_no`))
+COMMENT = '자주하는 질문';
+
+-- 8. 예약내역
+CREATE TABLE `bookply`.`book_reservation` (
+  `reserv_no` VARCHAR(10) NOT NULL COMMENT '예약코드',
+  `mem_no` VARCHAR(10) NOT NULL COMMENT '회원코드-FK\n회원(회원코드)',
+  `book_no` VARCHAR(10) NOT NULL COMMENT '도서코드-FK\n도서(도서코드)',
+  `reserv_date` DATETIME NOT NULL COMMENT '예약날짜',
+  `reserv_state` VARCHAR(12) NOT NULL COMMENT '예약완료, 예약취소',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\nY/N default: Y',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`reserv_no`, `mem_no`, `book_no`))
+COMMENT = '도서예약';
+
+-- 9. 북플리
+CREATE TABLE `bookply`.`book_playlist` (
+  `bpl_no` VARCHAR(10) NOT NULL COMMENT '북플리 코드',
+  `bpl_name` VARCHAR(50) NOT NULL COMMENT '북플리명\ndefault : OOO님의 플레이리스트',
+  `mem_no` VARCHAR(10) NOT NULL COMMENT '회원코드\n회원(회원코드)',
+  `like_cnt` INT NULL DEFAULT 0 COMMENT '좋아요수\ndefault : 0',
+  `book_cnt` INT NULL COMMENT '도서수',
+  `bpl_intro` VARCHAR(500) NULL COMMENT '소개글',
+  `bpl_category` VARCHAR(2) NOT NULL COMMENT '카테고리-FK\n관심분야(관심분야코드)',
+  `bpl_yn` VARCHAR(1) NOT NULL DEFAULT 'Y' COMMENT '공개여부\nY/N default: Y',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\ndefault : Y',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`bpl_no`, `mem_no`, `bpl_category`))
+COMMENT = '북플리';
+
+-- 10. 북플리 상세
+CREATE TABLE `bookply`.`bpl_detail` (
+  `bpl_no` VARCHAR(10) NOT NULL COMMENT '북플리코드-FK\n북플리(북플리코드)',
+  `book_no` VARCHAR(10) NOT NULL COMMENT '도서코드-FK\n도서(도서코드)',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\nY/N default: Y',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`bpl_no`, `book_no`))
+COMMENT = '북플리 상세';
+
+-- 11. 선호 북플리
+CREATE TABLE `bookply`.`like_bookply` (
+  `mem_no` VARCHAR(10) NOT NULL COMMENT '회원코드-FK\n회원(회원코드)',
+  `bpl_no` VARCHAR(10) NOT NULL COMMENT '북플리코드-FK\n북플리(북플리코드)',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\nY/N default: Y',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`mem_no`, `bpl_no`))
+COMMENT = '선호 북플리';
+
+-- 12. 관심분야
+CREATE TABLE `bookply`.`prefer` (
+  `pf_no` VARCHAR(2) NOT NULL COMMENT '관심분야코드',
+  `pf_name` VARCHAR(21) NOT NULL COMMENT '관심분야명',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\nY/N default: Y',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`pf_no`))
+COMMENT = '관심분야';
+
+-- 13. 공지사항
+CREATE TABLE `bookply`.`notification` (
+  `noti_no` INT NOT NULL COMMENT '번호',
+  `mem_no` VARCHAR(10) NOT NULL COMMENT '작성자\n회원코드-FK\n회원(회원코드)',
+  `noti_title` VARCHAR(100) NOT NULL COMMENT '제목',
+  `noti_subtitle` VARCHAR(100) NULL COMMENT '부제목',
+  `noti_content` VARCHAR(1000) NOT NULL COMMENT '내용',
+  `noti_cnt` INT NULL DEFAULT 0 COMMENT '조회수\ndefault : 0',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\nY/N default: Y',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`noti_no`, `mem_no`))
+COMMENT = '공지사항';
+
+-- 14. 도서신청
+CREATE TABLE `bookply`.`book_appl` (
+  `appl_no` VARCHAR(10) NOT NULL COMMENT '신청코드',
+  `mem_no` VARCHAR(10) NOT NULL COMMENT '회원코드-FK\n회원(회원코드)',
+  `appl_title` VARCHAR(200) NOT NULL COMMENT '도서명',
+  `appl_publisher` VARCHAR(30) NOT NULL COMMENT '출판사',
+  `appl_author` VARCHAR(100) NOT NULL COMMENT '저자',
+  `appl_state` VARCHAR(8) NOT NULL COMMENT '신청상태\n신청중, 입고중, 입고완료, 반려',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\nY/N default: Y',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`appl_no`, `mem_no`))
+COMMENT = '도서신청';
+
+-- 15. 도서중고거래
+CREATE TABLE `bookply`.`book_trade` (
+  `trade_no` INT auto_increment NOT NULL COMMENT '번호',
+  `mem_no` VARCHAR(10) NOT NULL COMMENT '판매자\n회원코드-FK\n회원(회원코드)',
+  `trade_title` VARCHAR(100) NOT NULL COMMENT '글 제목',
+  `trade_book_title` VARCHAR(100) NOT NULL COMMENT '책 제목',
+  `trade_publisher` VARCHAR(30) NOT NULL COMMENT '출판사',
+  `trade_price` VARCHAR(5) NOT NULL COMMENT '가격',
+  `trade_condition` VARCHAR(9) NOT NULL COMMENT '책 상태\n매우나쁨, 나쁨, 보통, 좋음, 매우좋음',
+  `trade_content` VARCHAR(1000) NULL COMMENT '설명',
+  `trade_state` VARCHAR(8) NOT NULL COMMENT '판매상태\n판매중, 판매완료',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부\nY/N default: Y',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`trade_no`, `mem_no`))
+COMMENT = '도서중고거래';
+drop table `bookply`.`book_trade`;
+
+-- 16. 메뉴
+CREATE TABLE `bookply`.`menu` (
+  `menu_no` VARCHAR(10) NOT NULL COMMENT '메뉴코드',
+  `menu_name` VARCHAR(40) NOT NULL COMMENT '메뉴명',
+  `menu_link` VARCHAR(20) NOT NULL COMMENT '링크',
+  `menu_icon` VARCHAR(40) COMMENT '메뉴아이콘',
+  `menu_level` VARCHAR(1) NOT NULL COMMENT '메뉴레벨',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`menu_no`))
+COMMENT = '메뉴 테이블';
+
+-- 17. 소메뉴
+CREATE TABLE `bookply`.`menu_sub` (
+  `menu_sub_no` VARCHAR(10) NOT NULL COMMENT '메뉴코드',
+  `menu_sub_name` VARCHAR(40) NOT NULL COMMENT '메뉴명',
+  `menu_no` VARCHAR(10) NOT NULL COMMENT '메뉴코드',
+  `menu_link` VARCHAR(20) NOT NULL COMMENT '링크',
+  `use_flag` VARCHAR(1) NULL DEFAULT 'Y' COMMENT '사용여부',
+  `reg_date` DATETIME NULL COMMENT '등록일시',
+  `mod_date` DATETIME NULL COMMENT '수정일시',
+  PRIMARY KEY (`menu_sub_no`, `menu_no`))
+COMMENT = '메뉴 테이블';
