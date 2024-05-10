@@ -1,0 +1,160 @@
+-- 트리거 생성 쿼리문
+-- member(회원) mem_no(회원코드) 자동 증가 삽입 trigger
+DELIMITER //
+CREATE TRIGGER tg_insert_member
+BEFORE INSERT ON member
+FOR EACH ROW
+BEGIN
+    DECLARE new_id INT;
+
+    SELECT SUBSTRING(mem_no, 4) INTO new_id FROM member ORDER BY CAST(SUBSTRING(mem_no, 4) AS UNSIGNED) DESC LIMIT 1;
+
+    IF new_id IS NULL THEN
+        SET new_id = 0;
+    END IF;
+    SET new_id = new_id + 1;
+
+    SET NEW.mem_no = CONCAT('mem', LPAD(new_id, 7, '0'));
+END;
+//
+DELIMITER ;
+
+-- book(도서) book_no(도서코드) 자동 증가 삽입 trigger
+DELIMITER //
+CREATE TRIGGER tg_insert_book
+BEFORE INSERT ON book
+FOR EACH ROW
+BEGIN
+    DECLARE new_id INT;
+
+    SELECT SUBSTRING(book_no, 5) INTO new_id FROM book ORDER BY CAST(SUBSTRING(book_no, 5) AS UNSIGNED) DESC LIMIT 1;
+
+    IF new_id IS NULL THEN
+        SET new_id = 0;
+    END IF;
+    SET new_id = new_id + 1;
+
+    SET NEW.book_no = CONCAT('book', LPAD(new_id, 6, '0'));
+END;
+//
+DELIMITER ;
+
+-- rent(대여) rent_no(대여코드) 자동 증가 삽입 trigger
+DELIMITER //
+CREATE TRIGGER tg_insert_rent
+BEFORE INSERT ON rent
+FOR EACH ROW
+BEGIN
+    DECLARE new_id INT;
+
+    SELECT SUBSTRING(rent_no, 5) INTO new_id FROM rent ORDER BY CAST(SUBSTRING(rent_no, 5) AS UNSIGNED) DESC LIMIT 1;
+
+    IF new_id IS NULL THEN
+        SET new_id = 0;
+    END IF;
+    SET new_id = new_id + 1;
+
+    SET NEW.rent_no = CONCAT('rent', LPAD(new_id, 6, '0'));
+END;
+//
+DELIMITER ;
+
+-- book_reservation(예약) reserv_no(예약코드) 자동 증가 삽입 trigger
+DELIMITER //
+CREATE TRIGGER tg_insert_book_reservation
+BEFORE INSERT ON book_reservation
+FOR EACH ROW
+BEGIN
+    DECLARE new_id INT;
+
+    SELECT SUBSTRING(reserv_no, 7) INTO new_id FROM book_reservation ORDER BY CAST(SUBSTRING(reserv_no, 7) AS UNSIGNED) DESC LIMIT 1;
+
+    IF new_id IS NULL THEN
+        SET new_id = 0;
+    END IF;
+    SET new_id = new_id + 1;
+
+    SET NEW.reserv_no = CONCAT('reserv', LPAD(new_id, 4, '0'));
+END;
+//
+DELIMITER ;
+
+-- book_playlist(북플리) bpl_no(북플리코드) 자동 증가 삽입 trigger
+DELIMITER //
+CREATE TRIGGER tg_insert_book_playlist
+BEFORE INSERT ON book_playlist
+FOR EACH ROW
+BEGIN
+    DECLARE new_id INT;
+
+    SELECT SUBSTRING(bpl_no, 4) INTO new_id FROM book_playlist ORDER BY CAST(SUBSTRING(bpl_no, 4) AS UNSIGNED) DESC LIMIT 1;
+
+    IF new_id IS NULL THEN
+        SET new_id = 0;
+    END IF;
+    SET new_id = new_id + 1;
+
+    SET NEW.bpl_no = CONCAT('bpl', LPAD(new_id, 7, '0'));
+END;
+//
+DELIMITER ;
+
+-- book_appl(도서신청) appl_no(신청코드) 자동 증가 삽입 trigger
+DELIMITER //
+CREATE TRIGGER tg_insert_book_appl
+BEFORE INSERT ON book_appl
+FOR EACH ROW
+BEGIN
+    DECLARE new_id INT;
+
+    SELECT SUBSTRING(appl_no, 5) INTO new_id FROM book_appl ORDER BY CAST(SUBSTRING(appl_no, 5) AS UNSIGNED) DESC LIMIT 1;
+
+    IF new_id IS NULL THEN
+        SET new_id = 0;
+    END IF;
+    SET new_id = new_id + 1;
+
+    SET NEW.appl_no = CONCAT('appl', LPAD(new_id, 6, '0'));
+END;
+//
+DELIMITER ;
+
+-- menu(메뉴) menu_no(메뉴코드) 자동 증가 삽입 trigger
+DELIMITER //
+CREATE TRIGGER tg_insert_menu
+BEFORE INSERT ON menu
+FOR EACH ROW
+BEGIN
+    DECLARE new_id INT;
+
+    SELECT SUBSTRING(menu_no, 5) INTO new_id FROM menu ORDER BY CAST(SUBSTRING(menu_no, 5) AS UNSIGNED) DESC LIMIT 1;
+
+    IF new_id IS NULL THEN
+        SET new_id = 0;
+    END IF;
+    SET new_id = new_id + 1;
+
+    SET NEW.menu_no = CONCAT('menu', LPAD(new_id, 6, '0'));
+END;
+//
+DELIMITER ;
+
+-- menu_sub(소메뉴) menu_sub_no(소메뉴코드) 자동 증가 삽입 trigger
+DELIMITER //
+CREATE TRIGGER tg_insert_menu_sub
+BEFORE INSERT ON menu_sub
+FOR EACH ROW
+BEGIN
+    DECLARE new_id INT;
+
+    SELECT SUBSTRING(menu_sub_no, 3) INTO new_id FROM menu_sub ORDER BY CAST(SUBSTRING(menu_sub_no, 3) AS UNSIGNED) DESC LIMIT 1;
+
+    IF new_id IS NULL THEN
+        SET new_id = 0;
+    END IF;
+    SET new_id = new_id + 1;
+
+    SET NEW.menu_sub_no = CONCAT('ms', LPAD(new_id, 8, '0'));
+END;
+//
+DELIMITER ;
