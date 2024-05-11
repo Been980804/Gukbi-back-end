@@ -11,5 +11,4 @@ public class BookplyBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BookplyBackendApplication.class, args);
 	}
-
 }

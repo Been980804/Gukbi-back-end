@@ -2,6 +2,7 @@ package gukbi.bookplybackend.common.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -119,8 +120,8 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
   }
 
   // 책바구니에 빼기
-  @PutMapping(value = "/main/bookInfo/basketDelete")
-  public ResponseDTO basketDelete(@RequestBody Map<String, Object> sqlData) {
+  @DeleteMapping(value = "/main/bookInfo/basketDelete")
+  public ResponseDTO basketDelete(@RequestParam Map<String, Object> sqlData) {
     ResponseDTO res = commonService.basketDelete(sqlData);
     return res;
   }
@@ -159,4 +160,6 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
   public void sendMail() {
     commonService.sendMail();
   }
+
+  
 }

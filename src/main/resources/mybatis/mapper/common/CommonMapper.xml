@@ -134,16 +134,13 @@
   </insert>
 
   <!-- 책바구니에 빼기 -->
-  <update id="basketDelete" parameterType="Map">
-    UPDATE
+  <delete id="basketDelete" parameterType="Map">
+    DELETE FROM
       book_basket
-    SET
-      use_flag = 'N',
-      mod_date = now()
     WHERE
       mem_no = #{memNo}
       AND book_no = #{bookNo}
-  </update>
+  </delete>
 
   <!-- 책바구니 목록 가져오기 -->
   <select id="basketList" parameterType="String" resultType="Map">
