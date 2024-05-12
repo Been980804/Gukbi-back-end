@@ -165,6 +165,17 @@
       AND book_no = #{bookNo}
   </select>
 
+  <!-- 미반납 도서대여내역 조회 -->
+  <update id="updateRentalList">
+    UPDATE
+      rent
+    SET
+      return_state = "연체중"
+    WHERE
+      return_date is null
+      AND date_add(rent_date, INTERVAL 14 DAY) &lt; now()
+  </update>
+
   <!-- 최신 대여내역 조회 -->
   <select id="getRentalRecent" resultType="Map">
     SELECT

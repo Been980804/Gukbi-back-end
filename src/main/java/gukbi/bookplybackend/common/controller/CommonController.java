@@ -161,5 +161,8 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     commonService.sendMail();
   }
 
-  
+  @Scheduled(cron = "0 0 09 * * ?")
+  public void updateRentalList() { // 매일 아침마다 대여내역을 최신화
+    commonService.updateRentalList();
+  }
 }

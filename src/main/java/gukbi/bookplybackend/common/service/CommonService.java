@@ -60,4 +60,7 @@ public interface CommonService {
 
   // 연체 내역 이메일 전송
   void sendMail();
+
+  // 매일 아침마다 대여내역을 최신화
+  void updateRentalList();
 }

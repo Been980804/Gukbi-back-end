@@ -391,4 +391,13 @@ public class CommonServiceImpl implements CommonService {
       e.printStackTrace();
     }
   }
+
+  @Override
+  public void updateRentalList() { // 매일 아침마다 대여내역을 최신화
+    try {
+      commonMapper.updateRentalList();  
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 }

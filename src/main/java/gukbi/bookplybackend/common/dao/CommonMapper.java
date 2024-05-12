@@ -60,4 +60,7 @@ public interface CommonMapper {
 
   // 연체중인 목록 조회
   List<Map<String, Object>> getOverdueRent();
+
+  // 반납일이 없는 대여내역 목록 최신화
+  void updateRentalList();
 }
