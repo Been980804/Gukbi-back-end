@@ -128,6 +128,13 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     return res;
   }
 
+  // 책바구니에 전체 빼기
+  @DeleteMapping(value = "/main/bookInfo/basketDeleteAll/{memNo}")
+  public ResponseDTO basketDeleteAll(@PathVariable(value = "memNo") String memNo) {
+    ResponseDTO res = commonService.basketDeleteAll(memNo);
+    return res;
+  }
+
   // 책바구니 목록 가져오기
   @GetMapping(value = "/main/bookInfo/basketList/{memNo}")
   public ResponseDTO basketList(@PathVariable(value = "memNo") String memNo) {

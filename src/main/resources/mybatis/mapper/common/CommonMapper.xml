@@ -142,6 +142,14 @@
       AND book_no = #{bookNo}
   </delete>
 
+  <!-- 책바구니에 전체 빼기 -->
+  <delete id="basketDeleteAll" parameterType="Map">
+    DELETE FROM
+      book_basket
+    WHERE
+      mem_no = #{memNo}
+  </delete>
+
   <!-- 책바구니 목록 가져오기 -->
   <select id="basketList" parameterType="String" resultType="Map">
     SELECT

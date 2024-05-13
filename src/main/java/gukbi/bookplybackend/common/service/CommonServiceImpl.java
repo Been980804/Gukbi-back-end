@@ -298,6 +298,25 @@ public class CommonServiceImpl implements CommonService {
   }
 
   @Override
+  @Transactional // 책바구니에 전체 빼기
+  public ResponseDTO basketDeleteAll(String memNo) {
+    ResponseDTO res = new ResponseDTO();
+    int result = commonMapper.basketDeleteAll(memNo);
+
+    System.out.println("result::::::::" + result);
+    if(result >= 1) {
+      res.setResCode(200);
+      res.setResMsg("책바구니 정보 삭제");
+      res.setData("basket", result);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("책바구니 정보 삭제에 실패했습니다.");
+    }
+
+    return res;
+  }
+
+  @Override
   @Transactional // 책바구니 목록 가져오기
   public ResponseDTO basketList(String memNo) {
     ResponseDTO res = new ResponseDTO();

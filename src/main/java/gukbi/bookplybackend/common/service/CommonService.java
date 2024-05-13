@@ -48,6 +48,9 @@ public interface CommonService {
   // 책바구니에 빼기
   ResponseDTO basketDelete(Map<String, Object> sqlData);
 
+  // 책바구니에 전체 빼기
+  ResponseDTO basketDeleteAll(String memNo);
+
   // 책바구니 목록 가져오기
   ResponseDTO basketList(String memNo);
 
