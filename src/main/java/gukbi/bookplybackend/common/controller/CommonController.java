@@ -15,7 +15,9 @@ import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.common.service.CommonService;
 
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class CommonController { // 공통으로 처리가 필요한 기능들 추가
@@ -130,6 +132,18 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
   @GetMapping(value = "/main/bookInfo/basketList/{memNo}")
   public ResponseDTO basketList(@PathVariable(value = "memNo") String memNo) {
     ResponseDTO res = commonService.basketList(memNo);
+    return res;
+  }
+
+  // 책바구니 내역 대여
+  @PostMapping(value = "/main/userInfo/bookRent")
+  public ResponseDTO bookRent(@RequestBody Map<String, Object> sqlData) {
+    List<Map<String, Object>> bookData = (List<Map<String, Object>>) sqlData.get("basket");
+    for(Map<String, Object> rent: bookData) {
+      rent.put("memNo", sqlData.get("memNo"));
+    }
+   
+    ResponseDTO res = commonService.bookRent(bookData);
     return res;
   }
 

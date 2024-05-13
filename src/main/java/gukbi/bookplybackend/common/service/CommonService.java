@@ -1,6 +1,8 @@
 package gukbi.bookplybackend.common.service;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 
@@ -48,6 +50,9 @@ public interface CommonService {
 
   // 책바구니 목록 가져오기
   ResponseDTO basketList(String memNo);
+
+  // 책바구니 내역 대여
+  ResponseDTO bookRent(List<Map<String, Object>> sqlData);
 
   // 도서대여내역 조회
   ResponseDTO getBookStatus(String bookNo);

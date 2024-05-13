@@ -154,6 +154,16 @@
       basket.use_flag = 'Y'
   </select>
 
+  <!-- 책바구니 내역 대여 -->
+  <insert id="bookRent" parameterType="Map">
+    INSERT INTO
+      rent(mem_no, book_no, rent_date, return_state, reg_date, mod_date)
+    VALUES
+      <foreach item="item" collection="list" separator=",">
+        (#{item.memNo}, #{item.book_no}, now(), "대여중", now(), now())
+      </foreach>
+  </insert>
+
   <!-- 도서대여내역 조회 -->
   <select id="getBookStatus" parameterType="String" resultType="Integer">
     SELECT

@@ -316,6 +316,24 @@ public class CommonServiceImpl implements CommonService {
   }
 
   @Override
+  @Transactional // 책바구니 내역 대여
+  public ResponseDTO bookRent(List<Map<String, Object>> sqlData) {
+    ResponseDTO res = new ResponseDTO();
+    Integer basket = commonMapper.bookRent(sqlData);
+
+    if(basket == sqlData.size()) {
+      res.setResCode(200);
+      res.setResMsg("책바구니 내역 대여 등록");
+      res.setData("bookRent", basket);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("책바구니 내역 대여 등록에 실패했습니다.");
+    }
+
+    return res;
+  }
+
+  @Override
   @Transactional // 도서대여내역 조회
   public ResponseDTO getBookStatus(String bookNo) {
     ResponseDTO res = new ResponseDTO();
