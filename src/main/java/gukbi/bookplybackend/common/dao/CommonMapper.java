@@ -38,7 +38,7 @@ public interface CommonMapper {
   List<Map<String, Object>> getNotiList();
 
   // 북플리 추천 목록 가져오기
-  List<Map<String, Object>> getBookPly();
+  List<Map<String, Object>> getBookPly(String favorite);
 
   // 책바구니에 담기
   Integer basket(Map<String, Object> sqlData);

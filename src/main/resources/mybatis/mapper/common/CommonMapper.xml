@@ -111,7 +111,7 @@
   </select>
 
   <!-- 북플리 추천 목록 가져오기 -->
-  <select id="getBookPly" resultType="Map">
+  <select id="getBookPly" parameterType="String" resultType="Map">
     SELECT ply.bpl_no, ply.bpl_name, ply.bpl_intro, ply.bpl_category, ply.book_cnt,
 	    (SELECT bpl.book_no FROM bpl_detail AS bpl
         WHERE bpl.bpl_no = ply.bpl_no and bpl.use_flag = 'Y' LIMIT 1) AS book_no,
@@ -122,7 +122,9 @@
         JOIN prefer ON prefer.pf_no = ply.bpl_category
         WHERE bpl.bpl_no = ply.bpl_no AND bpl.use_flag = 'Y' LIMIT 1) AS pf_name
     FROM book_playlist AS ply
-    WHERE ply.use_flag = 'Y';
+    WHERE
+      ply.use_flag = 'Y'
+      AND ply.bpl_category = #{favorite};
   </select>
 
   <!-- 책바구니에 담기 -->

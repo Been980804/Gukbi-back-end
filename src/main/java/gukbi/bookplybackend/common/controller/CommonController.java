@@ -108,9 +108,9 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
   }
 
   // 북플리 추천 목록 가져오기
-  @GetMapping(value = "/main/bookPly")
-  public ResponseDTO getBookPly() {
-    ResponseDTO res = commonService.getBookPly();
+  @GetMapping(value = "/main/bookPly/{favorite}")
+  public ResponseDTO getBookPly(@PathVariable(value = "favorite") String favorite) {
+    ResponseDTO res = commonService.getBookPly(favorite);
     return res;
   }
 

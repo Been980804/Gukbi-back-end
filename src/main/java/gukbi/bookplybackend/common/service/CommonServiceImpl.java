@@ -238,9 +238,9 @@ public class CommonServiceImpl implements CommonService {
 
   @Override
   @Transactional // 북플리 추천 목록 가져오기
-  public ResponseDTO getBookPly() {
+  public ResponseDTO getBookPly(String favorite) {
     ResponseDTO res = new ResponseDTO();
-    List<Map<String, Object>> bookPlyList = commonMapper.getBookPly();
+    List<Map<String, Object>> bookPlyList = commonMapper.getBookPly(favorite);
 
     if(!bookPlyList.isEmpty()) {
       res.setResCode(200);
@@ -303,7 +303,6 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     int result = commonMapper.basketDeleteAll(memNo);
 
-    System.out.println("result::::::::" + result);
     if(result >= 1) {
       res.setResCode(200);
       res.setResMsg("책바구니 정보 삭제");
