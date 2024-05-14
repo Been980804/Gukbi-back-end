@@ -66,6 +66,9 @@ public interface CommonService {
   // 카테고리 목록 조회
   ResponseDTO getCategory();
 
+  // 예약내역 조회
+  ResponseDTO getReservation();
+
   // 연체 내역 이메일 전송
   void sendMail();
 

@@ -15,7 +15,6 @@ import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.common.service.CommonService;
 
 import java.util.Map;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -168,11 +167,17 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     return res;
   }
   
-
   // 카테고리 목록 조회
   @GetMapping(value = "/main/category")
   public ResponseDTO getCategory() {
     ResponseDTO res = commonService.getCategory();
+    return res;
+  }
+
+  // 예약내역 조회
+  @GetMapping(value = "/main/bookInfo/reservation")
+  public ResponseDTO getReservation() {
+    ResponseDTO res = commonService.getReservation();
     return res;
   }
 

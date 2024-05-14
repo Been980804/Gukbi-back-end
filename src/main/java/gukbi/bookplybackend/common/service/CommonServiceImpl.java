@@ -406,6 +406,24 @@ public class CommonServiceImpl implements CommonService {
   }
 
   @Override
+  @Transactional // 예약내역 조회
+  public ResponseDTO getReservation() {
+    ResponseDTO res = new ResponseDTO();
+    List<Map<String, Object>> reservationList = commonMapper.getReservation();
+
+    if(!reservationList.isEmpty()) {
+      res.setResCode(200);
+      res.setResMsg("예약내역 목록 조회");
+      res.setData("reservation", reservationList);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("예약내역 목록 조회에 실패했습니다.");
+    }
+
+    return res;
+  }
+
+  @Override
   public void sendMail() {
     // List<Map<String, Object>> rentList = commonMapper.getOverdueRent();
     // {mem_name=손인호, rent_date=2024-03-02T00:00, mem_email=ihson@korea.com},
