@@ -240,6 +240,6 @@
         book_reservation
       WHERE use_flag = 'Y'
         ORDER BY reserv_date DESC LIMIT 100) AS reserv
-    GROUP BY reserv.book_no;
+    GROUP BY reserv.book_no limit 5;
   </select>
 </mapper>

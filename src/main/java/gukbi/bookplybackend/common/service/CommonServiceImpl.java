@@ -411,7 +411,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> reservationList = commonMapper.getReservation();
 
-    if(!reservationList.isEmpty()) {
+    if(!reservationList.isEmpty()) { 
       res.setResCode(200);
       res.setResMsg("예약내역 목록 조회");
       res.setData("reservation", reservationList);
