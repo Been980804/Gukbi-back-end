@@ -232,10 +232,14 @@
   <!-- 예약내역 목록 조회 -->
   <select id="getReservation" resultType="Map">
     SELECT
-      reserv_no
+      COUNT(reserv.book_no), reserv.book_no
     FROM
-      book_reservation
-    WHERE
-      use_flag = 'Y'
+      (SELECT
+        *
+      FROM
+        book_reservation
+      WHERE use_flag = 'Y'
+        ORDER BY reserv_date DESC LIMIT 100) AS reserv
+    GROUP BY reserv.book_no;
   </select>
 </mapper>
