@@ -159,13 +159,6 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     ResponseDTO res = commonService.getBookStatus(bookNo);
     return res;
   }
-
-  // 최신 대여내역 조회
-  @GetMapping(value = "/main/rental/recent")
-  public ResponseDTO rentalRecent() {
-    ResponseDTO res = commonService.getRentalRecent();
-    return res;
-  }
   
   // 카테고리 목록 조회
   @GetMapping(value = "/main/category")

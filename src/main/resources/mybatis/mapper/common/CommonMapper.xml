@@ -195,16 +195,6 @@
       return_date is null
       AND date_add(rent_date, INTERVAL 14 DAY) &lt; now()
   </update>
-
-  <!-- 최신 대여내역 조회 -->
-  <select id="getRentalRecent" resultType="Map">
-    SELECT
-      *
-    FROM
-      rent
-    WHERE
-      use_flag = 'Y'
-  </select>
   
   <!-- 카테고리 목록 조회 -->
   <select id="getCategory" resultType="Map">
