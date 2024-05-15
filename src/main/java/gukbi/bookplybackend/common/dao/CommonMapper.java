@@ -69,4 +69,7 @@ public interface CommonMapper {
 
   // 반납일이 없는 대여내역 목록 최신화
   void updateRentalList();
+
+  // 리뷰내역 조회
+  List<Map<String, Object>> getReview();
 }

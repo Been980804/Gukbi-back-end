@@ -222,7 +222,8 @@
   <!-- 예약내역 목록 조회 -->
   <select id="getReservation" resultType="Map">
     SELECT
-      COUNT(reserv.book_no), reserv.book_no, book.book_title, book.book_publisher, book.book_category_no, book.book_category_name, book.book_url
+      COUNT(reserv.book_no), reserv.book_no, book.book_title, book.book_publisher,
+       book.book_category_no, book.book_category_name, book.book_url, book.book_isbn
     FROM
       (SELECT
         *
@@ -232,5 +233,15 @@
         ORDER BY reserv_date DESC LIMIT 100) AS reserv
     JOIN book ON reserv.book_no = book.book_no
     GROUP BY reserv.book_no limit 5;
+  </select>
+
+  <!-- 리뷰내역 조회 -->
+  <select id="getReview" resultType="Map">
+    SELECT
+      rent_no, rev_scope, rev_content, mem_no
+    FROM
+      review
+    WHERE
+      use_flag = 'Y'
   </select>
 </mapper>

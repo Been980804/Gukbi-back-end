@@ -184,4 +184,10 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
   public void updateRentalList() { // 매일 아침마다 대여내역을 최신화
     commonService.updateRentalList();
   }
+
+  @GetMapping(value = "/main/review")
+  public ResponseDTO getReview() {
+    ResponseDTO res = commonService.getReview();
+    return res;
+  }
 }

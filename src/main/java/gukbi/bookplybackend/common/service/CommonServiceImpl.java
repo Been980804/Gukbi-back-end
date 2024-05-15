@@ -436,4 +436,22 @@ public class CommonServiceImpl implements CommonService {
       e.printStackTrace();
     }
   }
+
+  @Override
+  @Transactional(readOnly = true) // 리뷰 내역 조회
+  public ResponseDTO getReview() {
+    ResponseDTO res = new ResponseDTO();
+    List<Map<String, Object>> reviewList = commonMapper.getReview();
+
+    if (!reviewList.isEmpty()) { 
+      res.setResCode(200);
+      res.setResMsg("리뷰내역 조회");
+      res.setData("review", reviewList);
+    } else {
+      res.setResCode(300);
+      res.setResMsg("리뷰내역 조회에 실패했습니다.");
+    }
+
+    return res;
+  }
 }

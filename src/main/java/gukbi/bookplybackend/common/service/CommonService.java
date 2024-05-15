@@ -71,4 +71,7 @@ public interface CommonService {
 
   // 매일 아침마다 대여내역을 최신화
   void updateRentalList();
+
+  // 리뷰 내역 조회
+  ResponseDTO getReview();
 }
