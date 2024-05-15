@@ -185,7 +185,7 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     commonService.updateRentalList();
   }
 
-  @GetMapping(value = "/main/review")
+  @GetMapping(value = "/main/bookInfo/review")
   public ResponseDTO getReview() {
     ResponseDTO res = commonService.getReview();
     return res;
