@@ -56,12 +56,13 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
 
   // 도서전체목록 데이터 받기
   @GetMapping(value = "/main/bookList/{currentPage}")
-  public ResponseDTO getBookList(@PathVariable(value = "currentPage") int currentPage, @RequestParam Map<String, String> sqlData) {
+  public ResponseDTO getBookList(@PathVariable(value = "currentPage") int currentPage,
+      @RequestParam Map<String, String> sqlData) {
     Map<String, Object> pageData = new HashMap<String, Object>();
     pageData.put("recordPage", recordPage);
     pageData.put("currentPage", (currentPage - 1) * 10);
     pageData.put("search", sqlData.get("search"));
-    
+
     ResponseDTO res = commonService.getBookList(pageData);
     return res;
   }
@@ -89,12 +90,13 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
 
   // 카테고리 도서전체목록 데이터 받기
   @GetMapping(value = "/main/catList/{currentPage}")
-  public ResponseDTO getCatList(@PathVariable(value = "currentPage") int currentPage, @RequestParam Map<String, String> sqlData) {
+  public ResponseDTO getCatList(@PathVariable(value = "currentPage") int currentPage,
+      @RequestParam Map<String, String> sqlData) {
     Map<String, Object> pageData = new HashMap<String, Object>();
     pageData.put("recordPage", recordPage);
     pageData.put("currentPage", (currentPage - 1) * 10);
     pageData.put("menuName", sqlData.get("menuName"));
-    
+
     ResponseDTO res = commonService.getCatList(pageData);
     return res;
   }
@@ -145,10 +147,10 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
   @PostMapping(value = "/main/userInfo/bookRent")
   public ResponseDTO bookRent(@RequestBody Map<String, Object> sqlData) {
     List<Map<String, Object>> bookData = (List<Map<String, Object>>) sqlData.get("basket");
-    for(Map<String, Object> rent: bookData) {
+    for (Map<String, Object> rent : bookData) {
       rent.put("memNo", sqlData.get("memNo"));
     }
-   
+
     ResponseDTO res = commonService.bookRent(bookData);
     return res;
   }
@@ -159,7 +161,7 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     ResponseDTO res = commonService.getBookStatus(bookNo);
     return res;
   }
-  
+
   // 카테고리 목록 조회
   @GetMapping(value = "/main/category")
   public ResponseDTO getCategory() {
