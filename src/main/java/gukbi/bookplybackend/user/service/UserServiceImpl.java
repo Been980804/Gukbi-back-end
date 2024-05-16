@@ -23,10 +23,10 @@ public class UserServiceImpl implements UserService {
 
     Map<String, String> resMap = userMapper.selectUserInfo(reqBody);
 
-    if(null != resMap) {
+    if (null != resMap) {
       String pwd = reqBody.get("pwd");
 
-      if(pwd.equals(resMap.get("mem_pwd"))) {
+      if (pwd.equals(resMap.get("mem_pwd"))) {
         res.setResCode(200);
         res.setResMsg("Login Success");
         res.setData("userInfo", resMap);
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         res.setResCode(300);
         res.setResMsg("ID 또는 PW가 일치하지 않습니다.");
       }
-    } else {            
+    } else {
       res.setResCode(300);
       res.setResMsg("ID 또는 PW가 일치하지 않습니다.");
     }
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     ResponseDTO res = new ResponseDTO();
     Map<String, Object> userInfo = userMapper.duplicate(memId);
 
-    if(userInfo != null) {
+    if (userInfo != null) {
       res.setResCode(200);
       res.setResMsg("아이디 중복체크 조회");
       res.setData("userInfo", userInfo);
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
       ResponseDTO res = new ResponseDTO();
       int result = userMapper.join(sqlData);
 
-      if(result == 1) {
+      if (result == 1) {
         res.setResCode(200);
         res.setResMsg("회원가입 회원 정보 등록");
         res.setData("user", result);
@@ -84,5 +84,5 @@ public class UserServiceImpl implements UserService {
       res.setResMsg("이미 등록되어 있는 정보 입니다.");
       return res;
     }
-  }  
+  }
 }

@@ -20,7 +20,7 @@ import gukbi.bookplybackend.manage.service.MgrBoardService;
 @RestController
 @RequestMapping("/manage/board")
 public class MgrBoardController {
-  
+
   private static final int recordPage = 10;
 
   @Autowired
@@ -38,13 +38,14 @@ public class MgrBoardController {
 
   // 공지사항 전체목록 데이터 받기
   @GetMapping(value = "/notice/notiList/{currentPage}")
-  public ResponseDTO getNotiList(@PathVariable(value = "currentPage") int currentPage, @RequestParam Map<String, String> sqlData) {
+  public ResponseDTO getNotiList(@PathVariable(value = "currentPage") int currentPage,
+      @RequestParam Map<String, String> sqlData) {
     Map<String, Object> pageData = new HashMap<String, Object>();
     pageData.put("recordPage", recordPage);
     pageData.put("currentPage", (currentPage - 1) * 10);
     pageData.put("column", sqlData.get("column"));
     pageData.put("search", sqlData.get("search"));
-    
+
     ResponseDTO res = boardService.getNotiList(pageData);
     return res;
   }
@@ -72,13 +73,14 @@ public class MgrBoardController {
 
   // 문의사항 전체목록 데이터 받기
   @GetMapping(value = "/inquiry/inquiryList/{currentPage}")
-  public ResponseDTO getInquiryList(@PathVariable(value = "currentPage") int currentPage, @RequestParam Map<String, String> sqlData) {
+  public ResponseDTO getInquiryList(@PathVariable(value = "currentPage") int currentPage,
+      @RequestParam Map<String, String> sqlData) {
     Map<String, Object> pageData = new HashMap<String, Object>();
     pageData.put("recordPage", recordPage);
     pageData.put("currentPage", (currentPage - 1) * 10);
     pageData.put("column", sqlData.get("column"));
     pageData.put("search", sqlData.get("search"));
-    
+
     ResponseDTO res = boardService.getInquiryList(pageData);
     return res;
   }
@@ -94,7 +96,7 @@ public class MgrBoardController {
   @PutMapping(value = "/inquiry/answer")
   public ResponseDTO registAnswer(@RequestBody Map<String, Object> sqlData) {
     Map<String, Object> a = objectMapper.convertValue(sqlData.get("params"), Map.class);
- 
+
     ResponseDTO res = boardService.registAnswer(a);
     return res;
   }
@@ -108,13 +110,14 @@ public class MgrBoardController {
 
   // 도서거래 전체목록 데이터 받기
   @GetMapping(value = "/trade/tradeList/{currentPage}")
-  public ResponseDTO getTradeList(@PathVariable(value = "currentPage") int currentPage, @RequestParam Map<String, String> sqlData) {
+  public ResponseDTO getTradeList(@PathVariable(value = "currentPage") int currentPage,
+      @RequestParam Map<String, String> sqlData) {
     Map<String, Object> pageData = new HashMap<String, Object>();
     pageData.put("recordPage", recordPage);
     pageData.put("currentPage", (currentPage - 1) * 10);
     pageData.put("column", sqlData.get("column"));
     pageData.put("search", sqlData.get("search"));
-    
+
     ResponseDTO res = boardService.getTradeList(pageData);
     return res;
   }
@@ -135,13 +138,14 @@ public class MgrBoardController {
 
   // 희망도서 전체목록 데이터 받기
   @GetMapping(value = "/appl/applList/{currentPage}")
-  public ResponseDTO getApplList(@PathVariable(value = "currentPage") int currentPage, @RequestParam Map<String, String> sqlData) {
+  public ResponseDTO getApplList(@PathVariable(value = "currentPage") int currentPage,
+      @RequestParam Map<String, String> sqlData) {
     Map<String, Object> pageData = new HashMap<String, Object>();
     pageData.put("recordPage", recordPage);
     pageData.put("currentPage", (currentPage - 1) * 10);
     pageData.put("column", sqlData.get("column"));
     pageData.put("search", sqlData.get("search"));
-    
+
     ResponseDTO res = boardService.getApplList(pageData);
     return res;
   }

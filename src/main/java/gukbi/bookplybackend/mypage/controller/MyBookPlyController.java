@@ -21,23 +21,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/mypage/bookPly")
 public class MyBookPlyController {
-    
+
   private static final int showCnt = 3;
 
   @Autowired
   private final MyBookPlyService bookPlyService;
 
   // 북플리 총 개수 조회
-  @GetMapping(value="/bookPlyCnt/{mem_no}")
+  @GetMapping(value = "/bookPlyCnt/{mem_no}")
   public ResponseDTO getBookPlyCnt(@PathVariable("mem_no") String mem_no) {
     ResponseDTO res = bookPlyService.getBookPlyCnt(mem_no);
     return res;
   }
-  
 
   // 북플리 목록 조회
-  @GetMapping(value="/bookPlyList/{nowPage}")
-  public ResponseDTO getBookPlyList(@PathVariable("nowPage") int nowPage, @RequestParam Map<String,String> reqBody){
+  @GetMapping(value = "/bookPlyList/{nowPage}")
+  public ResponseDTO getBookPlyList(@PathVariable("nowPage") int nowPage, @RequestParam Map<String, String> reqBody) {
     Map<String, Object> pageMap = new HashMap<>();
     pageMap.put("showCnt", showCnt);
     pageMap.put("nowPage", (nowPage - 1) * 3);
@@ -48,62 +47,62 @@ public class MyBookPlyController {
   }
 
   // 공개여부 수정
-  @PutMapping(value="/updateVisibility")
-  public ResponseDTO updateVisibility(@RequestBody Map<String,String> reqBody) {
+  @PutMapping(value = "/updateVisibility")
+  public ResponseDTO updateVisibility(@RequestBody Map<String, String> reqBody) {
     ResponseDTO res = bookPlyService.updateVisibility(reqBody);
     return res;
   }
 
   // 북플리 상세보기 조회
-  @GetMapping(value="/getDetailBookList/{bpl_no}")
-  public ResponseDTO getDetailBookList(@PathVariable("bpl_no") String bpl_no, @RequestParam("mem_no") String mem_no){
+  @GetMapping(value = "/getDetailBookList/{bpl_no}")
+  public ResponseDTO getDetailBookList(@PathVariable("bpl_no") String bpl_no, @RequestParam("mem_no") String mem_no) {
     ResponseDTO res = bookPlyService.getDetailBookList(bpl_no, mem_no);
     return res;
   }
 
   // 북플리 좋아요
-  @PostMapping(value="/updateLike")
-  public ResponseDTO updateLike(@RequestBody Map<String, String> reqBody){
+  @PostMapping(value = "/updateLike")
+  public ResponseDTO updateLike(@RequestBody Map<String, String> reqBody) {
     ResponseDTO res = bookPlyService.updateLike(reqBody);
     return res;
   }
 
   // 북플리 생성
-  @PostMapping(value="/createBpl")
-  public ResponseDTO createBpl(@RequestBody Map<String, String> reqBody){
+  @PostMapping(value = "/createBpl")
+  public ResponseDTO createBpl(@RequestBody Map<String, String> reqBody) {
     ResponseDTO res = bookPlyService.createBpl(reqBody);
     return res;
   }
 
   // 북플리 일괄 삭제
-  @PostMapping(value="/deleteBpl")
+  @PostMapping(value = "/deleteBpl")
   public ResponseDTO deleteBpl(@RequestBody Map<String, Object> reqBody) {
     ResponseDTO res = bookPlyService.deleteBpl(reqBody);
     return res;
   }
-  
+
   // 북플리내 책 일괄 삭제
-  @PostMapping(value="/deleteBook")
+  @PostMapping(value = "/deleteBook")
   public ResponseDTO deleteBook(@RequestBody Map<String, Object> reqBody) {
     ResponseDTO res = bookPlyService.deleteBook(reqBody);
     return res;
   }
-  
+
   // 북플리 정보 수정
-  @PostMapping(value="/updateBpl")
+  @PostMapping(value = "/updateBpl")
   public ResponseDTO updateBpl(@RequestBody Map<String, String> reqBody) {
     ResponseDTO res = bookPlyService.updateBpl(reqBody);
     return res;
   }
-  
+
   // 북플리에 책 담기
-  @PostMapping(value="/addBpl")
-  public ResponseDTO addBpl(@RequestBody Map<String,Object> reqBody) {
+  @PostMapping(value = "/addBpl")
+  public ResponseDTO addBpl(@RequestBody Map<String, Object> reqBody) {
     ResponseDTO res = bookPlyService.addBpl(reqBody);
     return res;
   }
-  
-  @GetMapping(value="MyBookPlyList/{mem_no}")
+
+  @GetMapping(value = "MyBookPlyList/{mem_no}")
   public ResponseDTO getMyBookPlyList(@PathVariable("mem_no") String mem_no) {
     ResponseDTO res = bookPlyService.getMyBookPlyList(mem_no);
     return res;

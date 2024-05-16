@@ -16,12 +16,12 @@ import gukbi.bookplybackend.user.service.UserService;
 @RestController
 @RequestMapping("/user")
 public class userController {
-  
+
   @Autowired
   UserService userService;
 
   // 로그인
-  @PostMapping(value="/login")
+  @PostMapping(value = "/login")
   public ResponseDTO login(@RequestBody Map<String, String> reqBody) {
     ResponseDTO res = userService.login(reqBody);
     return res;

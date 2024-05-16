@@ -46,7 +46,6 @@ public interface MgrMapper {
   // 추천도서 정보 가져오기
   Map<String, Object> sugBookInfo();
 
-
   // 총 회원 개수 가져오기
   Integer getUserCount(Map<String, String> sqlData);
 
@@ -65,20 +64,17 @@ public interface MgrMapper {
   // 회원 연체내역 총 개수
   Integer getOverdueCount(String memNo);
 
-
   // 총 회원 대여/연체정보 개수 가져오기
   Integer getRentCount(Map<String, String> sqlData);
 
   // 회원 대여/연체정보 데이터 받기
   List<Map<String, Object>> getRentList(Map<String, Object> pageData);
 
-
   // 총 예약 개수 가져오기
   Integer getReservCount(Map<String, String> sqlData);
 
   // 현재 페이지 예약목록 가져오기
   List<Map<String, Object>> getReservList(Map<String, Object> pageData);
-
 
   // 총 공지사항 개수 가져오기
   Integer getNotiCount(Map<String, String> sqlData);

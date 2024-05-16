@@ -35,20 +35,20 @@ public class RentController {
   }
 
   // 대여했던 총 도서 수
-  @GetMapping(value="/rentedCnt/{mem_no}")
+  @GetMapping(value = "/rentedCnt/{mem_no}")
   public ResponseDTO getRentedCnt(@PathVariable("mem_no") String mem_no) {
     ResponseDTO res = rentService.getRentedCnt(mem_no);
     return res;
   }
-  
+
   // 대여했던 도서 리스트 조회
   @GetMapping(value = "/rentedList/{nowPage}")
-  public ResponseDTO rentedList(@PathVariable("nowPage") int nowPage , @RequestParam Map<String,String> reqBody) {
+  public ResponseDTO rentedList(@PathVariable("nowPage") int nowPage, @RequestParam Map<String, String> reqBody) {
     Map<String, Object> pageMap = new HashMap<>();
     pageMap.put("showCnt", showCnt);
     pageMap.put("nowPage", (nowPage - 1) * 10);
     pageMap.put("mem_no", reqBody.get("mem_no"));
-    
+
     ResponseDTO res = rentService.getRentedList(pageMap);
     return res;
   }
@@ -82,9 +82,9 @@ public class RentController {
   }
 
   // 도서 예약 취소
-  @PostMapping(value="/cancelReserveBook")
+  @PostMapping(value = "/cancelReserveBook")
   public ResponseDTO cancelReserveBook(@RequestBody Map<String, String> reqBody) {
-    ResponseDTO res =rentService.cancelReserveBook(reqBody);
+    ResponseDTO res = rentService.cancelReserveBook(reqBody);
     return res;
   }
 }

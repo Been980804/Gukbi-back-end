@@ -16,7 +16,7 @@ import gukbi.bookplybackend.manage.service.MgrReservService;
 @RestController
 @RequestMapping("/manage/reserv")
 public class MgrReservController {
-  
+
   private static final int recordPage = 10;
 
   @Autowired
@@ -31,13 +31,14 @@ public class MgrReservController {
 
   // 예약전체목록 데이터 받기
   @GetMapping(value = "/reservList/{currentPage}")
-  public ResponseDTO getBookList(@PathVariable(value = "currentPage") int currentPage, @RequestParam Map<String, String> sqlData) {
+  public ResponseDTO getBookList(@PathVariable(value = "currentPage") int currentPage,
+      @RequestParam Map<String, String> sqlData) {
     Map<String, Object> pageData = new HashMap<String, Object>();
     pageData.put("recordPage", recordPage);
     pageData.put("currentPage", (currentPage - 1) * 10);
     pageData.put("column", sqlData.get("column"));
     pageData.put("search", sqlData.get("search"));
-    
+
     ResponseDTO res = reservService.getReservList(pageData);
     return res;
   }

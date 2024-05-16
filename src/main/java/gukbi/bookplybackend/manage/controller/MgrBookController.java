@@ -34,13 +34,14 @@ public class MgrBookController { // 도서목록 관련 기능
 
   // 도서전체목록 데이터 받기
   @GetMapping(value = "/bookList/{currentPage}")
-  public ResponseDTO getBookList(@PathVariable(value = "currentPage") int currentPage, @RequestParam Map<String, String> sqlData) {
+  public ResponseDTO getBookList(@PathVariable(value = "currentPage") int currentPage,
+      @RequestParam Map<String, String> sqlData) {
     Map<String, Object> pageData = new HashMap<String, Object>();
     pageData.put("recordPage", recordPage);
     pageData.put("currentPage", (currentPage - 1) * 10);
     pageData.put("column", sqlData.get("column"));
     pageData.put("search", sqlData.get("search"));
-    
+
     ResponseDTO res = bookService.getBookList(pageData);
     return res;
   }
@@ -80,7 +81,7 @@ public class MgrBookController { // 도서목록 관련 기능
     return res;
   }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   // 추천도서 테이블 총 개수
   @GetMapping(value = "/sugCount")
@@ -91,13 +92,14 @@ public class MgrBookController { // 도서목록 관련 기능
 
   // 추천도서전체목록 데이터 받기
   @GetMapping(value = "/sugList/{currentPage}")
-  public ResponseDTO getSugList(@PathVariable(value = "currentPage") int currentPage, @RequestParam Map<String, String> sqlData) {
+  public ResponseDTO getSugList(@PathVariable(value = "currentPage") int currentPage,
+      @RequestParam Map<String, String> sqlData) {
     Map<String, Object> pageData = new HashMap<String, Object>();
     pageData.put("recordPage", sugRecordPage);
     pageData.put("currentPage", (currentPage - 1) * sugRecordPage);
     pageData.put("column", sqlData.get("column"));
     pageData.put("search", sqlData.get("search"));
-    
+
     ResponseDTO res = bookService.getSugList(pageData);
     return res;
   }
