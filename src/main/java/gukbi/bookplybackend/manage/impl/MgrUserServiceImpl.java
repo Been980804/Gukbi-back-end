@@ -1,4 +1,4 @@
-package gukbi.bookplybackend.manage.service;
+package gukbi.bookplybackend.manage.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -11,9 +11,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.manage.dao.MgrMapper;
+import gukbi.bookplybackend.manage.service.MgrUserService;
 
 @Service
-public class MgrUserServiceImpl implements MgrUserService{
+public class MgrUserServiceImpl implements MgrUserService {
 
   @Autowired
   MgrMapper manageMapper;
@@ -22,12 +23,12 @@ public class MgrUserServiceImpl implements MgrUserService{
   ObjectMapper objectMapper;
 
   @Override
-  @Transactional // 총 회원 개수 가져오기 
+  @Transactional // 총 회원 개수 가져오기
   public ResponseDTO getUserCount(Map<String, String> sqlData) {
     ResponseDTO res = new ResponseDTO();
     int userCount = manageMapper.getUserCount(sqlData);
 
-    if(userCount >= 0) {
+    if (userCount >= 0) {
       res.setResCode(200);
       res.setResMsg("총 회원 개수 조회");
       res.setData("userCount", userCount);
@@ -45,15 +46,15 @@ public class MgrUserServiceImpl implements MgrUserService{
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> userList = manageMapper.getUserList(pageData);
 
-    for(Map<String, Object> user: userList) {
-      if(user.get("mem_rent_yn").equals("Y")) {
+    for (Map<String, Object> user : userList) {
+      if (user.get("mem_rent_yn").equals("Y")) {
         user.replace("mem_rent_yn", true);
       } else {
         user.replace("mem_rent_yn", false);
       }
     }
 
-    if(!userList.isEmpty()) {
+    if (!userList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("회원 리스트 조회");
       res.setData("userList", userList);
@@ -71,7 +72,7 @@ public class MgrUserServiceImpl implements MgrUserService{
     ResponseDTO res = new ResponseDTO();
     int rentCount = manageMapper.getUserRentCount(sqlData);
 
-    if(rentCount >= 0) {
+    if (rentCount >= 0) {
       res.setResCode(200);
       res.setResMsg("총 회원 대여/연체정보 개수 조회");
       res.setData("rentCount", rentCount);
@@ -89,7 +90,7 @@ public class MgrUserServiceImpl implements MgrUserService{
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> userInfo = manageMapper.getUserInfo(pageData);
 
-    if(userInfo != null) {
+    if (userInfo != null) {
       res.setResCode(200);
       res.setResMsg("회원 대여/연체정보 조회");
       res.setData("userInfo", userInfo);
@@ -97,7 +98,7 @@ public class MgrUserServiceImpl implements MgrUserService{
       res.setResCode(300);
       res.setResMsg("회원 대여/연체정보 조회에 실패했습니다.");
     }
-    
+
     return res;
   }
 
@@ -107,7 +108,7 @@ public class MgrUserServiceImpl implements MgrUserService{
     ResponseDTO res = new ResponseDTO();
     int overdueCount = manageMapper.getOverdueCount(memNo);
 
-    if(overdueCount >= 0) {
+    if (overdueCount >= 0) {
       res.setResCode(200);
       res.setResMsg("회원 연체정보 개수 조회");
       res.setData("overdueCount", overdueCount);
@@ -125,7 +126,7 @@ public class MgrUserServiceImpl implements MgrUserService{
     ResponseDTO res = new ResponseDTO();
     int result = manageMapper.setRent(sqlData);
 
-    if(result == 1) {
+    if (result == 1) {
       res.setResCode(200);
       res.setResMsg("회원 대여가능여부 변경");
       res.setData("rent", result);

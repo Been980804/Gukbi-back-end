@@ -1,4 +1,4 @@
-package gukbi.bookplybackend.manage.service;
+package gukbi.bookplybackend.manage.impl;
 
 import java.net.URI;
 import java.util.List;
@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.manage.dao.MgrMapper;
+import gukbi.bookplybackend.manage.service.MgrBookService;
 
 @Service
 public class MgrBookServiceImpl implements MgrBookService {
@@ -35,12 +36,12 @@ public class MgrBookServiceImpl implements MgrBookService {
   private String authKey;
 
   @Override
-  @Transactional // 총 도서 개수 가져오기 
-  public ResponseDTO getBookCount(@RequestParam Map<String, String> sqlData) { 
+  @Transactional // 총 도서 개수 가져오기
+  public ResponseDTO getBookCount(@RequestParam Map<String, String> sqlData) {
     ResponseDTO res = new ResponseDTO();
     int bookCount = manageMapper.getBookCount(sqlData);
 
-    if(bookCount >= 0) {
+    if (bookCount >= 0) {
       res.setResCode(200);
       res.setResMsg("총 도서 개수 조회");
       res.setData("bookCount", bookCount);
@@ -58,7 +59,7 @@ public class MgrBookServiceImpl implements MgrBookService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> bookList = manageMapper.getBookList(pageData);
 
-    if(!bookList.isEmpty()) {
+    if (!bookList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("도서 리스트 조회");
       res.setData("bookList", bookList);
@@ -76,7 +77,7 @@ public class MgrBookServiceImpl implements MgrBookService {
     ResponseDTO res = new ResponseDTO();
     Map<String, Object> bookInfo = manageMapper.getBookInfo(isbn);
 
-    if(bookInfo != null) {
+    if (bookInfo != null) {
       res.setResCode(200);
       res.setResMsg("도서 상세정보 조회");
       res.setData("bookInfo", bookInfo);
@@ -84,7 +85,7 @@ public class MgrBookServiceImpl implements MgrBookService {
       res.setResCode(300);
       res.setResMsg("도서 상세정보 조회에 실패했습니다.");
     }
-    
+
     return res;
   }
 
@@ -93,23 +94,23 @@ public class MgrBookServiceImpl implements MgrBookService {
   public ResponseDTO getDescript(String isbn) {
     ResponseDTO res = new ResponseDTO();
     URI uri = UriComponentsBuilder.fromUriString(baseUrl)
-              .queryParam("authKey", authKey)
-              .queryParam("isbn13", isbn)
-              .queryParam("format", "json")
-              .build(true)
-              .toUri();
+        .queryParam("authKey", authKey)
+        .queryParam("isbn13", isbn)
+        .queryParam("format", "json")
+        .build(true)
+        .toUri();
 
     String jsonString = WebClient.builder().baseUrl(baseUrl)
-              .build()
-              .get()
-              .uri(uri)
-              .retrieve()
-              .bodyToMono(String.class)
-              .block();
+        .build()
+        .get()
+        .uri(uri)
+        .retrieve()
+        .bodyToMono(String.class)
+        .block();
 
     try {
       JsonNode jsonNode = objectMapper.readTree(jsonString).get("response")
-                    .get("detail").get(0).get("book").get("description");
+          .get("detail").get(0).get("book").get("description");
       String result = objectMapper.readValue(jsonNode.toString(), String.class);
       res.setResCode(200);
       res.setResMsg("도서 책소개 정보 조회");
@@ -130,7 +131,7 @@ public class MgrBookServiceImpl implements MgrBookService {
       ResponseDTO res = new ResponseDTO();
       int result = manageMapper.createBook(book);
 
-      if(result == 1) {
+      if (result == 1) {
         res.setResCode(200);
         res.setResMsg("도서 정보 등록");
         res.setData("book", result);
@@ -154,7 +155,7 @@ public class MgrBookServiceImpl implements MgrBookService {
     ResponseDTO res = new ResponseDTO();
     int result = manageMapper.bookModify(book);
 
-    if(result == 1) {
+    if (result == 1) {
       res.setResCode(200);
       res.setResMsg("도서 정보 수정");
       res.setData("book", result);
@@ -172,7 +173,7 @@ public class MgrBookServiceImpl implements MgrBookService {
     ResponseDTO res = new ResponseDTO();
     int result = manageMapper.bookDelete(isbn);
 
-    if(result == 1) {
+    if (result == 1) {
       res.setResCode(200);
       res.setResMsg("도서 정보 삭제");
       res.setData("book", result);
@@ -184,7 +185,7 @@ public class MgrBookServiceImpl implements MgrBookService {
     return res;
   }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   @Override
   @Transactional // 총 추천도서 개수 가져오기
@@ -192,7 +193,7 @@ public class MgrBookServiceImpl implements MgrBookService {
     ResponseDTO res = new ResponseDTO();
     int sugCount = manageMapper.getSugCount(sqlData);
 
-    if(sugCount >= 0) {
+    if (sugCount >= 0) {
       res.setResCode(200);
       res.setResMsg("총 도서 개수 조회");
       res.setData("sugCount", sugCount);
@@ -210,7 +211,7 @@ public class MgrBookServiceImpl implements MgrBookService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> sugList = manageMapper.getSugList(pageData);
 
-    if(!sugList.isEmpty()) {
+    if (!sugList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("도서 리스트 조회");
       res.setData("sugList", sugList);
@@ -228,7 +229,7 @@ public class MgrBookServiceImpl implements MgrBookService {
     ResponseDTO res = new ResponseDTO();
     int result = manageMapper.sugBook(isbn);
 
-    if(result == 1) {
+    if (result == 1) {
       res.setResCode(200);
       res.setResMsg("도서 정보 수정");
       res.setData("sugBook", result);
@@ -246,7 +247,7 @@ public class MgrBookServiceImpl implements MgrBookService {
     ResponseDTO res = new ResponseDTO();
     int result = manageMapper.sugRegist(isbn);
 
-    if(result == 1) {
+    if (result == 1) {
       res.setResCode(200);
       res.setResMsg("도서 정보 수정");
       res.setData("sugRegist", result);
@@ -264,7 +265,7 @@ public class MgrBookServiceImpl implements MgrBookService {
     ResponseDTO res = new ResponseDTO();
     int result = manageMapper.sugDelete(isbn);
 
-    if(result == 1) {
+    if (result == 1) {
       res.setResCode(200);
       res.setResMsg("도서 정보 삭제");
       res.setData("sugDelete", result);
@@ -282,7 +283,7 @@ public class MgrBookServiceImpl implements MgrBookService {
     ResponseDTO res = new ResponseDTO();
     Map<String, Object> bookInfo = manageMapper.sugBookInfo();
 
-    if(bookInfo != null) {
+    if (bookInfo != null) {
       res.setResCode(200);
       res.setResMsg("추천도서 정보 조회");
       res.setData("sugBookInfo", bookInfo);

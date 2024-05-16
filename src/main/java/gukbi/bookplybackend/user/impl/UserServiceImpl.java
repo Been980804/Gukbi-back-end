@@ -1,4 +1,4 @@
-package gukbi.bookplybackend.user.service;
+package gukbi.bookplybackend.user.impl;
 
 import java.util.Map;
 
@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.user.dao.UserMapper;
+import gukbi.bookplybackend.user.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {

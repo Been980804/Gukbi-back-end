@@ -1,4 +1,4 @@
-package gukbi.bookplybackend.manage.service;
+package gukbi.bookplybackend.manage.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.manage.dao.MgrMapper;
+import gukbi.bookplybackend.manage.service.MgrBoardService;
 
 @Service
 public class MgrBoardServiceImpl implements MgrBoardService {
@@ -27,7 +28,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     int notiCount = manageMapper.getNotiCount(sqlData);
 
-    if(notiCount >= 0) {
+    if (notiCount >= 0) {
       res.setResCode(200);
       res.setResMsg("총 공지사항 개수 조회");
       res.setData("notiCount", notiCount);
@@ -45,7 +46,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> notiList = manageMapper.getNotiList(pageData);
 
-    if(!notiList.isEmpty()) {
+    if (!notiList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("공지사항 리스트 조회");
       res.setData("notiList", notiList);
@@ -63,7 +64,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     Map<String, Object> notiInfo = manageMapper.getNotiInfo(notiNo);
 
-    if(notiInfo != null) {
+    if (notiInfo != null) {
       res.setResCode(200);
       res.setResMsg("공지사항 상세정보 조회");
       res.setData("notiInfo", notiInfo);
@@ -71,7 +72,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
       res.setResCode(300);
       res.setResMsg("공지사항 상세정보 조회에 실패했습니다.");
     }
-    
+
     return res;
   }
 
@@ -81,7 +82,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     int result = manageMapper.notiDelete(notiNo);
 
-    if(result == 1) {
+    if (result == 1) {
       res.setResCode(200);
       res.setResMsg("공지사항 정보 삭제");
       res.setData("noti", result);
@@ -99,7 +100,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     int inquiryCount = manageMapper.getInquiryCount(sqlData);
 
-    if(inquiryCount >= 0) {
+    if (inquiryCount >= 0) {
       res.setResCode(200);
       res.setResMsg("총 공지사항 개수 조회");
       res.setData("inquiryCount", inquiryCount);
@@ -117,7 +118,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> inquiryList = manageMapper.getInquiryList(pageData);
 
-    if(!inquiryList.isEmpty()) {
+    if (!inquiryList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("공지사항 리스트 조회");
       res.setData("inquiryList", inquiryList);
@@ -135,7 +136,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     Map<String, Object> inquiryInfo = manageMapper.getInquiryInfo(inquiryNo);
 
-    if(inquiryInfo != null) {
+    if (inquiryInfo != null) {
       res.setResCode(200);
       res.setResMsg("문의사항 상세정보 조회");
       res.setData("inquiryInfo", inquiryInfo);
@@ -143,7 +144,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
       res.setResCode(300);
       res.setResMsg("문의사항 상세정보 조회에 실패했습니다.");
     }
-    
+
     return res;
   }
 
@@ -153,7 +154,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     int result = manageMapper.registAnswer(sqlData);
 
-    if(result == 1) {
+    if (result == 1) {
       res.setResCode(200);
       res.setResMsg("문의사항 답장 등록");
       res.setData("answer", result);
@@ -171,7 +172,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     int tradeCount = manageMapper.getTradeCount(sqlData);
 
-    if(tradeCount >= 0) {
+    if (tradeCount >= 0) {
       res.setResCode(200);
       res.setResMsg("총 공지사항 개수 조회");
       res.setData("tradeCount", tradeCount);
@@ -189,7 +190,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> tradeList = manageMapper.getTradeList(pageData);
 
-    if(!tradeList.isEmpty()) {
+    if (!tradeList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("공지사항 리스트 조회");
       res.setData("tradeList", tradeList);
@@ -207,7 +208,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     Map<String, Object> tradeInfo = manageMapper.getTradeInfo(tradeNo);
 
-    if(tradeInfo != null) {
+    if (tradeInfo != null) {
       res.setResCode(200);
       res.setResMsg("도서 상세정보 조회");
       res.setData("tradeInfo", tradeInfo);
@@ -215,7 +216,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
       res.setResCode(300);
       res.setResMsg("도서 상세정보 조회에 실패했습니다.");
     }
-    
+
     return res;
   }
 
@@ -225,7 +226,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     int applCount = manageMapper.getApplCount(sqlData);
 
-    if(applCount >= 0) {
+    if (applCount >= 0) {
       res.setResCode(200);
       res.setResMsg("총 공지사항 개수 조회");
       res.setData("applCount", applCount);
@@ -243,7 +244,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> applList = manageMapper.getApplList(pageData);
 
-    if(!applList.isEmpty()) {
+    if (!applList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("공지사항 리스트 조회");
       res.setData("applList", applList);
@@ -261,7 +262,7 @@ public class MgrBoardServiceImpl implements MgrBoardService {
     ResponseDTO res = new ResponseDTO();
     int result = manageMapper.setStatus(sqlData);
 
-    if(result == 1) {
+    if (result == 1) {
       res.setResCode(200);
       res.setResMsg("희망도서 신청상태 변경");
       res.setData("status", result);

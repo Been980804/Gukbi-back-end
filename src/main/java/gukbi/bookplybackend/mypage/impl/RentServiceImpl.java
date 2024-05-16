@@ -1,4 +1,4 @@
-package gukbi.bookplybackend.mypage.service;
+package gukbi.bookplybackend.mypage.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.mypage.dao.MyPageMapper;
+import gukbi.bookplybackend.mypage.service.RentService;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -20,7 +21,6 @@ public class RentServiceImpl implements RentService {
   @Transactional
   public ResponseDTO getRentList(String mem_no) { // 대여중인 도서 조회
     ResponseDTO res = new ResponseDTO();
-
     List<Map<String, String>> rentList = myPageMapper.getRentList(mem_no);
 
     if (null != rentList) {
@@ -39,14 +39,13 @@ public class RentServiceImpl implements RentService {
   @Transactional
   public ResponseDTO getRentedCnt(String mem_no) { // 대여한 총 도서 수 조회
     ResponseDTO res = new ResponseDTO();
-
     int totalCnt = myPageMapper.getRentedCnt(mem_no);
 
-    if(totalCnt >= 0){
+    if (totalCnt >= 0) {
       res.setResCode(200);
       res.setResMsg("대여한 도서 수 조회");
       res.setData("totalCnt", totalCnt);
-    }else{
+    } else {
       res.setResCode(300);
       res.setResMsg("대여한 도서 수 조회 실패");
     }
@@ -55,11 +54,10 @@ public class RentServiceImpl implements RentService {
 
   @Override
   @Transactional
-  public ResponseDTO getRentedList(Map<String,Object> pageMap) { // 대여한 도서 조회
+  public ResponseDTO getRentedList(Map<String, Object> pageMap) { // 대여한 도서 조회
     ResponseDTO res = new ResponseDTO();
-
     List<Map<String, String>> rentedList = myPageMapper.getRentedList(pageMap);
-    
+
     res.setResCode(200);
     res.setResMsg("대여한 리스트 조회");
     res.setData("rentedList", rentedList);
@@ -71,7 +69,6 @@ public class RentServiceImpl implements RentService {
   @Transactional
   public ResponseDTO getReserveList(String mem_no) { // 예약중인 도서 조회
     ResponseDTO res = new ResponseDTO();
-
     List<Map<String, String>> reserveList = myPageMapper.getReserveList(mem_no);
 
     res.setResCode(200);
@@ -85,7 +82,6 @@ public class RentServiceImpl implements RentService {
   @Transactional
   public ResponseDTO review(Map<String, Object> reqBody) { // 리뷰 작성
     ResponseDTO res = new ResponseDTO();
-
     int insertRow = myPageMapper.review(reqBody);
 
     if (insertRow > 0) {
@@ -102,7 +98,6 @@ public class RentServiceImpl implements RentService {
   @Transactional
   public ResponseDTO returnBook(Map<String, String> reqBody) { // 도서 반납
     ResponseDTO res = new ResponseDTO();
-
     int updateRow = myPageMapper.returnBook(reqBody);
 
     if (updateRow > 0) {
@@ -118,25 +113,23 @@ public class RentServiceImpl implements RentService {
   @Override
   @Transactional
   public ResponseDTO changeRentState(String rent_no) { // 대여상태 변경
-  ResponseDTO res = new ResponseDTO();
+    ResponseDTO res = new ResponseDTO();
+    int updateRow = myPageMapper.changeRentState(rent_no);
 
-  int updateRow = myPageMapper.changeRentState(rent_no);
-
-  if (updateRow > 0) {
-  res.setResCode(200);
-  res.setResMsg("대여상태 수정 성공");
-  } else {
-  res.setResCode(300);
-  res.setResMsg("대여상태 수정 실패");
-  }
-  return res;
+    if (updateRow > 0) {
+      res.setResCode(200);
+      res.setResMsg("대여상태 수정 성공");
+    } else {
+      res.setResCode(300);
+      res.setResMsg("대여상태 수정 실패");
+    }
+    return res;
   }
 
   @Override
   @Transactional
   public ResponseDTO cancelReserveBook(Map<String, String> reqBody) { // 예약한 도서 취소
     ResponseDTO res = new ResponseDTO();
-
     int updateRow = myPageMapper.cancelReserveBook(reqBody);
 
     if (updateRow > 0) {

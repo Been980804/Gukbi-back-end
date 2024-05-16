@@ -8,10 +8,10 @@ import gukbi.bookplybackend.common.dto.ResponseDTO;
 
 @Service
 public interface MyBookTradeService {
-    // 도서거래 총 게시물 개수 조회
-    ResponseDTO getTradeCnt(String mem_no);
-    // 도서거래 게시물 조회
-    ResponseDTO getTradeList(Map<String, Object> pageMap);
-    // 도서거래 게시물 삭제
-    ResponseDTO deleteTrade(Map<String, Object> reqBody);
+  // 도서거래 총 게시물 개수 조회
+  ResponseDTO getTradeCnt(String mem_no);
+  // 도서거래 게시물 조회
+  ResponseDTO getTradeList(Map<String, Object> pageMap);
+  // 도서거래 게시물 삭제
+  ResponseDTO deleteTrade(Map<String, Object> reqBody);
 }

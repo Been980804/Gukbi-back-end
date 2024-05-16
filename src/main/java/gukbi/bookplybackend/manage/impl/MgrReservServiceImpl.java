@@ -1,4 +1,4 @@
-package gukbi.bookplybackend.manage.service;
+package gukbi.bookplybackend.manage.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.manage.dao.MgrMapper;
+import gukbi.bookplybackend.manage.service.MgrReservService;
 
 @Service
 public class MgrReservServiceImpl implements MgrReservService {
@@ -27,7 +28,7 @@ public class MgrReservServiceImpl implements MgrReservService {
     ResponseDTO res = new ResponseDTO();
     int reservCount = manageMapper.getReservCount(sqlData);
 
-    if(reservCount >= 0) {
+    if (reservCount >= 0) {
       res.setResCode(200);
       res.setResMsg("총 예약 개수 조회");
       res.setData("reservCount", reservCount);
@@ -45,7 +46,7 @@ public class MgrReservServiceImpl implements MgrReservService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> reservList = manageMapper.getReservList(pageData);
 
-    if(!reservList.isEmpty()) {
+    if (!reservList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("예약 리스트 조회");
       res.setData("reservList", reservList);
