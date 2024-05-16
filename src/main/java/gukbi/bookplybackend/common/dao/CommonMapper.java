@@ -71,5 +71,5 @@ public interface CommonMapper {
   void updateRentalList();
 
   // 리뷰내역 조회
-  List<Map<String, Object>> getReview();
+  List<Map<String, Object>> getReview(String isbn);
 }

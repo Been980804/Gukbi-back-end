@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -187,9 +186,10 @@ public class CommonController { // 공통으로 처리가 필요한 기능들 �
     commonService.updateRentalList();
   }
 
-  @GetMapping(value = "/main/bookInfo/review")
-  public ResponseDTO getReview() {
-    ResponseDTO res = commonService.getReview();
+  // 리뷰내역 조회
+  @GetMapping(value = "/main/bookInfo/review/{isbn}")
+  public ResponseDTO getReview(@PathVariable(value = "isbn") String isbn) {
+    ResponseDTO res = commonService.getReview(isbn);
     return res;
   }
 }

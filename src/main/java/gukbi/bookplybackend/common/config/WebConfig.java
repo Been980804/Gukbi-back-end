@@ -21,7 +21,6 @@ public class WebConfig implements WebMvcConfigurer {
             .allowedOrigins("http://localhost:3000")
             .allowedMethods("GET", "POST", "PUT", "DELETE")
             .maxAge(3000);
-            System.out.println(password);
   }
 
   @Bean

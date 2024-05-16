@@ -439,9 +439,9 @@ public class CommonServiceImpl implements CommonService {
 
   @Override
   @Transactional(readOnly = true) // 리뷰 내역 조회
-  public ResponseDTO getReview() {
+  public ResponseDTO getReview(String isbn) {
     ResponseDTO res = new ResponseDTO();
-    List<Map<String, Object>> reviewList = commonMapper.getReview();
+    List<Map<String, Object>> reviewList = commonMapper.getReview(isbn);
 
     if (!reviewList.isEmpty()) {
       res.setResCode(200);

@@ -243,5 +243,6 @@
       review
     WHERE
       use_flag = 'Y'
+      AND book_no = (select book_no from book where book_isbn = #{isbn});
   </select>
 </mapper>

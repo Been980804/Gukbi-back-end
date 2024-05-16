@@ -73,5 +73,5 @@ public interface CommonService {
   void updateRentalList();
 
   // 리뷰 내역 조회
-  ResponseDTO getReview();
+  ResponseDTO getReview(String isbn);
 }
