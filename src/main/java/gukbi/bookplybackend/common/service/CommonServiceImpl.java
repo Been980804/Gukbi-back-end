@@ -45,7 +45,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> menuList = commonMapper.getLargeMenu(level);
 
-    if(!menuList.isEmpty()) {
+    if (!menuList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("대메뉴 리스트 조회");
       res.setData("menuList", menuList);
@@ -63,7 +63,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> menuList = commonMapper.getSmallMenu();
 
-    if(!menuList.isEmpty()) {
+    if (!menuList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("소메뉴 리스트 조회");
       res.setData("menuList", menuList);
@@ -75,13 +75,13 @@ public class CommonServiceImpl implements CommonService {
     return res;
   }
 
-	@Override
+  @Override
   @Transactional // 추천도서 정보 가져오기
-	public ResponseDTO sugBookInfo() {
-		ResponseDTO res = new ResponseDTO();
+  public ResponseDTO sugBookInfo() {
+    ResponseDTO res = new ResponseDTO();
     Map<String, Object> bookInfo = commonMapper.sugBookInfo();
 
-    if(bookInfo != null) {
+    if (bookInfo != null) {
       res.setResCode(200);
       res.setResMsg("추천도서 정보 조회");
       res.setData("sugBookInfo", bookInfo);
@@ -91,15 +91,15 @@ public class CommonServiceImpl implements CommonService {
     }
 
     return res;
-	}
+  }
 
   @Override
-  @Transactional // 총 도서 개수 가져오기 
+  @Transactional // 총 도서 개수 가져오기
   public ResponseDTO getBookCount(Map<String, String> sqlData) {
     ResponseDTO res = new ResponseDTO();
     int bookCount = commonMapper.getBookCount(sqlData);
 
-    if(bookCount >= 0) {
+    if (bookCount >= 0) {
       res.setResCode(200);
       res.setResMsg("총 도서 개수 조회");
       res.setData("bookCount", bookCount);
@@ -117,7 +117,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> bookList = commonMapper.getBookList(pageData);
 
-    if(!bookList.isEmpty()) {
+    if (!bookList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("도서 리스트 조회");
       res.setData("bookList", bookList);
@@ -128,14 +128,14 @@ public class CommonServiceImpl implements CommonService {
 
     return res;
   }
-  
+
   @Override
   @Transactional // 도서 상세정보 가져오기
   public ResponseDTO getBookInfo(String isbn) {
     ResponseDTO res = new ResponseDTO();
     Map<String, Object> bookInfo = commonMapper.getBookInfo(isbn);
 
-    if(bookInfo != null) {
+    if (bookInfo != null) {
       res.setResCode(200);
       res.setResMsg("도서 상세정보 조회");
       res.setData("bookInfo", bookInfo);
@@ -143,7 +143,7 @@ public class CommonServiceImpl implements CommonService {
       res.setResCode(300);
       res.setResMsg("도서 상세정보 조회에 실패했습니다.");
     }
-    
+
     return res;
   }
 
@@ -152,23 +152,23 @@ public class CommonServiceImpl implements CommonService {
   public ResponseDTO getDescript(String isbn) {
     ResponseDTO res = new ResponseDTO();
     URI uri = UriComponentsBuilder.fromUriString(baseUrl)
-              .queryParam("authKey", authKey)
-              .queryParam("isbn13", isbn)
-              .queryParam("format", "json")
-              .build(true)
-              .toUri();
+        .queryParam("authKey", authKey)
+        .queryParam("isbn13", isbn)
+        .queryParam("format", "json")
+        .build(true)
+        .toUri();
 
     String jsonString = WebClient.builder().baseUrl(baseUrl)
-              .build()
-              .get()
-              .uri(uri)
-              .retrieve()
-              .bodyToMono(String.class)
-              .block();
+        .build()
+        .get()
+        .uri(uri)
+        .retrieve()
+        .bodyToMono(String.class)
+        .block();
 
     try {
       JsonNode jsonNode = objectMapper.readTree(jsonString).get("response")
-                    .get("detail").get(0).get("book").get("description");
+          .get("detail").get(0).get("book").get("description");
       String result = objectMapper.readValue(jsonNode.toString(), String.class);
       res.setResCode(200);
       res.setResMsg("도서 책소개 정보 조회");
@@ -188,7 +188,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     int bookCount = commonMapper.getCatCount(sqlData);
 
-    if(bookCount >= 0) {
+    if (bookCount >= 0) {
       res.setResCode(200);
       res.setResMsg("총 도서 개수 조회");
       res.setData("bookCount", bookCount);
@@ -206,7 +206,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> bookList = commonMapper.getCatList(pageData);
 
-    if(!bookList.isEmpty()) {
+    if (!bookList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("도서 리스트 조회");
       res.setData("bookList", bookList);
@@ -224,7 +224,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> notiList = commonMapper.getNotiList();
 
-    if(!notiList.isEmpty()) {
+    if (!notiList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("공지사항 리스트 조회");
       res.setData("notiList", notiList);
@@ -242,7 +242,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> bookPlyList = commonMapper.getBookPly(favorite);
 
-    if(!bookPlyList.isEmpty()) {
+    if (!bookPlyList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("북플리 리스트 조회");
       res.setData("bookPlyList", bookPlyList);
@@ -261,7 +261,7 @@ public class CommonServiceImpl implements CommonService {
       ResponseDTO res = new ResponseDTO();
       int result = commonMapper.basket(sqlData);
 
-      if(result == 1) {
+      if (result == 1) {
         res.setResCode(200);
         res.setResMsg("책바구니 정보 등록");
         res.setData("basket", result);
@@ -285,7 +285,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     int result = commonMapper.basketDelete(sqlData);
 
-    if(result == 1) {
+    if (result == 1) {
       res.setResCode(200);
       res.setResMsg("책바구니 정보 삭제");
       res.setData("basket", result);
@@ -303,7 +303,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     int result = commonMapper.basketDeleteAll(memNo);
 
-    if(result >= 1) {
+    if (result >= 1) {
       res.setResCode(200);
       res.setResMsg("책바구니 정보 삭제");
       res.setData("basket", result);
@@ -321,7 +321,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> basketList = commonMapper.basketList(memNo);
 
-    if(!basketList.isEmpty()) {
+    if (!basketList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("책바구니 리스트 조회");
       res.setData("basketList", basketList);
@@ -339,7 +339,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     Integer basket = commonMapper.bookRent(sqlData);
 
-    if(basket == sqlData.size()) {
+    if (basket == sqlData.size()) {
       res.setResCode(200);
       res.setResMsg("책바구니 내역 대여 등록");
       res.setData("bookRent", basket);
@@ -357,7 +357,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     int result = commonMapper.getBookStatus(bookNo);
 
-    if(result == 1 || result == 0) {
+    if (result == 1 || result == 0) {
       res.setResCode(200);
       res.setResMsg("도서대여내역 조회");
       res.setData("status", result);
@@ -375,7 +375,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> categoryList = commonMapper.getCategory();
 
-    if(!categoryList.isEmpty()) {
+    if (!categoryList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("관심분야 카테고리 목록 조회");
       res.setData("category", categoryList);
@@ -393,7 +393,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> reservationList = commonMapper.getReservation();
 
-    if(!reservationList.isEmpty()) { 
+    if (!reservationList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("예약내역 목록 조회");
       res.setData("reservation", reservationList);
@@ -414,14 +414,14 @@ public class CommonServiceImpl implements CommonService {
 
     MimeMessage mailMessage = mailSender.createMimeMessage();
 
-    String[] mailList = {"dlsghths@gmail.com", "dlsghths79@naver.com"};
+    String[] mailList = { "dlsghths@gmail.com", "dlsghths79@naver.com" };
     try {
       MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, true, "UTF-8");
       messageHelper.setFrom("dlsghths@gmail.com"); // 보내는 사람
       messageHelper.setTo(mailList);
       messageHelper.setSubject("북플리 도서관 도서 연체 관련 안내 메일");
       messageHelper.setText("북플리 도서관 도서 연체 관련 안내 메일");
-      
+
       mailSender.send(mailMessage);
     } catch (Exception e) {
       e.printStackTrace();
@@ -431,7 +431,7 @@ public class CommonServiceImpl implements CommonService {
   @Override
   public void updateRentalList() { // 매일 아침마다 대여내역을 최신화
     try {
-      commonMapper.updateRentalList();  
+      commonMapper.updateRentalList();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -443,7 +443,7 @@ public class CommonServiceImpl implements CommonService {
     ResponseDTO res = new ResponseDTO();
     List<Map<String, Object>> reviewList = commonMapper.getReview();
 
-    if (!reviewList.isEmpty()) { 
+    if (!reviewList.isEmpty()) {
       res.setResCode(200);
       res.setResMsg("리뷰내역 조회");
       res.setData("review", reviewList);

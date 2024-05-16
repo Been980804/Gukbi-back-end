@@ -16,52 +16,43 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
-
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/madang/inquiry")
 public class InquiryListController {
-    
-    public static final int showCnt = 10;
 
-    @Autowired
-    InquiryListService inquiryService;
+  public static final int showCnt = 10;
 
-    @GetMapping(value="/getFaq")
-    public ResponseDTO getFaq() {
-        ResponseDTO res = inquiryService.getFaq();
+  @Autowired
+  InquiryListService inquiryService;
 
-        return res;
-    }
-    
-    @GetMapping(value="/getQnaCnt")
-    public ResponseDTO getQnaCnt(@RequestParam Map<String, Object> reqBody) {
-        ResponseDTO res = inquiryService.getQnaCnt(reqBody);
-        
-        return res;
-    }
-    
-    @GetMapping(value="/getQna/{nowPage}")
-    public ResponseDTO getQna(@PathVariable("nowPage") int nowPage,@RequestParam Map<String, Object> reqBody) {
-        Map<String, Object> pageMap = new HashMap<>();
-        pageMap.put("showCnt", showCnt);
-        pageMap.put("nowPage", (nowPage - 1) * 10);
-        pageMap.put("column", reqBody.get("column"));
-        pageMap.put("search", reqBody.get("search"));
+  @GetMapping(value = "/getFaq")
+  public ResponseDTO getFaq() {
+    ResponseDTO res = inquiryService.getFaq();
+    return res;
+  }
 
-        ResponseDTO res = inquiryService.getQna(pageMap);
-        
-        return res;
-    }
-    
-    @PostMapping(value="/inquiryReg")
-    public ResponseDTO inquiryReg(@RequestBody Map<String, Object> reqBody) {
-        ResponseDTO res = inquiryService.inquiryReg(reqBody);
-        
-        return res;
-    }
-    
+  @GetMapping(value = "/getQnaCnt")
+  public ResponseDTO getQnaCnt(@RequestParam Map<String, Object> reqBody) {
+    ResponseDTO res = inquiryService.getQnaCnt(reqBody);
+    return res;
+  }
+
+  @GetMapping(value = "/getQna/{nowPage}")
+  public ResponseDTO getQna(@PathVariable("nowPage") int nowPage, @RequestParam Map<String, Object> reqBody) {
+    Map<String, Object> pageMap = new HashMap<>();
+    pageMap.put("showCnt", showCnt);
+    pageMap.put("nowPage", (nowPage - 1) * 10);
+    pageMap.put("column", reqBody.get("column"));
+    pageMap.put("search", reqBody.get("search"));
+
+    ResponseDTO res = inquiryService.getQna(pageMap);
+    return res;
+  }
+
+  @PostMapping(value = "/inquiryReg")
+  public ResponseDTO inquiryReg(@RequestBody Map<String, Object> reqBody) {
+    ResponseDTO res = inquiryService.inquiryReg(reqBody);
+    return res;
+  }
 }
