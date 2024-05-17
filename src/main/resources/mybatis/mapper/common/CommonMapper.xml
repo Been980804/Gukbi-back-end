@@ -238,11 +238,12 @@
   <!-- 리뷰내역 조회 -->
   <select id="getReview" resultType="Map">
     SELECT
-      rent_no, rev_scope, rev_content, mem_no
+      review.rev_scope, review.rev_content, member.mem_name
     FROM
       review
+    JOIN member ON review.mem_no = member.mem_no
     WHERE
-      use_flag = 'Y'
-      AND book_no = (select book_no from book where book_isbn = #{isbn});
+      review.use_flag = 'Y'
+      AND review.book_no = (select book_no from book where book_isbn = #{isbn});
   </select>
 </mapper>
