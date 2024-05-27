@@ -18,4 +18,7 @@ public interface UserInfoService {
   ResponseDTO accountDelete(Map<String,String> reqBody);
   // 회원정보 수정
   ResponseDTO updateUserInfo(Map<String, String> reqBody);
+
+  //google Login 실행
+  ResponseDTO googleLogin();
 }

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.mypage.service.UserInfoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -57,4 +59,18 @@ public class UserInfoController {
     ResponseDTO res = userInfoService.updateUserInfo(reqBody);
     return res;
   }
+
+  // google Login 실행
+  @GetMapping("/googleLogin")
+  public ResponseDTO googleLogin() {
+    ResponseDTO res = userInfoService.googleLogin();
+    return res;
+  }
+  
+  @GetMapping("/googleLogin/callback")
+  public ResponseDTO googleLoginToken(@RequestParam(name = "code") String code) {
+    System.out.println("code:::::::" + code);
+    return null;
+  }
+  
 }

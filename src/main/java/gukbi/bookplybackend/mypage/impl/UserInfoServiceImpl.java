@@ -1,9 +1,17 @@
 package gukbi.bookplybackend.mypage.impl;
 
+import java.net.URI;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import gukbi.bookplybackend.common.dto.ResponseDTO;
 import gukbi.bookplybackend.mypage.dao.MyPageMapper;
@@ -15,6 +23,12 @@ import lombok.RequiredArgsConstructor;
 public class UserInfoServiceImpl implements UserInfoService {
 
   private final MyPageMapper myPageMapper;
+
+  @Autowired
+  ObjectMapper objectMapper;
+
+  @Value("${spring.security.oauth2.client.registration.google.client-id}")
+  private String clientId;
 
   @Override
   @Transactional
@@ -99,6 +113,26 @@ public class UserInfoServiceImpl implements UserInfoService {
       res.setResMsg("회원정보 수정 실패");
     }
 
+    return res;
+  }
+
+  @Override //google Login 실행
+  public ResponseDTO googleLogin() {
+    ResponseDTO res = new ResponseDTO();
+    String baseUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+    String redirectUrl = "http://localhost:3000/mypage/userInfo/googleLogin/callback";
+
+    URI uri = UriComponentsBuilder.fromUriString(baseUrl)
+      .queryParam("client_id", clientId)
+      .queryParam("redirect_uri", redirectUrl)
+      .queryParam("response_type", "code")
+      .queryParam("scope", "email")
+      .build(true)
+      .toUri();
+    
+    res.setResCode(200);
+    res.setResMsg("구글 로그인 토큰 조회");
+    res.setData("google", uri);
     return res;
   }
 }
