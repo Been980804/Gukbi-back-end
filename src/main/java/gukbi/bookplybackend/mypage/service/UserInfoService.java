@@ -21,4 +21,5 @@ public interface UserInfoService {
 
   //google Login 실행
   ResponseDTO googleLogin();
+  ResponseDTO getGoogleToken(String code);
 }

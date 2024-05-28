@@ -70,7 +70,9 @@ public class UserInfoController {
   @GetMapping("/googleLogin/callback")
   public ResponseDTO googleLoginToken(@RequestParam(name = "code") String code) {
     System.out.println("code:::::::" + code);
+    ResponseDTO res = userInfoService.getGoogleToken(code);
     return null;
   }
+  
   
 }

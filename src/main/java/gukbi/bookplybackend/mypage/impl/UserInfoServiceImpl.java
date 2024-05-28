@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -29,6 +30,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 
   @Value("${spring.security.oauth2.client.registration.google.client-id}")
   private String clientId;
+
+  @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+  private String clientSecret;
 
   @Override
   @Transactional
@@ -133,6 +137,47 @@ public class UserInfoServiceImpl implements UserInfoService {
     res.setResCode(200);
     res.setResMsg("구글 로그인 토큰 조회");
     res.setData("google", uri);
+    return res;
+  }
+
+  @Override
+  public ResponseDTO getGoogleToken(String code) {
+    ResponseDTO res = new ResponseDTO();
+    String baseUrl = "https://oauth2.googleapis.com/token";
+    String redirectUrl = "http://localhost:3000/mypage/userInfo/googleLogin/callback";
+
+    URI uri = UriComponentsBuilder.fromUriString(baseUrl)
+      .queryParam("code", code)
+      .queryParam("client_id", clientId)
+      .queryParam("client_secret", clientSecret)
+      .queryParam("grant_type", "authorization_code")
+      .queryParam("redirect_uri", redirectUrl)
+      .build(true)
+      .toUri();
+
+    String jsonString = WebClient.builder().baseUrl(baseUrl)
+      .build()
+      .post()
+      .uri(uri)
+      .retrieve()
+      .bodyToMono(String.class)
+      .block();
+
+    System.out.println("jsonString::::::::::::::" + jsonString);
+
+    try {
+      JsonNode jsonNode = objectMapper.readTree(jsonString).get("response")
+          .get("detail").get(0).get("book").get("description");
+      String result = objectMapper.readValue(jsonNode.toString(), String.class);
+      res.setResCode(200);
+      res.setResMsg("도서 책소개 정보 조회");
+      res.setData("descript", result);
+    } catch (Exception e) {
+      System.out.println("getDescript error: " + e.getMessage());
+      res.setResCode(400);
+      res.setResMsg("도서 상세정보 조회에 실패했습니다.");
+    }
+
     return res;
   }
 }
