@@ -162,12 +162,6 @@ public class UserInfoServiceImpl implements UserInfoService {
       .bodyToMono(String.class)
       .block();
 
-  //   "access_token": "ya29.a0AXooCgu8GPJV-WmbijrzbfSl80OzTaT4EX7GDgxt2030PWKtBQYQq5ouaX3f0vYAMi_N3kTzyOCr0_bA4zRKFiJfEOCj9x5_-fsJ0wv0kxtLAoSqfngcCDB_Fie0cPyE2M2a2dDDzYfYfBtyveqZmuAt9XTXZahDyAaCgYKAUwSARMSFQHGX2MigMxax1JSHYwXPYh8oNAyLQ0169",
-  // "expires_in": 3598,
-  // "scope": "openid https://www.googleapis.com/auth/userinfo.email",
-  // "token_type": "Bearer",
-  // "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3MTk2NzgzNTFhNWZhZWRjMmU3MDI3NGJiZWE2MmRhMmE4YzRhMTIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDIzNTczNDE5ODI5LTh2dTM0cWZua3BkNnJxcnU2bXVpYzZncmJoaWVpdDkzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTAyMzU3MzQxOTgyOS04dnUzNHFmbmtwZDZycXJ1Nm11aWM2Z3JiaGllaXQ5My5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwMTQ1MzM3ODM2NTIxMDI0OTMyNSIsImVtYWlsIjoiZGxzZ2h0aHNAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJub3VVdmVidEdRc21fcEp3dVNDX09BIiwiaWF0IjoxNzE2ODgwMjgxLCJleHAiOjE3MTY4ODM4ODF9.YbkVuetA5yMQxE_n6hX_dom_qNvUq6yYBsQRmjKActcMfgc8HQS9zG8PYrRgjojutWavl8gjkSU7x8teiju0RCALZL9FMQCeRePkpAVgQYW0GAhgJHQUC1DMTf7HtlXsneX1Dg3EJRSYGqYAidRzmk_ZT9WTihCk0aC2YEbAJF-leRp4PW1av06r278MTN8L9I3zoKfBG8XzSJ7_3N_ALAGyBgnhsoteWxV2ilQqW4KFC45mJFItbgVqAJV_DTnubErHWA6w6bezIq1bQ0KIB-H5BuSJtSNBbzWVZ81K7ZA1OaE0FNOFG5A6dgjZX2J2Plk-lcjoDa0omeeltqA2UA"
-
     try {
       JsonNode jsonNode = objectMapper.readTree(jsonString).get("access_token");
       String token = objectMapper.readValue(jsonNode.toString(), String.class);
