@@ -19,7 +19,9 @@ public interface UserInfoService {
   // 회원정보 수정
   ResponseDTO updateUserInfo(Map<String, String> reqBody);
 
-  //google Login 실행
+  // google Login 실행
   ResponseDTO googleLogin();
   ResponseDTO getGoogleToken(String code);
+  // kakao Login 실행
+  ResponseDTO kakaoLogin();
 }

@@ -60,8 +60,7 @@ public class UserInfoController {
     return res;
   }
 
-  // google Login 실행
-  @GetMapping("/googleLogin")
+  @GetMapping("/googleLogin") // google Login 실행
   public ResponseDTO googleLogin() {
     ResponseDTO res = userInfoService.googleLogin();
     return res;
@@ -74,5 +73,9 @@ public class UserInfoController {
     return null;
   }
   
-  
+  @GetMapping("/kakaoLogin") // kakao Login 실행
+  public ResponseDTO kakaoLogin() {
+    ResponseDTO res = userInfoService.kakaoLogin();
+    return res;
+  }
 }

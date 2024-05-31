@@ -28,10 +28,13 @@ public class UserInfoServiceImpl implements UserInfoService {
   ObjectMapper objectMapper;
 
   @Value("${spring.security.oauth2.client.registration.google.client-id}")
-  private String clientId;
+  private String gClientId;
 
   @Value("${spring.security.oauth2.client.registration.google.client-secret}")
-  private String clientSecret;
+  private String gClientSecret;
+
+  @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
+  private String kClientId;
 
   @Override
   @Transactional
@@ -119,14 +122,14 @@ public class UserInfoServiceImpl implements UserInfoService {
     return res;
   }
 
-  @Override //google Login 실행
+  @Override // google Login 실행
   public ResponseDTO googleLogin() {
     ResponseDTO res = new ResponseDTO();
     String baseUrl = "https://accounts.google.com/o/oauth2/v2/auth";
     String redirectUrl = "http://localhost:3000/mypage/userInfo/googleLogin/callback";
 
     URI uri = UriComponentsBuilder.fromUriString(baseUrl)
-      .queryParam("client_id", clientId)
+      .queryParam("client_id", gClientId)
       .queryParam("redirect_uri", redirectUrl)
       .queryParam("response_type", "code")
       .queryParam("scope", "email")
@@ -147,8 +150,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     URI uri = UriComponentsBuilder.fromUriString(baseUrl)
       .queryParam("code", code)
-      .queryParam("client_id", clientId)
-      .queryParam("client_secret", clientSecret)
+      .queryParam("client_id", gClientId)
+      .queryParam("client_secret", gClientSecret)
       .queryParam("grant_type", "authorization_code")
       .queryParam("redirect_uri", redirectUrl)
       .build(true)
@@ -197,5 +200,24 @@ public class UserInfoServiceImpl implements UserInfoService {
       .block();
     System.out.println("jsonString:::::::" + jsonString);
     return jsonString;
+  }
+
+  @Override // kakao Login 실행
+  public ResponseDTO kakaoLogin() {
+    ResponseDTO res = new ResponseDTO();
+    String baseUrl = "https://kauth.kakao.com/oauth/authorize";
+    String redirectUrl = "http://localhost:3000/mypage/userInfo/kakaoLogin/callback";
+
+    URI uri = UriComponentsBuilder.fromUriString(baseUrl)
+      .queryParam("client_id", kClientId)
+      .queryParam("redirect_uri", redirectUrl)
+      .queryParam("response_type", "code")
+      .build(true)
+      .toUri();
+    
+    res.setResCode(200);
+    res.setResMsg("카카오 로그인 토큰 조회");
+    res.setData("kakao", uri);
+    return res;
   }
 }
