@@ -68,7 +68,6 @@ public class UserInfoController {
   
   @GetMapping("/googleLogin/callback")
   public ResponseDTO googleLoginToken(@RequestParam(name = "code") String code) {
-    System.out.println("code:::::::" + code);
     ResponseDTO res = userInfoService.getGoogleToken(code);
     return null;
   }
@@ -77,5 +76,11 @@ public class UserInfoController {
   public ResponseDTO kakaoLogin() {
     ResponseDTO res = userInfoService.kakaoLogin();
     return res;
+  }
+
+  @GetMapping("/kakaoLogin/callback")
+  public ResponseDTO kakaoLoginToken(@RequestParam(name = "code") String code) {
+    ResponseDTO res = userInfoService.getKakaoToken(code);
+    return null;
   }
 }

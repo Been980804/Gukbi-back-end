@@ -24,4 +24,5 @@ public interface UserInfoService {
   ResponseDTO getGoogleToken(String code);
   // kakao Login 실행
   ResponseDTO kakaoLogin();
+  ResponseDTO getKakaoToken(String code);
 }

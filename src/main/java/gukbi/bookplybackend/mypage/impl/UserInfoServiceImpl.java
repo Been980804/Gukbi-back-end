@@ -220,4 +220,44 @@ public class UserInfoServiceImpl implements UserInfoService {
     res.setData("kakao", uri);
     return res;
   }
+
+  @Override
+  public ResponseDTO getKakaoToken(String code) {
+    ResponseDTO res = new ResponseDTO();
+    String baseUrl = "https://kauth.kakao.com/oauth/token";
+    String redirectUrl = "http://localhost:3000/mypage/userInfo/kakaoLogin/callback";
+
+    URI uri = UriComponentsBuilder.fromUriString(baseUrl)
+      .queryParam("grant_type", "authorization_code")
+      .queryParam("client_id", kClientId)
+      .queryParam("redirect_uri", redirectUrl)
+      .queryParam("code", code)
+      .build(true)
+      .toUri();
+    
+    String jsonString = WebClient.builder().baseUrl(baseUrl)
+      .build()
+      .post()
+      .uri(uri)
+      .retrieve()
+      .bodyToMono(String.class)
+      .block();
+    
+    try {
+      JsonNode jsonNode = objectMapper.readTree(jsonString).get("access_token");
+      String token = objectMapper.readValue(jsonNode.toString(), String.class);
+
+      System.out.println("token:::::::" + token);
+
+      res.setResCode(200);
+      res.setResMsg("도서 책소개 정보 조회");
+      res.setData("result", token);
+    } catch (Exception e) {
+      System.out.println("getKakaoToken error: " + e.getMessage());
+      res.setResCode(400);
+      res.setResMsg("도서 상세정보 조회에 실패했습니다.");
+    }
+
+    return res;
+  }
 }
