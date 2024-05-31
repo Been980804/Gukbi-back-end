@@ -248,10 +248,11 @@ public class UserInfoServiceImpl implements UserInfoService {
       String token = objectMapper.readValue(jsonNode.toString(), String.class);
 
       System.out.println("token:::::::" + token);
+      String result = getKakaoUserInfo(token);
 
       res.setResCode(200);
       res.setResMsg("도서 책소개 정보 조회");
-      res.setData("result", token);
+      res.setData("result", result);
     } catch (Exception e) {
       System.out.println("getKakaoToken error: " + e.getMessage());
       res.setResCode(400);
@@ -259,5 +260,24 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     return res;
+  }
+
+  public String getKakaoUserInfo(String token) {
+    String baseUrl = "https://kapi.kakao.com/v2/user/me";
+
+    URI uri = UriComponentsBuilder.fromUriString(baseUrl)
+      .build(true)
+      .toUri();
+    
+    String jsonString = WebClient.builder().baseUrl(baseUrl)
+      .defaultHeader("Authorization", "Bearer " + token)
+      .build()
+      .get()
+      .uri(uri)
+      .retrieve()
+      .bodyToMono(String.class)
+      .block();
+    System.out.println("jsonString:::::::" + jsonString);
+    return jsonString;
   }
 }
